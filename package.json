@@ -1,0 +1,17 @@
+{
+  "name": "aigsb-workshop3-site",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Student-facing site for AI@GSB Workshop 3: make your AI look and sound like you (a voice skill, a design skill, a one-page personal website).",
+  "scripts": {
+    "dev": "node scripts/dev-server.mjs",
+    "check-skills": "node scripts/skills.mjs check",
+    "sync-skills": "node scripts/skills.mjs sync",
+    "test-zip": "node scripts/test-zip.mjs"
+  },
+  "dependencies": {
+    "@upstash/redis": "^1.38.3",
+    "redis": "^6.3.0"
+  }
+}

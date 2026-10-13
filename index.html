@@ -1,0 +1,760 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Make your AI look and sound like you | AI@GSB Workshop 3</title>
+<meta name="description" content="AI@GSB Workshop 3. Teach Claude your voice and your look with two skills, test them on a one-page site, host it live.">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+
+<!-- icon sprite -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-ext" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-img" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="9" cy="10" r="2" fill="currentColor"/><path d="M4 18l5-5 3 3 3-3 5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M6 2h8l5 5v14a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M14 2v5h5" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+  <symbol id="i-warn" viewBox="0 0 24 24"><path d="M12 3l10 18H2L12 3z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><path d="M12 10v5M12 18v.5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></symbol>
+  <symbol id="i-elephant" viewBox="0 0 64 64">
+    <ellipse cx="22" cy="28" rx="15" ry="17" fill="#C9C3D6"/>
+    <ellipse cx="22" cy="28" rx="9.5" ry="11.5" fill="#F4B6C2"/>
+    <circle cx="36" cy="26" r="17" fill="#B4ADC4"/>
+    <path d="M44 34c6 3 7 10 4 15-2 4-7 4-8 0" fill="none" stroke="#B4ADC4" stroke-width="7" stroke-linecap="round"/>
+    <circle cx="41" cy="22" r="2.6" fill="#141413"/>
+    <circle cx="42" cy="21" r=".9" fill="#fff"/>
+    <path d="M30 30c2 2 5 2 7 0" fill="none" stroke="#8F879F" stroke-width="1.8" stroke-linecap="round"/>
+    <path d="M47 6l2 4 4 1-4 1-2 4-2-4-4-1 4-1z" fill="#FFD23F"/>
+  </symbol>
+  <symbol id="i-mirror" viewBox="0 0 64 64">
+    <ellipse cx="32" cy="27" rx="20" ry="23" fill="#E6DFFF" stroke="#7C5CFF" stroke-width="3.5"/>
+    <path d="M20 14c3-5 9-8 14-7" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".9"/>
+    <circle cx="32" cy="24" r="6" fill="#7C5CFF"/>
+    <path d="M22 40c2-6 7-9 10-9s8 3 10 9" fill="#7C5CFF"/>
+    <path d="M32 50v8M24 60h16" stroke="#5A3DD6" stroke-width="4" stroke-linecap="round"/>
+    <path d="M51 6l2 4 4 1-4 1-2 4-2-4-4-1 4-1z" fill="#FFD23F"/>
+  </symbol>
+</svg>
+
+<header class="topbar">
+  <div class="brand">
+    <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="9" width="15" height="15" rx="4" fill="#FF6A3D" transform="rotate(-8 9.5 16.5)"/><rect x="9" y="5" width="15" height="15" rx="4" fill="#7C5CFF" opacity=".92"/><rect x="15" y="12" width="15" height="15" rx="4" fill="#14B8A6" opacity=".9" transform="rotate(6 22.5 19.5)"/></svg>
+    <span class="brand-text">AI@GSB <small>Workshop 3: Your site</small></span>
+  </div>
+  <div class="spacer"></div>
+  <a class="btn small ghost nav-slides" href="slides.html">Slides</a>
+  <span class="version-chip" id="version-chip" hidden title="Your version. Change it in step 1."></span>
+  <div class="progress" id="progress" hidden>
+    <div class="progress-bar" id="progress-bar" aria-hidden="true"></div>
+    <span id="progress-text">0 of 8 done</span>
+  </div>
+  <button type="button" class="stuck-btn" id="stuck-open" hidden>Stuck?</button>
+  <div class="who" id="who-wrap" hidden>
+    <button type="button" class="who-btn" id="who-btn" aria-haspopup="true" aria-expanded="false" aria-label="Your account">M</button>
+    <div class="who-menu" id="who-menu" hidden>
+      <p id="whoami"></p>
+      <button type="button" id="change-name">Change name or email</button>
+      <button type="button" id="reset">Start over on this device</button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ SIGN IN ============ -->
+<main class="welcome" id="welcome" hidden>
+  <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span><span class="blob b4"></span>
+  <form class="welcome-card" id="signin" novalidate>
+    <div class="kicker"><span class="dot"></span>AI@GSB Workshop 3</div>
+    <h1>Make your AI look and sound like <em>you</em></h1>
+    <p class="lede">Two skills, one for how you write, one for how things look. A one-page site to test them on. Live by the end.</p>
+    <label class="field"><span>Your name</span><input id="who" name="name" autocomplete="name" placeholder="First and last name" required></label>
+    <label class="field"><span>Your email</span><input id="email" name="email" type="email" autocomplete="email" placeholder="you@stanford.edu" required></label>
+    <p class="form-err" id="form-err" hidden></p>
+    <button class="btn" id="go" type="submit" disabled>Let's go →</button>
+    <p class="privacy">We save your name, email, version, progress and live link. Deleted after 30 days. Your writing and colors never leave this page. <span id="room-note"></span></p>
+  </form>
+</main>
+
+<!-- ============ APP ============ -->
+<div class="app" id="app" hidden>
+  <nav class="rail" aria-label="Workshop steps">
+    <div class="rail-scroll">
+      <ol class="rail-list" id="rail"><li class="rail-pill" aria-hidden="true"></li></ol>
+    </div>
+  </nav>
+
+  <div class="stage" id="stage">
+    <div class="backbar" id="backbar" hidden><span id="backbar-text">You're looking back at an earlier step.</span><button type="button" class="btn small" id="backbar-go">Back to where you are →</button></div>
+    <div class="stage-inner">
+
+<!-- ================= WHAT YOU'RE BUILDING (first, no number) ================= -->
+<section class="step" data-step="what" data-icon="✦" data-title="What you're building" data-group="WHY" data-part="why" data-when="Start here" hidden
+  data-learned="Now you know the skills are the point and the site is the test.">
+  <header class="step-head">
+    <div class="step-meta"><span class="step-num">✦</span><span class="when-chip">Start here</span></div>
+    <h2>A live site tonight. Two files that <em>outlast</em> it.</h2>
+    <p class="step-lede">The skills are the point. The site is how you test them.</p>
+  </header>
+
+  <div class="diagram" role="img" aria-label="Two skill files, voice and design, feed your one-page site, which becomes a live link.">
+    <div class="dg">
+      <div class="dg-files">
+        <div class="dg-file voice"><span class="dg-name">voice</span><span class="dg-ext">SKILL.md</span></div>
+        <div class="dg-file design"><span class="dg-name">design</span><span class="dg-ext">SKILL.md</span></div>
+      </div>
+      <svg class="dg-arrows" viewBox="0 0 72 208" aria-hidden="true">
+        <defs><marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#141413"/></marker></defs>
+        <path d="M6 48 C40 48, 34 96, 64 96" marker-end="url(#arr)"/>
+        <path d="M6 160 C40 160, 34 112, 64 112" marker-end="url(#arr)"/>
+      </svg>
+      <span class="dg-varrow" aria-hidden="true"></span>
+      <div class="dg-site">
+        <div class="dg-win"><div class="dg-chrome"><i></i><i></i><i></i></div><div class="dg-page"><i class="h"></i><i class="l"></i><i></i><span class="dg-btn"></span><span class="dg-photo"></span></div></div>
+        <span class="dg-cap">your one-page site</span>
+      </div>
+      <svg class="dg-arrow" viewBox="0 0 72 40" aria-hidden="true"><path d="M6 20 H62" marker-end="url(#arr)"/></svg>
+      <span class="dg-varrow" aria-hidden="true"></span>
+      <span class="dg-live">live link</span>
+    </div>
+  </div>
+
+  <h3>Tonight</h3>
+  <ol class="plan plan-6">
+    <li><strong>Pick your version.</strong></li>
+    <li><strong>Teach it your voice.</strong> Test it on a two-line intro.</li>
+    <li><strong>Teach it your look.</strong> Test it on your About me section.</li>
+    <li><strong>Three options.</strong> Pick one, name what's off, fix the skill.</li>
+    <li><strong>Build it once.</strong></li>
+    <li><strong>Host it live.</strong></li>
+  </ol>
+
+  <h3>House rules</h3>
+  <ol class="rules" id="house-rules">
+    <li><strong>Ask Claude before you ask a person.</strong> It knows which step you're on. The Stuck? button has the prompt.</li>
+    <li><strong>Laptops closed except Claude and this tab.</strong> Two windows. That's the whole desk.</li>
+    <li><strong>Build in the account you'll keep.</strong> Stanford if you want room to work tonight. Personal if you want it forever.</li>
+  </ol>
+
+  <div class="done-box"><div class="thumb thumb-list" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div><div><b>Done looks like</b><p>You can point at the step that builds the skills (2 and 3) and the step that tests them (5). Claude is open in another tab.</p></div></div>
+</section>
+
+<!-- ================= STEP 0 ================= -->
+<section class="step" data-step="setup" data-num="0" data-title="Before class" data-group="WHY" data-part="why" hidden
+  data-learned="You're set up. Claude signed in, skills on, a before picture saved.">
+  <header class="step-head">
+    <div class="step-meta"><span class="step-num">0</span></div>
+    <h2>One sign-in. The rest is <em>optional</em>.</h2>
+    <p class="step-lede">Do 0.1 before class. The optional ones make tonight better.</p>
+  </header>
+
+  <h3>Bring these</h3>
+  <ul class="setup-bullets">
+    <li><strong>A Claude account that works.</strong> Stanford workspace (<a class="go-link" href="https://stanford.service-now.com/it_services?id=sc_cat_item&amp;sys_id=d0605d9c2b558b10ee36fd3fc891bfe2" target="_blank" rel="noopener">request it here</a>, SSO plus a short form) or a personal account on a non-Stanford email.</li>
+    <li><strong>A GitHub account.</strong> Free. <a class="go-link" href="https://github.com/signup" target="_blank" rel="noopener">github.com/signup</a></li>
+    <li><strong>A Vercel account, signed in with GitHub.</strong> Free. <a class="go-link" href="https://vercel.com/signup" target="_blank" rel="noopener">vercel.com/signup</a></li>
+    <li><strong>Three things you wrote.</strong> Emails, a post, a text. Pasted into one note.</li>
+  </ul>
+
+  <!-- 0.1 -->
+  <div class="sub" data-sub="setup-1">
+    <button type="button" class="sub-head" aria-expanded="false"><span class="sub-num">0.1</span><span class="sub-title">Sign in to Claude and find Skills<small>Required. 2 minutes.</small></span><span class="sub-tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span><svg class="chev" aria-hidden="true"><use href="#i-chev"/></svg></button>
+    <div class="collapse"><div class="collapse-inner"><div class="sub-body">
+      <ol class="do">
+        <li>Open <a class="go-link" href="https://claude.ai" target="_blank" rel="noopener">claude.ai</a> or the desktop app. Sign in to the account you'll keep using. Stanford workspace, or a personal account on a non-Stanford email.</li>
+        <li><strong>Customize</strong> in the left sidebar › <strong>Skills</strong> › <strong>+ Add</strong>.</li>
+      </ol>
+      <div class="check"><p><strong>Check</strong> + Add shows <strong>Upload skill</strong>.</p></div>
+      <figure class="shot" data-shot="claude-customize-skills"><figcaption>Customize › Skills › + Add.</figcaption></figure>
+      <div class="done-box"><div class="thumb thumb-menu" aria-hidden="true"><i></i><i></i><i class="hl"></i></div><div><b>Done looks like</b><p>The + Add menu is open and Upload skill is in it. Nothing uploaded yet.</p></div></div>
+      <p class="small">Personal account on a stanford.edu email? It stops working on Oct 15. Switch to the Stanford workspace or a personal email before class.</p>
+      <div class="sub-foot"><button type="button" class="btn small accent sub-done">Done, next →</button><button type="button" class="stuck-inline" data-stuck="setup-1">Stuck on 0.1?</button></div>
+    </div></div></div>
+  </div>
+
+  <!-- 0.2 -->
+  <div class="sub" data-sub="setup-2" data-optional>
+    <button type="button" class="sub-head" aria-expanded="false"><span class="sub-num">0.2</span><span class="sub-title">Run the before prompt<small>Optional. 3 minutes.</small></span><span class="sub-tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span><svg class="chev" aria-hidden="true"><use href="#i-chev"/></svg></button>
+    <div class="collapse"><div class="collapse-inner"><div class="sub-body">
+      <p>The before picture. No skills, just your LinkedIn.</p>
+      <ol class="do">
+        <li>On LinkedIn, open your profile. <strong>More</strong> › <strong>Save to PDF</strong>. It brings your education and volunteering with it.</li>
+        <li>New Claude chat. Upload the PDF, then paste this
+          <div class="copy-card" data-copy="before-prompt" data-title="Paste into a new Claude chat" data-sub="With the PDF attached"></div>
+        </li>
+        <li>Screenshot the preview. Keep it for tonight.</li>
+      </ol>
+      <div class="check"><p><strong>Check</strong> a screenshot of a page preview.</p></div>
+      <figure class="shot" data-shot="0.2-before"><figcaption>A before page.</figcaption></figure>
+      <div class="done-box"><div class="thumb thumb-generic" aria-hidden="true"><i class="h"></i><i></i><i></i><span class="cards"><i></i><i></i><i></i></span></div><div><b>Done looks like</b><p>A screenshot of a page that could be anyone's, saved where you'll find it in step 5.</p></div></div>
+      <div class="sub-foot"><button type="button" class="btn small accent sub-done">Done, next →</button><span class="opt-chip">Optional</span><button type="button" class="stuck-inline" data-stuck="setup-2">Stuck on 0.2?</button></div>
+    </div></div></div>
+  </div>
+
+  <!-- 0.3 -->
+  <div class="sub" data-sub="setup-3" data-optional>
+    <button type="button" class="sub-head" aria-expanded="false"><span class="sub-num">0.3</span><span class="sub-title">Find 3 things you wrote<small>Optional. 5 minutes.</small></span><span class="sub-tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span><svg class="chev" aria-hidden="true"><use href="#i-chev"/></svg></button>
+    <div class="collapse"><div class="collapse-inner"><div class="sub-body">
+      <p>An email, a post, a text. You on a normal day, not your cover letter. No samples? Your 5 most recent sent emails. Paste them into a note.</p>
+      <div class="check"><p><strong>Check</strong> three pieces of your writing in one place.</p></div>
+      <div class="sub-foot"><button type="button" class="btn small accent sub-done">Done, next →</button><span class="opt-chip">Optional</span></div>
+    </div></div></div>
+  </div>
+
+  <!-- 0.4 -->
+  <div class="sub" data-sub="setup-4" data-optional id="find-sites">
+    <button type="button" class="sub-head" aria-expanded="false"><span class="sub-num">0.4</span><span class="sub-title">Find 2 websites you like the look of<small>Optional. 3 minutes.</small></span><span class="sub-tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span><svg class="chev" aria-hidden="true"><use href="#i-chev"/></svg></button>
+    <div class="collapse"><div class="collapse-inner"><div class="sub-body">
+      <p>Two sites where you thought "I'd want mine to feel like that". <strong>Save both links. You'll use them again</strong> in step 3.</p>
+      <p>Nothing comes to mind? Ask Claude, with your LinkedIn PDF attached</p>
+      <div class="copy-card" data-copy="find-sites" data-title="Paste into a new Claude chat" data-sub="With the PDF attached"></div>
+      <div class="check"><p><strong>Check</strong> two links saved.</p></div>
+      <div class="sub-foot"><button type="button" class="btn small accent sub-done">Done, next →</button><span class="opt-chip">Optional</span></div>
+    </div></div></div>
+  </div>
+
+  <!-- 0.5 -->
+  <div class="sub" data-sub="setup-5" data-optional>
+    <button type="button" class="sub-head" aria-expanded="false"><span class="sub-num">0.5</span><span class="sub-title">Create a GitHub account<small>Optional. 2 minutes.</small></span><span class="sub-tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span><svg class="chev" aria-hidden="true"><use href="#i-chev"/></svg></button>
+    <div class="collapse"><div class="collapse-inner"><div class="sub-body">
+      <p>Pick a username you'd put on a resume. <a class="go-link" href="https://github.com/signup" target="_blank" rel="noopener">github.com/signup</a></p>
+      <div class="check"><p><strong>Check</strong> you can sign in to GitHub.</p></div>
+      <div class="sub-foot"><button type="button" class="btn small accent sub-done">Done, next →</button><span class="opt-chip">Optional</span></div>
+    </div></div></div>
+  </div>
+
+  <!-- 0.6 -->
+  <div class="sub" data-sub="setup-6" data-optional>
+    <button type="button" class="sub-head" aria-expanded="false"><span class="sub-num">0.6</span><span class="sub-title">Create a Vercel account, signed in with GitHub<small>Optional. Free for students.</small></span><span class="sub-tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span><svg class="chev" aria-hidden="true"><use href="#i-chev"/></svg></button>
+    <div class="collapse"><div class="collapse-inner"><div class="sub-body">
+      <p>Sign up with <strong>Continue with GitHub</strong>, so the two are linked from the start. Hobby plan. <a class="go-link" href="https://vercel.com/signup" target="_blank" rel="noopener">vercel.com/signup</a></p>
+      <div class="check"><p><strong>Check</strong> a Vercel dashboard with your GitHub name on it.</p></div>
+      <div class="sub-foot"><button type="button" class="btn small accent sub-done">Done</button><span class="opt-chip">Optional</span></div>
+    </div></div></div>
+  </div>
+
+  <p class="foot-note" id="setup-gate">Check off 0.1 to finish this step.</p>
+</section>
+
+<!-- ================= STEP 1 ================= -->
+<section class="step" data-step="version" data-num="1" data-title="Pick your version" data-sub-title="3 min" data-group="VOICE" data-part="voice" hidden
+  data-learned="Now you know your version, and that changing it later is one line in each skill.">
+  <header class="step-head">
+    <div class="step-meta"><span class="step-num">1</span><span class="when-chip">3 min</span></div>
+    <h2>Three versions. <em>Pick one.</em></h2>
+    <p class="step-lede">Pick for whoever reads it first. Changing later is one line in each skill.</p>
+  </header>
+
+  <div class="version-cards" id="version-cards">
+    <div class="version-card" data-version="polished">
+      <div class="vprev vprev-pro" aria-hidden="true"><span class="vp-num">01</span><i class="vp-h"></i><i class="vp-l"></i><i class="vp-l short"></i><span class="vp-rule"></span><span class="vp-num">02</span><i class="vp-l"></i></div>
+      <h3>Polished</h3>
+      <p class="vmeaning">Short, structured, confident. For recruiters and investors.</p>
+      <dl class="vfacts">
+        <div><dt>Looks</dt><dd>Numbered sections, one accent, lots of room.</dd></div>
+      </dl>
+      <button type="button" class="btn pick-version" data-version="polished">This one</button>
+    </div>
+    <div class="version-card" data-version="warm">
+      <div class="vprev vprev-mid" aria-hidden="true"><span class="vp-photo"></span><i class="vp-h"></i><i class="vp-l"></i><i class="vp-l short"></i><span class="vp-btn"></span></div>
+      <h3>Warm</h3>
+      <p class="vmeaning">Direct, a clear point of view, sounds like you talk. For most people.</p>
+      <dl class="vfacts">
+        <div><dt>Looks</dt><dd>A big photo, bold labels, one rounded button.</dd></div>
+      </dl>
+      <button type="button" class="btn pick-version" data-version="warm">This one</button>
+    </div>
+    <div class="version-card" data-version="playful">
+      <div class="vprev vprev-fun" aria-hidden="true"><span class="vp-circle"></span><i class="vp-h lower"></i><i class="vp-l"></i><i class="vp-l short"></i><span class="vp-list"><i></i><i></i></span></div>
+      <h3>Playful</h3>
+      <p class="vmeaning">Candid, loose, fragments allowed. For friends and side projects.</p>
+      <dl class="vfacts">
+        <div><dt>Looks</dt><dd>One narrow column, lots of air, a candid photo.</dd></div>
+      </dl>
+      <button type="button" class="btn pick-version" data-version="playful">This one</button>
+    </div>
+  </div>
+
+  <p class="sites-lede"><strong>Mary's three sites.</strong> One per version.</p>
+  <div class="sites-row">
+    <a class="site-card" href="https://ai-gsb-deans.vercel.app" target="_blank" rel="noopener" data-part="core"><span class="site-tag">Polished</span><span class="site-url">ai-gsb-deans.vercel.app</span><span class="site-what">The Dean's Series</span></a>
+    <a class="site-card" href="https://runyourcity.org" target="_blank" rel="noopener" data-part="why"><span class="site-tag">Warm</span><span class="site-url">runyourcity.org</span><span class="site-what">A nonprofit</span></a>
+    <a class="site-card" href="https://outofourdepth.com" target="_blank" rel="noopener" data-part="design"><span class="site-tag">Playful</span><span class="site-url">outofourdepth.com</span><span class="site-what">A podcast</span></a>
+  </div>
+
+  <div class="check"><p><strong>Check</strong> a version chip in the header, top right.</p></div>
+  <div class="done-box"><div class="thumb thumb-chip" aria-hidden="true"><i></i><i></i><span class="chip" id="thumb-chip-text">Warm</span></div><div><b>Done looks like</b><p>A version chip in the header. Every form from here starts with it filled in.</p></div></div>
+  <p class="foot-note" id="version-gate">Pick a version to finish this step.</p>
+</section>
+
+<!-- ================= STEP 2 ================= -->
+<section class="step" data-step="voice" data-num="2" data-title="Teach it your voice" data-sub-title="12 min" data-group="VOICE" data-part="voice" hidden
+  data-learned="Now you know a voice skill is samples plus rules, and the test is reading it out loud.">
+  <header class="step-head">
+    <div class="step-meta"><span class="step-num">2</span><span class="part-chip">Voice</span><span class="when-chip">12 min</span></div>
+    <h2>Three samples in. A skill that <em>writes like you</em> out.</h2>
+    <p class="step-lede">Claude reads your samples and your rules before it writes a word in your name.</p>
+  </header>
+
+  <h3><span class="h-num">1</span>Fill in Make it yours</h3>
+  <p>Your samples from 0.3 and a few words you use. Blank fields keep their [brackets].</p>
+  <p class="aside-tip"><strong>Talk instead of type:</strong> the mic button works for samples too.</p>
+  <div class="myform" data-kind="voice"></div>
+
+  <h3><span class="h-num">2</span>Upload voice.zip to Claude</h3>
+  <div class="upload-skill" data-skill="voice" data-open></div>
+  <figure class="shot" data-shot="2-upload"><figcaption>Upload skill, voice.zip picked.</figcaption></figure>
+
+  <h3><span class="h-num">3</span>Test it in a new chat</h3>
+  <div class="copy-card" data-copy="voice-intro" data-title="Paste into a new Claude chat" data-sub="Voice skill switched on"></div>
+
+  <aside class="memory mirror">
+    <svg class="elephant" aria-hidden="true"><use href="#i-mirror"/></svg>
+    <div>
+      <div class="label">Mirror moment</div>
+      <h4>Read it out loud. Would a friend know it's you?</h4>
+      <p>If not, add a sample and run it again. A text to a friend works better than anything you wrote for a job.</p>
+    </div>
+  </aside>
+
+  <h3>Or build it with Claude</h3>
+  <p>Open a new chat and say: <strong>help me build a skill called voice.</strong> Then paste this so it asks the right questions.</p>
+  <div class="copy-card" data-copy="voice-builder" data-title="Paste into the same chat" data-sub="Version comes from step 1"></div>
+  <p>Answer with real writing. Cut anything that sounds like a press release. Click <strong>Save skill</strong> when it's done. Saved skills stay on unless you switch them off.</p>
+  <figure class="shot" data-shot="2-builder"><figcaption>Claude building the voice skill.</figcaption></figure>
+
+  <div class="card side-quest">
+    <h4>Side quest: pull samples from your email</h4>
+    <p>Connect Gmail or Outlook under <strong>Settings</strong> › <strong>Connectors</strong>, then ask Claude for your five most recent sent emails. Fast, and it may not pick your best writing. Read before you paste.</p>
+  </div>
+
+  <h3>Anatomy of a skill</h3>
+  <p>Three regions. The top is yours. The middle is locked. The bottom is what it must never do.</p>
+  <div class="anatomy" data-skill="voice"><p class="anat-loading">Loading voice…</p></div>
+  <div class="anat-caveat"><span class="cv-badge">Heads up</span><p>One way to write a skill, not the only way. Only the name and description are required.</p></div>
+
+  <div class="check"><p><strong>Check</strong> a two-line intro you'd actually say, no made-up facts.</p></div>
+  <div class="done-box"><div class="thumb thumb-bio" aria-hidden="true"><span class="bio">Hi, I'm Maya. I build things that help kids run.</span></div><div><b>Done looks like</b><p>voice.zip is in Customize › Skills and switched on. Claude wrote a two-line intro that sounds like you.</p></div></div>
+</section>
+
+<!-- ================= STEP 3 ================= -->
+<section class="step" data-step="design" data-num="3" data-title="Teach it your look" data-sub-title="10 min" data-group="DESIGN" data-part="design" hidden
+  data-learned="Now you know a design skill is one color, one font pair and a few nevers.">
+  <header class="step-head">
+    <div class="step-meta"><span class="step-num">3</span><span class="part-chip">Design</span><span class="when-chip">10 min</span></div>
+    <h2>One color, one font pair, <em>three nevers</em>.</h2>
+    <p class="step-lede">A design skill is smaller than you'd think.</p>
+  </header>
+
+  <h3><span class="h-num">1</span>Fill in Make it yours</h3>
+  <p>Your version picks the starter. Not sure about the color? Pick a swatch, change it later.</p>
+  <div class="myform" data-kind="design"></div>
+
+  <h3><span class="h-num">2</span>Upload design.zip</h3>
+  <p>Same clicks as step 2. In your list it's <code><span data-design-name>design-warm</span></code>.</p>
+  <div class="upload-skill" data-skill="design"></div>
+
+  <h3><span class="h-num">3</span>Test it on your About me section</h3>
+  <p>Your name, one line, one button. Not the whole site yet.</p>
+  <div class="copy-card" data-copy="design-test" data-title="Paste into a new Claude chat" data-sub="Both skills switched on"></div>
+  <figure class="shot" data-shot="3-test"><figcaption>The About me section only.</figcaption></figure>
+
+  <aside class="memory">
+    <svg class="elephant" aria-hidden="true"><use href="#i-elephant"/></svg>
+    <div>
+      <div class="label">Memory moment</div>
+      <h4>The skill says how. Memory says who.</h4>
+      <p>Tell Claude one true thing about yourself, then run the test again. Claude saves some things on its own. To be sure, say: <strong>save this to memory.</strong></p>
+    </div>
+  </aside>
+
+  <h3>Or write it from two sites you like</h3>
+  <p>The two links you saved in <button type="button" class="linkish" data-go="setup">0.4</button>. Open a new chat and say: <strong>help me build a skill called design.</strong> Then ask what the two sites share</p>
+  <div class="copy-card" data-copy="compare-sites" data-title="Paste into the same chat" data-sub="Add the two links"></div>
+  <p>Usually one color, a lot of white, two fonts. Then paste this so the skill gets the structure</p>
+  <div class="copy-card" data-copy="design-builder" data-title="Paste into the same chat" data-sub="Version comes from step 1"></div>
+  <p>If it lists more than one accent color, cut the extras. Click <strong>Save skill</strong> when it's done. Saved skills stay on unless you switch them off.</p>
+
+  <h3>Same two files, other tools</h3>
+  <p>Pick by what you have access to, not to compare outputs.</p>
+  <ul class="tools-list">
+    <li><strong>Claude Design.</strong> Pro or Max only, not on Stanford. A canvas that renders the design skill live.</li>
+    <li><strong>ChatGPT.</strong> The same two files as Project or custom GPT instructions.</li>
+    <li><strong>Gemini.</strong> The same two files as Gem instructions.</li>
+  </ul>
+  <p class="account-advice">Build in the account you'll keep using. (Josh's rule: nothing to migrate later.) Stanford if you want room to work tonight. Personal if you want it forever. Either way your two files go anywhere: they are text.</p>
+
+  <div class="check"><p><strong>Check</strong> one section with your color, your font, your photo or none.</p></div>
+  <div class="done-box"><div class="thumb thumb-section" aria-hidden="true"><span class="photo"></span><i class="h"></i><i class="l"></i><span class="btn-ish"></span></div><div><b>Done looks like</b><p>design.zip is in Customize › Skills and switched on. One About me section in your color and font, nothing else on the page yet.</p></div></div>
+</section>
+
+<!-- ================= STEP 4 ================= -->
+<section class="step" data-step="three" data-num="4" data-title="Three options" data-sub-title="10 min" data-group="DEPLOY" data-part="deploy" hidden
+  data-learned="Now you know the loop. Three, pick one, name what's off, fix the skill.">
+  <header class="step-head">
+    <div class="step-meta"><span class="step-num">4</span><span class="part-chip">Deploy</span><span class="when-chip">10 min</span></div>
+    <h2>Ask for three. Point. <em>Name what's off.</em></h2>
+    <p class="step-lede">Just the top section, three ways. Then make the fix stick so you never say it again.</p>
+  </header>
+
+  <h3><span class="h-num">1</span>Three versions of the top section</h3>
+  <p>Both skills on. New chat.</p>
+  <div class="copy-card" data-copy="three-options" data-title="Paste into a new Claude chat" data-sub="Three previews, or three files"></div>
+
+  <h3><span class="h-num">2</span>Pick one and say what's off</h3>
+  <p>"Say it the way I write emails" beats "make it better".</p>
+  <div class="copy-card" data-copy="go-with-b" data-title="Paste into the same chat" data-sub="Change B and the complaint"></div>
+
+  <h3><span class="h-num">3</span>Make the fix stick</h3>
+  <p>Fix the page and it's fixed once. Fix the skill and it's fixed every time. Let Claude put it in the skill</p>
+  <div class="copy-card" data-copy="make-stick" data-title="Paste into the same chat" data-sub="Claude edits the skill"></div>
+  <p>Or edit it yourself. <strong>Customize</strong> › <strong>Skills</strong> › <strong>Yours</strong> › <strong>voice</strong> › <strong>Edit</strong>. Add one line under Words I use or Never say. Save.</p>
+  <figure class="shot" data-shot="5-edit"><figcaption>voice › Edit, new line added.</figcaption></figure>
+
+  <div class="check"><p><strong>Check</strong> one top section you'd keep, and a line in a skill that wasn't there 10 minutes ago.</p></div>
+  <div class="done-box"><div class="thumb thumb-skill" aria-hidden="true"><i></i><i></i><i class="new"></i><i></i></div><div><b>Done looks like</b><p>Option A, B or C open in the preview with your name in it. A new line in your voice or design skill.</p></div></div>
+</section>
+
+<!-- ================= STEP 5 ================= -->
+<section class="step" data-step="build" data-num="5" data-title="Build it once" data-sub-title="10 min" data-group="DEPLOY" data-part="deploy" hidden
+  data-learned="Now you know what two skills do to the same LinkedIn, and that the first build is a draft.">
+  <header class="step-head">
+    <div class="step-meta"><span class="step-num">5</span><span class="part-chip">Deploy</span><span class="when-chip">10 min</span></div>
+    <h2>Same LinkedIn in. <em>Your</em> site out.</h2>
+    <p class="step-lede">Both skills on, your pick from step 4. One message, then wait.</p>
+  </header>
+
+  <ol class="do">
+    <li><strong>Both skills on.</strong> Customize › Skills › <strong>Yours</strong>. Both toggles on.</li>
+    <li><strong>Same chat as step 4.</strong> Upload your LinkedIn PDF, then paste this
+      <div class="copy-card" data-copy="build-site" data-title="Paste into the same chat" data-sub="Four sections, one file"></div>
+    </li>
+    <li><strong>Open the preview.</strong> Don't send a second message while it works. A minute or two.</li>
+  </ol>
+  <figure class="shot" data-shot="4-preview"><figcaption>All four sections.</figcaption></figure>
+
+  <aside class="memory mirror">
+    <svg class="elephant" aria-hidden="true"><use href="#i-mirror"/></svg>
+    <div>
+      <div class="label">Mirror moment</div>
+      <h4>Put your before screenshot next to it.</h4>
+      <p>Tell the person next to you what changed. The color, the headline, which lines sound like you.</p>
+    </div>
+  </aside>
+
+  <aside class="butwait">
+    <div class="butwait-head"><svg><use href="#i-warn"/></svg>Three ways this breaks</div>
+    <div class="butwait-body">
+      <p><strong>Chat, no preview.</strong> Say "single downloadable HTML file". Still nothing? Stanford workspace: code execution is already on for everyone. Personal account: <strong>Settings › Capabilities › Code execution and file creation</strong>.
+        <a class="go-link" href="https://claude.ai/settings/capabilities" target="_blank" rel="noopener">Open Capabilities</a></p>
+      <figure class="shot" data-shot="4-capabilities"><figcaption>Capabilities, Code execution and file creation on.</figcaption></figure>
+      <p><strong>Nothing like my design skill.</strong> New chat. First line "Use my voice skill and my design skill."</p>
+      <p><strong>Usage limit.</strong> Raise your hand, or finish at home with Gemini.</p>
+      <div class="fold">
+        <button type="button" class="fold-head" aria-expanded="false">Gemini fallback<svg class="chev" aria-hidden="true"><use href="#i-chev"/></svg></button>
+        <div class="collapse"><div class="collapse-inner"><div class="fold-body">
+          <p>Make a Gem, attach both unzipped <code>SKILL.md</code> files and your LinkedIn PDF, paste</p>
+          <div class="copy-card" data-copy="gemini-fallback" data-title="Paste into your Gem" data-sub="Or a ChatGPT Project"></div>
+        </div></div></div>
+      </div>
+    </div>
+  </aside>
+
+  <div class="check"><p><strong>Check</strong> a page with your color, your words, all four sections.</p></div>
+  <div class="done-box"><div class="thumb thumb-page" aria-hidden="true"><i class="h"></i><i class="l"></i><span class="sec"></span><span class="sec"></span><span class="sec"></span></div><div><b>Done looks like</b><p>A preview with all four sections, your color, your top section from step 4, and no fact you didn't give it.</p></div></div>
+</section>
+
+<!-- ================= STEP 6 ================= -->
+<section class="step" data-step="host" data-num="6" data-title="Host it live" data-sub-title="8 min" data-group="DEPLOY" data-part="deploy" hidden
+  data-learned="Now you know going live is four clicks, and every change is the same upload.">
+  <header class="step-head">
+    <div class="step-meta"><span class="step-num">6</span><span class="part-chip">Deploy</span><span class="when-chip">8 min</span></div>
+    <h2>Live in <em>four clicks</em>.</h2>
+    <p class="step-lede">GitHub holds the file. Vercel serves it. Both free. Stuck on either? Ask Claude to walk you through it. It can do most of it.</p>
+  </header>
+
+  <h3>First, three files on your laptop</h3>
+  <ul class="checklist-save" id="save-list">
+    <li><label><input type="checkbox" data-save="site"><span><strong>index.html</strong> from the preview's download button.</span></label></li>
+    <li><label><input type="checkbox" data-save="voice"><span><strong>voice.zip</strong>. Built it with Claude? Download it from your skill page.</span></label></li>
+    <li><label><input type="checkbox" data-save="design"><span><strong>design.zip</strong></span></label></li>
+  </ul>
+
+  <h3>Then the four clicks</h3>
+  <ol class="clicks">
+    <li class="click"><h4>New repo</h4><p>github.com › <strong>+</strong> › New repository. Name it <code>yourname-site</code>, Public, nothing ticked. Create.</p><figure class="shot" data-shot="d-2-repo"><figcaption>New repository, Public.</figcaption></figure></li>
+    <li class="click"><h4>Upload index.html</h4><p><strong>Add file</strong> › Upload files. Drag it in. Commit changes.</p><figure class="shot" data-shot="d-3-upload"><figcaption>Upload files.</figcaption></figure></li>
+    <li class="click"><h4>Import to Vercel</h4><p>vercel.com, signed in with GitHub. <strong>Add New</strong> › Project › find the repo › Import.</p><figure class="shot" data-shot="d-5-import"><figcaption>Import yourname-site.</figcaption></figure></li>
+    <li class="click"><h4>Deploy</h4><p>Leave the settings. Click <strong>Deploy</strong>. Under a minute. Copy the link.</p><figure class="shot" data-shot="d-6-link"><figcaption>Your link.</figcaption></figure></li>
+  </ol>
+  <p class="long-version small">Stuck on an account or a blank page? <a href="deploy.html">The long version</a> has every screen.</p>
+
+  <h3>Paste your live link</h3>
+  <div class="card live-link" id="live-link">
+    <div class="live-row"><input type="url" id="live-url" inputmode="url" placeholder="https://yourname-site.vercel.app" maxlength="200" autocomplete="off" spellcheck="false" aria-label="Your live link"></div>
+    <p class="live-echo" id="live-echo" aria-live="polite"></p>
+    <label class="gallery-opt"><input type="checkbox" id="gallery-opt" checked><span><strong>Show it in the class gallery</strong></span></label>
+  </div>
+
+  <div class="deploy-plan card" id="deploy-plan">
+    <div class="deploy-line">Not tonight? I'll host it live on <input type="date" id="deploy-date" aria-label="Deploy date"> at <input type="time" id="deploy-time" aria-label="Deploy time"></div>
+    <p class="deploy-echo" id="deploy-echo" aria-live="polite"></p>
+  </div>
+
+  <h3>Side quests</h3>
+  <p>Same two skills, seven more targets. Any order, any time.</p>
+  <div class="quests">
+    <div class="sub quest" data-sub="quest-1" id="quest-1"><button type="button" class="sub-head"><span class="sub-num">1</span><span class="sub-title">A site for your company or club</span><span class="sub-tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span></button></div>
+    <div class="sub quest" data-sub="quest-2" id="quest-2"><button type="button" class="sub-head"><span class="sub-num">2</span><span class="sub-title">A cover letter in your voice</span><span class="sub-tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span></button></div>
+    <div class="sub quest" data-sub="quest-3" id="quest-3"><button type="button" class="sub-head"><span class="sub-num">3</span><span class="sub-title">Slides in your design</span><span class="sub-tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span></button></div>
+    <div class="sub quest" data-sub="quest-4" id="quest-4"><button type="button" class="sub-head"><span class="sub-num">4</span><span class="sub-title">Rewrite your LinkedIn About</span><span class="sub-tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span></button></div>
+    <div class="sub quest" data-sub="quest-5" id="quest-5"><button type="button" class="sub-head"><span class="sub-num">5</span><span class="sub-title">A "now" page you update monthly</span><span class="sub-tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span></button></div>
+    <div class="sub quest" data-sub="quest-6" id="quest-6"><button type="button" class="sub-head"><span class="sub-num">6</span><span class="sub-title">An event page. Reunion, launch, wedding</span><span class="sub-tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span></button></div>
+    <div class="sub quest" data-sub="quest-7" id="quest-7"><button type="button" class="sub-head"><span class="sub-num">7</span><span class="sub-title">A speaker bio and headshot page</span><span class="sub-tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span></button></div>
+  </div>
+
+  <div class="check"><p><strong>Check</strong> your link opens on your phone with your name on it.</p></div>
+  <div class="done-box"><div class="thumb thumb-files" aria-hidden="true"><span class="f">html</span><span class="f">zip</span><span class="f">zip</span><span class="cal"><i></i></span></div><div><b>Done looks like</b><p>Three files on your laptop, a vercel.app link pasted above, and the same link open on your phone.</p></div></div>
+</section>
+
+<!-- ================= FINISH ================= -->
+<section class="step finale" data-step="finish" data-title="Finish" data-group="DEPLOY" data-part="finish" hidden>
+  <div class="finish-hero">
+    <svg class="trophy" viewBox="0 0 120 120" aria-hidden="true">
+      <circle cx="60" cy="60" r="56" fill="#DCE2FF"/>
+      <path d="M38 30h44v16a22 22 0 0 1-44 0z" fill="#FFD23F" stroke="#C99A00" stroke-width="3"/>
+      <path d="M38 36H26a12 12 0 0 0 14 16M82 36h12a12 12 0 0 1-14 16" fill="none" stroke="#C99A00" stroke-width="3"/>
+      <rect x="54" y="66" width="12" height="14" fill="#FFD23F" stroke="#C99A00" stroke-width="3"/>
+      <rect x="42" y="80" width="36" height="10" rx="3" fill="#2B4BFF"/>
+      <path d="M60 36l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z" fill="#fff"/>
+    </svg>
+    <h2>You made it!</h2>
+    <p class="step-lede">Two skills that know how you write and how you like things to look. A site that proves it.</p>
+  </div>
+  <h3>Now you know</h3>
+  <ul class="recap" id="recap"></ul>
+
+  <div class="card" id="feedback">
+    <h3 style="margin-top:0">How was it?</h3>
+    <div class="stars" role="radiogroup" aria-label="Rating, 1 to 5"></div>
+    <label class="field"><span>One line. What should we change?</span><input id="fb-comment" maxlength="300" placeholder="What worked, what didn't"></label>
+    <button type="button" class="btn" id="fb-send" disabled>Send feedback</button>
+    <p class="fb-status" id="fb-status" hidden></p>
+  </div>
+
+  <div class="card" data-part="finish">
+    <h3 style="margin-top:0">Take home</h3>
+    <p>See everyone's site in the <a class="go-link" href="gallery.html">class gallery</a>. The side quests in <button type="button" class="linkish" data-go="host">step 6</button> stay open.</p>
+  </div>
+</section>
+
+    </div><!-- /stage-inner -->
+  </div><!-- /stage -->
+</div><!-- /app -->
+
+<!-- ============ STUCK DRAWER ============ -->
+<div class="drawer-wrap" id="drawer" hidden>
+  <aside class="drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title">
+    <header class="drawer-head">
+      <h2 id="drawer-title">Stuck?</h2>
+      <button type="button" class="btn small" data-close>Close</button>
+    </header>
+    <div class="drawer-search"><input class="input" id="stuck-search" type="search" placeholder="Search, e.g. no preview" aria-label="Search the Stuck? list"></div>
+    <div class="drawer-body" id="drawer-body">
+
+      <section class="ladder" id="ladder">
+        <h3>Try these in order</h3>
+        <ol class="rungs">
+          <li><b>Stay in the chat you're building in. Ask Claude:</b>
+            <div class="copy-card compact-card" data-copy="stuck-ask" data-title="Paste into Claude" data-sub="Includes your step number"></div>
+          </li>
+          <li><b>Search the list below.</b></li>
+          <li><b>Post it on PollEv.</b> A helper answers in the room. <span class="link-pending" data-url="[POLLEV_URL]" data-label="Open PollEv">PollEv link coming soon</span></li>
+          <li><b>Raise your hand and someone will come help.</b></li>
+        </ol>
+      </section>
+
+      <section class="stuck-group" data-group="setup-1"><h3>0.1 Sign in to Claude</h3>
+        <details class="stuck-item"><summary>I can't sign in with my Stanford account</summary><div class="fix"><p>The Stanford workspace comes through a request form: SSO, a short attestation, then it's on. <a class="go-link" href="https://stanford.service-now.com/it_services?id=sc_cat_item&amp;sys_id=d0605d9c2b558b10ee36fd3fc891bfe2" target="_blank" rel="noopener">Request form</a> and the <a class="go-link" href="https://uit.stanford.edu/service/claude" target="_blank" rel="noopener">service page</a>.</p><p>Personal Claude accounts on a stanford.edu email stop working on Oct 15. Use the Stanford workspace or a personal email account. Tonight, if the request hasn't come through, build in a personal account you'll keep.</p></div></details>
+        <details class="stuck-item"><summary>No Customize in the sidebar, or no Skills tab</summary><div class="fix"><p><strong>Customize</strong> is in the left sidebar, then the <strong>Skills</strong> tab inside it. Not there? Update the desktop app, or use <a class="go-link" data-verify href="https://claude.ai/customize/skills" target="_blank" rel="noopener">claude.ai/customize/skills</a> in a browser. Greyed out is an account setting. Raise your hand.</p></div></details>
+        <details class="stuck-item"><summary>Code execution is off, or I can't find it</summary><div class="fix"><p>Stanford workspace: already on for everyone, there's no toggle to find. Personal account: <strong>Settings</strong> › <strong>Capabilities</strong> › <strong>Code execution and file creation</strong>. <a class="go-link" href="https://claude.ai/settings/capabilities" target="_blank" rel="noopener">Open Capabilities</a></p></div></details>
+        <details class="stuck-item"><summary>Borrow ours: the starter skills</summary><div class="fix"><p>Our four starters, blank. Download, then upload under <strong>Customize</strong> › <strong>Skills</strong> › <strong>+ Add</strong> › <strong>Upload skill</strong>. Fill in Make it yours later, in Edit.</p><p class="starter-row"><button type="button" class="btn small ghost" data-starter="voice">voice.zip</button> <button type="button" class="btn small ghost" data-starter="design-polished">design-polished.zip</button> <button type="button" class="btn small ghost" data-starter="design-warm">design-warm.zip</button> <button type="button" class="btn small ghost" data-starter="design-playful">design-playful.zip</button></p></div></details>
+      </section>
+
+      <section class="stuck-group" data-group="setup-2"><h3>0.2 The before prompt</h3>
+        <details class="stuck-item"><summary>It answered in chat, no preview</summary><div class="fix"><p>Say "make it a single HTML file". Personal account? Check <strong>Settings › Capabilities › Code execution and file creation</strong> is on. New chat.</p></div></details>
+        <details class="stuck-item"><summary>I don't have a LinkedIn</summary><div class="fix"><p>Three lines about you and your last two roles, typed by hand.</p></div></details>
+        <details class="stuck-item"><summary>Where's Save to PDF?</summary><div class="fix"><p>Your own profile page on LinkedIn, the <strong>More</strong> button under your name, then <strong>Save to PDF</strong>. On the phone app it's under the three dots.</p></div></details>
+      </section>
+
+      <section class="stuck-group" data-group="setup-5"><h3>0.5 and 0.6 Accounts</h3>
+        <details class="stuck-item"><summary>Vercel asks for a payment method</summary><div class="fix"><p>Wrong plan. Go back and pick <strong>Hobby</strong>. Free for personal sites.</p></div></details>
+        <details class="stuck-item"><summary>Can't see my GitHub in Vercel</summary><div class="fix"><p>Connect it after the fact: in Vercel, <strong>Settings</strong> › <strong>Git</strong>, or <strong>Add New</strong> › <strong>Project</strong> › <strong>Import Git Repository</strong> › <strong>Add GitHub Account</strong>. Signing up with <strong>Continue with GitHub</strong> links them from the start, so if you're making the account now, do that.</p></div></details>
+      </section>
+
+      <section class="stuck-group" data-group="version"><h3>1 Pick your version</h3>
+        <details class="stuck-item"><summary>I'm two of these</summary><div class="fix"><p>Pick for whoever reads it first. The other is a one-line change later.</p></div></details>
+        <details class="stuck-item"><summary>No chip in the header</summary><div class="fix"><p>Click <strong>This one</strong> on a card. On a phone the chip sits next to Stuck?.</p></div></details>
+      </section>
+
+      <section class="stuck-group" data-group="voice"><h3>2 Teach it your voice</h3>
+        <details class="stuck-item"><summary>The skill doesn't show up</summary><div class="fix"><p>Customize › Skills › <strong>Yours</strong>. Check it's on. New chat. Still missing? Upload the .zip, not the folder.</p></div></details>
+        <details class="stuck-item"><summary>It sounds like a press release</summary><div class="fix"><p>Add a sample. A text you sent to a friend pulls harder than anything formal.</p></div></details>
+        <details class="stuck-item"><summary>It invented a job, a number, an award</summary><div class="fix"><p>Say "every fact you don't have goes in [brackets]". Check the right skill is on.</p></div></details>
+        <details class="stuck-item"><summary>I uploaded the unzipped folder</summary><div class="fix"><p>Safari unzips for you. Download voice.zip again and upload the .zip. Don't rename the folder inside.</p></div></details>
+        <details class="stuck-item"><summary>The form lost what I typed</summary><div class="fix"><p>On purpose. This site never saves your writing. Paste again. Your zip is in Downloads if you made one.</p></div></details>
+      </section>
+
+      <section class="stuck-group" data-group="design"><h3>3 Teach it your look</h3>
+        <details class="stuck-item"><summary>It ignored the design skill</summary><div class="fix"><p>Switch it on in Customize › Skills › Yours, then name it in the prompt. "Use my design skill."</p></div></details>
+        <details class="stuck-item"><summary>The colors look wrong</summary><div class="fix"><p>Put the hex code in the box, not a name. "Navy" means ten things. <code>#24426B</code> means one.</p></div></details>
+        <details class="stuck-item"><summary>It added three feature cards</summary><div class="fix"><p>Say "no cards". Check the design skill is on and named in the prompt.</p></div></details>
+        <details class="stuck-item"><summary>It built the whole site</summary><div class="fix"><p>Say "only the About me section". The whole thing is step 5.</p></div></details>
+      </section>
+
+      <section class="stuck-group" data-group="three"><h3>4 Three options</h3>
+        <details class="stuck-item"><summary>It built the whole page three times</summary><div class="fix"><p>Say "only the top section, the Hi I'm part". Small asks get small changes.</p></div></details>
+        <details class="stuck-item"><summary>The three options look the same</summary><div class="fix"><p>Ask for "different layouts, not just different words". Name one. "Photo on the left, no photo, headline centered."</p></div></details>
+        <details class="stuck-item"><summary>The fix didn't stick</summary><div class="fix"><p>It's on the page, not in the skill. Open Customize › Skills › Yours › voice. No new line? Add it by hand. New chat.</p></div></details>
+      </section>
+
+      <section class="stuck-group" data-group="build"><h3>5 Build it once</h3>
+        <details class="stuck-item"><summary>It answered in chat, no preview</summary><div class="fix"><p>Say "single downloadable HTML file". Personal account? Check <strong>Settings › Capabilities › Code execution and file creation</strong>. New chat after.</p></div></details>
+        <details class="stuck-item"><summary>It looks nothing like my design skill</summary><div class="fix"><p>New chat. First line "Use my voice skill and my design skill." Both on in Customize › Skills › Yours.</p></div></details>
+        <details class="stuck-item"><summary>It forgot my pick from step 4</summary><div class="fix"><p>Paste the top section you chose into the prompt. "Keep this exactly as the first section."</p></div></details>
+        <details class="stuck-item"><summary>I hit a usage limit</summary><div class="fix"><p>Raise your hand. Build on a neighbor's laptop, or finish at home with the Gemini fallback in step 5.</p></div></details>
+        <details class="stuck-item"><summary>Three minutes and nothing</summary><div class="fix"><p>Wait one more. A second message restarts it. If the chat errors, send the same prompt in a new chat.</p></div></details>
+      </section>
+
+      <section class="stuck-group" data-group="host"><h3>6 Host it live</h3>
+        <details class="stuck-item"><summary>I can't find the download button</summary><div class="fix"><p>Top right of the preview. Or say "give me the HTML file to download". Rename it <code>index.html</code>.</p></div></details>
+        <details class="stuck-item"><summary>Vercel can't see the repo</summary><div class="fix"><p>In the import list, the <strong>GitHub App Permissions</strong> link. Give it the repo. Reload.</p></div></details>
+        <details class="stuck-item"><summary>The page is blank</summary><div class="fix"><p>The file must be <code>index.html</code> at the top of the repo, not in a folder. Rename or move it, commit, wait a minute.</p></div></details>
+        <details class="stuck-item"><summary>Built it with Claude. Where's the zip?</summary><div class="fix"><p>Customize › Skills › Yours › your skill › download or export. None? Copy the text into SKILL.md and zip a folder named after the skill.</p></div></details>
+        <details class="stuck-item"><summary>The link won't save</summary><div class="fix"><p>It has to start with <code>https://</code>. Copy it from the browser bar, not from memory.</p></div></details>
+        <details class="stuck-item"><summary>Lost on GitHub or Vercel</summary><div class="fix"><p>Ask Claude to walk you through it, one screen at a time. It can do most of it. <a href="deploy.html">The long version</a> has every screen too.</p></div></details>
+      </section>
+
+      <section class="stuck-group" data-group="any"><h3>Anywhere</h3>
+        <details class="stuck-item"><summary>I'm on a step I already finished</summary><div class="fix"><p><strong>Back to where you are</strong>, top of the page.</p></div></details>
+        <details class="stuck-item"><summary>Claude wants my phone number for the site</summary><div class="fix"><p>Say no. Email and a link is plenty. The design skill says so too.</p></div></details>
+      </section>
+
+      <p class="stuck-empty" id="stuck-empty" hidden>Nothing matches. Post it on PollEv, or raise your hand if it's a login.</p>
+
+      <section class="stuck-group" id="drawer-rules">
+        <h3>House rules</h3>
+        <ol class="rules" id="house-rules-copy"></ol>
+      </section>
+    </div>
+  </aside>
+</div>
+
+<div class="ticker" id="ticker" role="status" aria-live="polite"><b>Now you know</b><span id="ticker-text"></span></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<canvas id="confetti" aria-hidden="true"></canvas>
+
+<!-- ============ COPY-CARD SOURCES ============ -->
+<script type="text/plain" id="src-before-prompt">Build me a one-page personal website from my LinkedIn PDF. Single HTML file.</script>
+
+<script type="text/plain" id="src-find-sites">Find two personal sites you think I'd like, based on my LinkedIn. Links and one line each on why.</script>
+
+<script type="text/plain" id="src-voice-intro">Using my voice skill, draft a two-line intro for my site.</script>
+
+<script type="text/plain" id="src-voice-builder">Help me build a skill called voice. Its job is to write as me whenever you draft anything in my name. Website copy, bios, emails, cover letters, posts, slides.
+
+My version is {{VERSION}}. Polished is short, structured, confident. Warm is direct, a clear point of view, sounds like I talk. Playful is candid, loose, fragments allowed.
+
+Interview me first. Ask for 3 samples of my writing, words and phrases I actually use, how I sign off, and up to 3 things I never say. Put the samples in as they are.
+
+Write it in three parts. Make it yours, with my answers. Locked, with the rules. Read my samples first, first person, contractions, say less, opinions over adjectives, unknown facts in [brackets]. Never. No em dashes, no "excited to share", no "passionate about", no sentence that explains its own significance.
+
+End with the test. Read the draft out loud. Would a friend of mine know I wrote it?</script>
+
+<script type="text/plain" id="src-design-test">Use my design skill and my voice skill. Make just the About me section of my personal site: Hi, I'm [name], one line about me, one button. Single HTML file.</script>
+
+<script type="text/plain" id="src-compare-sites">What do these two sites have in common in color, type, layout and feel? Write it as rules I can reuse. [site 1] [site 2]</script>
+
+<script type="text/plain" id="src-design-builder">Help me build a skill called design. Its job is how my website, slides and documents look. Use it whenever you build or style anything visual for me.
+
+My version is {{VERSION}}. Start from the rules you just wrote. Tell me which of them I should keep, then ask.
+
+The skill holds one accent color as hex, one Google Fonts pair, photo or no photo, 3 words for how it should feel, and up to 3 things it must never do. Then a locked part. One HTML file, unknown facts in [brackets], body text at least 16px, contrast at least 4.5 to 1, spacing on an 8px grid, no drop shadows, no gradients, no hero with three cards, no icon per bullet, one color only. Use my voice skill for every word.
+
+My site is one page, four sections in this order. Hi I'm, What I'm working on, Where I've been, How to reach me. No phone number, no home address.</script>
+
+<script type="text/plain" id="src-three-options">Use my voice skill and my design skill. Give me three versions of just the top section of my personal site, the "Hi, I'm [name]" part: one line about me and one button. Different headlines and different layouts. Single HTML file each, A, B and C.</script>
+
+<script type="text/plain" id="src-go-with-b">Go with B. The headline is too stiff. Say it the way I write emails.</script>
+
+<script type="text/plain" id="src-make-stick">Add that to my voice skill so you always do it.</script>
+
+<script type="text/plain" id="src-build-site">Use my voice skill and my design skill. Keep the top section we picked exactly as it is. Build me a one-page personal website as a single HTML file I can download. Four sections: Hi I'm, What I'm working on, Where I've been, How to reach me. My LinkedIn PDF is attached. Unknown facts go in [brackets].</script>
+
+<script type="text/plain" id="src-gemini-fallback">Read the two attached SKILL.md files first, my voice and my design. Follow both. Build me a one-page personal website as a single HTML file I can download. Four sections. Hi I'm, What I'm working on, Where I've been, How to reach me. Unknown facts go in [brackets]. My LinkedIn PDF is attached.</script>
+
+<script type="text/plain" id="src-stuck-ask">I'm in a workshop building a personal website with two skills, voice and design. I'm on {{STEP}}: {{STEP_TITLE}}. What I did and what happened: [paste]. Give me the one most likely cause and the one thing to try next. Short.</script>
+
+<!-- The voice starter, embedded so the anatomy renders even from file://. Keep it identical to skills/voice/SKILL.md (npm run test-zip checks). -->
+<script type="text/plain" id="skill-voice">
+---
+name: voice
+description: Write as me. Use whenever you draft anything in my name: website copy, bios, emails, cover letters, posts, slides. Read my samples first and match them.
+---
+
+# My voice
+
+## Make it yours (edit this part)
+
+Version: Warm
+(Polished: short, structured, confident. Warm: direct, a clear point of view, sounds like you talk. Playful: candid, loose, fragments allowed.)
+
+My samples (paste 3 things you wrote, or your 5 most recent sent emails):
+
+---
+[sample 1]
+---
+[sample 2]
+---
+[sample 3]
+---
+
+Words and phrases I actually use:
+- [example: "quick one", "thanks tons", "no worries"]
+
+How I sign off:
+- [example: "Mary"]
+
+Never say (up to 3 of your own):
+- [example: "excited to share"]
+
+## Locked (leave this alone)
+
+1. Read my samples before writing a word. Match their sentence length, punctuation habits, and how they open and close. If my samples are short, write short.
+2. Write the way I talk, not the way a press release talks. First person. Contractions. Say the thing, then stop.
+3. Say less. Cut any sentence that could appear on anyone's website.
+4. Opinions over adjectives. "I think consulting taught me to listen" beats "a passionate, results-driven leader."
+5. If you don't know a fact about me, leave a [bracket]. Never invent jobs, numbers, awards or quotes.
+6. One idea per sentence. Vary the length. No lists of three for rhythm's sake.
+
+## Never (from Wikipedia's "Signs of AI writing", via the humanizer skill)
+
+- No em dashes.
+- No "I hope this finds you well", "excited to share", "passionate about", "results-driven", "leverage", "delve", "landscape", "journey", "testament to", "pivotal".
+- No sentence that ends by explaining its own significance ("...highlighting my commitment to").
+- No "It's not X, it's Y" constructions.
+- No stacked adjectives. No tagline-style fragments stacked for effect.
+- No emojis unless they appear in my samples.
+
+## Check before you finish
+
+Read the draft out loud. Would a friend of mine know I wrote it? If not, go back to the samples.
+</script>
+
+<script src="js/zip.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
