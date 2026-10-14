@@ -15,6 +15,9 @@ Font pair: "Poppins + Source Sans 3"
 
 Photo: [yes, use my photo] / [no photo]
 
+Sites I like:
+- [example: a link]
+
 3 words for how it should feel: warm, direct, bright
 
 Never do (up to 3 of your own):
