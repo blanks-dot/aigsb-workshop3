@@ -19,6 +19,7 @@
   --why: #FF6A3D;    --why-s: #FFE1D6;    --why-d: #B33A16;
   --voice: #7C5CFF;  --voice-s: #E6DFFF;  --voice-d: #5A3DD6;
   --design: #14B8A6; --design-s: #D4F3EE; --design-d: #0B6B61;
+  --build: #F2B705;  --build-s: #FCEFB4;  --build-d: #8A5800;  /* fill carries ink text, never white */
   --deploy: #2B4BFF; --deploy-s: #DCE2FF; --deploy-d: #2340E0;
 
   --sun: #FFD23F;
@@ -208,10 +209,11 @@ button { font: inherit; color: inherit; cursor: pointer; }
 
 .part-chip { display: inline-flex; align-items: center; gap: 4px; font: 500 .72rem/1 var(--font-mono); letter-spacing: .06em; text-transform: uppercase; padding: .35em .6em; border-radius: 999px; background: var(--pc-soft, var(--paper-2)); color: var(--pc, var(--ink-2)); }
 
-/* act colors. Why = Start here + Before class, Voice = version + voice, Design = look, Deploy = build + three + live */
+/* act colors, matching the deck: Why = Start here + Before class, Voice = version + voice, Design = look, Build = three options + build it once, Host = host it live + finish (deploy colors) */
 [data-part="why"]    { --accent: var(--why);    --accent-soft: var(--why-s);    --rc: var(--why);    --pc: var(--why-d);    --pc-soft: var(--why-s); }
 [data-part="voice"]  { --accent: var(--voice);  --accent-soft: var(--voice-s);  --rc: var(--voice);  --pc: var(--voice-d);  --pc-soft: var(--voice-s); }
 [data-part="design"] { --accent: var(--design); --accent-soft: var(--design-s); --rc: var(--design); --pc: var(--design-d); --pc-soft: var(--design-s); }
+[data-part="build"]  { --accent: var(--build);  --accent-soft: var(--build-s);  --rc: var(--build);  --pc: var(--build-d);  --pc-soft: var(--build-s); }
 [data-part="deploy"], [data-part="finish"] { --accent: var(--deploy); --accent-soft: var(--deploy-s); --rc: var(--deploy); --pc: var(--deploy-d); --pc-soft: var(--deploy-s); }
 [data-part="core"]   { --accent: var(--ink); --accent-soft: var(--paper-2); --rc: var(--ink); --pc: var(--ink); --pc-soft: var(--paper-2); }
 
@@ -521,7 +523,7 @@ body.draft .draft-note::before { content: "Draft note for Mary (hidden from stud
 .plan li { counter-increment: plan; position: relative; padding: 10px 14px 10px 50px; background: var(--card); border: 1px solid var(--line); border-radius: 14px; margin: 0; }
 .plan li::before { content: counter(plan); position: absolute; left: 12px; top: 9px; width: 26px; height: 26px; border-radius: 8px; display: grid; place-items: center; font: 400 1.2rem/1 var(--font-display); color: var(--ink); background: var(--plan-s, var(--paper-2)); box-shadow: 0 2px 0 var(--plan-c, var(--ink)); }
 .plan li:nth-child(1) { --plan-c: var(--voice); --plan-s: var(--voice-s); } .plan li:nth-child(2) { --plan-c: var(--voice); --plan-s: var(--voice-s); } .plan li:nth-child(3) { --plan-c: var(--design); --plan-s: var(--design-s); }
-.plan li:nth-child(4) { --plan-c: var(--deploy); --plan-s: var(--deploy-s); } .plan li:nth-child(5) { --plan-c: var(--deploy); --plan-s: var(--deploy-s); } .plan li:nth-child(6) { --plan-c: var(--deploy); --plan-s: var(--deploy-s); }
+.plan li:nth-child(4) { --plan-c: var(--build); --plan-s: var(--build-s); } .plan li:nth-child(5) { --plan-c: var(--build); --plan-s: var(--build-s); } .plan li:nth-child(6) { --plan-c: var(--deploy); --plan-s: var(--deploy-s); }
 
 /* what you see -> which line */
 .maptable { width: 100%; border-collapse: separate; border-spacing: 0 8px; font-size: .94rem; }
@@ -641,7 +643,6 @@ body.draft .draft-note::before { content: "Draft note for Mary (hidden from stud
    ===================================================================== */
 
 /* ---------- header nav (Slides) and the setup bullets ---------- */
-.topbar .nav-slides { white-space: nowrap; }
 .setup-bullets { list-style: none; padding: 0; margin: 8px 0 22px; display: grid; gap: 8px; }
 .setup-bullets li { position: relative; padding: 10px 14px 10px 34px; background: var(--card); border: 1px solid var(--line); border-radius: 12px; margin: 0; font-size: .95rem; }
 .setup-bullets li::before { content: ""; position: absolute; left: 13px; top: 17px; width: 10px; height: 10px; border-radius: 3px; background: var(--accent, var(--why)); }
@@ -843,7 +844,6 @@ body.draft .draft-note::before { content: "Draft note for Mary (hidden from stud
   .version-cards, .sites-row, .mf-three { grid-template-columns: 1fr; }
   .done-box { grid-template-columns: 84px 1fr; padding: 12px; gap: 12px; }
   .thumb { height: 64px; }
-  .topbar .nav-slides { display: none; }
   .myform { padding: 16px; box-shadow: 4px 4px 0 var(--ink); }
   .myform.downloaded { box-shadow: 4px 4px 0 var(--green); }
   .swatch { width: 40px; height: 40px; }
@@ -864,7 +864,7 @@ body.draft .draft-note::before { content: "Draft note for Mary (hidden from stud
 .sub-body h4 { margin: 22px 0 8px; }
 .sub-body .quest-teaches { margin: 0 0 12px; }
 
-/* ---------- step 6 in the room: four clicks, then the live link ---------- */
+/* ---------- step 6 in the room: four Vercel Drop cards, then the live link ---------- */
 .clicks { list-style: none; padding: 0; margin: 12px 0 22px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; counter-reset: click; }
 .click { counter-increment: click; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 18px 14px; box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 8px; margin: 0; }
 .click::before { content: counter(click); font: 400 3rem/1 var(--font-display); color: var(--deploy); letter-spacing: -.03em; }
@@ -913,3 +913,72 @@ body.draft .draft-note::before { content: "Draft note for Mary (hidden from stud
   .clicks, .quests { grid-template-columns: 1fr; }
   .gal { padding: 24px 16px 100px; }
 }
+
+/* ---------- revision 4 ---------- */
+
+/* Build (yellow) fills carry ink, never white */
+.rail-item[data-part="build"].done .node { color: var(--ink); }
+.step[data-part="build"] .learned::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23141413' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z'/%3E%3C/svg%3E"); }
+
+/* the formula: three parts side by side (voice and design steps) */
+.formula { list-style: none; padding: 0; margin: 4px 0 24px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.formula li { margin: 0; background: var(--card); border: 1px solid var(--line); border-top: 4px solid var(--accent); border-radius: 14px; padding: 12px 14px 14px; font-size: .94rem; color: var(--ink-2); }
+.formula li b { display: block; font: 400 1.5rem/1.05 var(--font-display); color: var(--ink); margin-bottom: 4px; }
+.formula li p { margin: 0; }
+.formula li p + p { margin-top: 6px; }
+
+/* Make it yours forms: fields grouped under the formula's parts */
+.mf-group { border-top: 1px dashed var(--line-2); padding-top: 12px; margin-top: 4px; }
+.mf-group-label { display: inline-block; font: 500 .7rem/1 var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--pc, var(--ink-2)); background: var(--accent-soft, var(--paper-2)); padding: .45em .65em; border-radius: 999px; margin-bottom: 10px; }
+.mf-two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 6px; }
+.mf-two input { width: 100%; font: inherit; color: var(--ink); border: 2px solid var(--line); border-radius: 12px; padding: .62em .85em; background: var(--card); }
+.mf-two input:focus { outline: none; border-color: var(--ink); box-shadow: 0 0 0 4px var(--paper-2); }
+
+/* GSB starter card (voice step) */
+.starter-card { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; background: var(--card); border: 1px dashed var(--line-2); border-radius: 14px; padding: 12px 16px; margin: 0 0 14px; }
+.starter-card p { margin: 0; font-size: .95rem; }
+.starter-card p strong { display: block; color: var(--ink); }
+
+/* "One skill, more than one you" */
+.card.modes h4 { margin: 0 0 6px; }
+.card.modes p { margin: 0 0 10px; font-size: .95rem; }
+.card.modes .copy-card { margin-bottom: 0; }
+
+/* account comparison: label column + three tools on desktop, one card per tool on phones */
+.acct-grid { display: grid; grid-template-columns: 116px repeat(3, minmax(0, 1fr)); grid-template-rows: auto repeat(4, auto); column-gap: 10px; margin: 10px 0 22px; }
+.acct-labels, .acct-col { grid-row: 1 / span 5; display: grid; grid-template-rows: subgrid; }
+.acct-labels span { font: 500 .7rem/1.3 var(--font-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); padding: 12px 0 10px; border-top: 1px solid var(--line); }
+.acct-labels span:first-child { border-top: 0; }
+.acct-col { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 0 14px; box-shadow: var(--shadow); }
+.acct-col.pick { border: 2px solid var(--accent); }
+.acct-col h4 { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 0; padding: 12px 0 10px; font: 400 1.45rem/1.05 var(--font-display); }
+.acct-pick { font: 500 .62rem/1 var(--font-mono); letter-spacing: .06em; text-transform: uppercase; background: var(--accent-soft); color: var(--pc); padding: .45em .6em; border-radius: 999px; }
+.acct-col dl { grid-row: 2 / span 4; display: grid; grid-template-rows: subgrid; margin: 0; }
+.acct-col dl > div { padding: 10px 0; border-top: 1px solid var(--line); }
+.acct-col dt { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.acct-col dd { margin: 0; font-size: .9rem; line-height: 1.4; color: var(--ink-2); }
+@media (max-width: 720px) {
+  .formula { grid-template-columns: 1fr; }
+  .mf-two { grid-template-columns: 1fr; }
+  .acct-grid { display: grid; grid-template-columns: 1fr; grid-template-rows: none; row-gap: 10px; }
+  .acct-labels { display: none; }
+  .acct-col, .acct-col dl { grid-row: auto; display: block; }
+  .acct-col dl > div { display: grid; grid-template-columns: 96px 1fr; gap: 10px; }
+  .acct-col dt { position: static; width: auto; height: auto; overflow: visible; clip: auto; white-space: normal; font: 500 .66rem/1.35 var(--font-mono); letter-spacing: .05em; text-transform: uppercase; color: var(--ink-3); padding-top: 2px; }
+}
+
+/* finish: feedback form + PollEv */
+.fb-ask { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; background: var(--deploy-s); border-radius: 14px; padding: 12px 14px; margin: 0 0 16px; }
+.fb-ask p { margin: 0; font-size: .95rem; flex: 1 1 240px; }
+.fb-ask .go-link { font-weight: 700; }
+.fb-poll { margin: 0 0 16px; font-size: .95rem; color: var(--ink-2); }
+
+/* host: GitHub side quest card */
+.card.side-quest .small { margin: 8px 0 0; }
+
+/* deploy.html: the optional GitHub path */
+.guide .path-head { margin-top: 40px; }
+/* go-links on a Build step: ink text, the build tint behind it */
+.step[data-part="build"] .go-link { color: var(--ink); }
+.step[data-part="build"] .go-link:hover { color: #fff; }
+.guide .path-title { font-size: clamp(1.7rem, 3.6vw, 2.3rem); margin: 8px 0 12px; }
