@@ -30,7 +30,7 @@
   .psub { margin: 0 0 12px; font-size: .86rem; color: var(--ink-3); }
   .where-row { display: grid; grid-template-columns: 34px 170px 1fr; gap: 10px; align-items: center; padding: 8px 0; border-top: 1px solid var(--paper-2); }
   .where-row:first-of-type { border-top: 0; }
-  .where-n { width: 30px; height: 30px; border-radius: 9px; display: grid; place-items: center; font: 500 .85rem/1 var(--font-mono); background: var(--rc, var(--ink)); color: #fff; }
+  .where-n { width: 30px; height: 30px; border-radius: 9px; display: grid; place-items: center; font: 500 .85rem/1 var(--font-mono); background: var(--rc, var(--ink)); color: var(--on-rc, #fff); }
   .where-t { font-weight: 600; font-size: .92rem; line-height: 1.2; }
   .where-t small { display: block; color: var(--ink-3); font-weight: 500; }
   .where-bar { position: relative; height: 22px; background: var(--paper-2); border-radius: 6px; overflow: hidden; }
@@ -105,7 +105,7 @@
       <section class="panel"><h2>Median time per step</h2><p class="psub">From when a student opened the step to when they checked it off. Setup steps can run long.</p><div id="time"></div></section>
     </div>
     <div>
-      <section class="panel"><h2>Before class (step 0)</h2><p class="psub">Each item checked off. Only 0.1 is required. 0.5 and 0.6 are the GitHub and Vercel accounts.</p><div id="prep"></div><div id="prep-missing"></div></section>
+      <section class="panel"><h2>Before class (step 0)</h2><p class="psub">Each item checked off. Only 0.1 is required. 0.5 is the Vercel account.</p><div id="prep"></div><div id="prep-missing"></div></section>
       <section class="panel"><h2>Version</h2><p class="psub">From step 1. Polished, Warm or Playful.</p><div id="versions"></div></section>
       <section class="panel"><h2>Live links and gallery</h2><p class="psub">From step 6. Bold chips are in the <a href="gallery.html" target="_blank" rel="noopener">class gallery</a> (opted in, link pasted). Dates are the "not tonight" fallback.</p><div id="deploys"></div></section>
       <section class="panel"><h2>Step 5: how's tonight going?</h2><p class="psub">The 1 to 5 on step 5's Done button.</p><div id="step5"></div></section>
@@ -127,7 +127,8 @@
   "use strict";
   var TITLES = { what: "What you're building", setup: "Before class", version: "Pick your version", voice: "Teach it your voice", design: "Teach it your look", three: "Three options", build: "Build it once", host: "Host it live", finish: "Finish" };
   var NUM = { what: "✦", setup: "0", version: "1", voice: "2", design: "3", three: "4", build: "5", host: "6", finish: "✓" };
-  var COLOR = { what: "#FF6A3D", setup: "#FF6A3D", version: "#7C5CFF", voice: "#7C5CFF", design: "#14B8A6", three: "#2B4BFF", build: "#2B4BFF", host: "#2B4BFF", finish: "#2B4BFF" };
+  var COLOR = { what: "#FF6A3D", setup: "#FF6A3D", version: "#7C5CFF", voice: "#7C5CFF", design: "#14B8A6", three: "#F2B705", build: "#F2B705", host: "#2B4BFF", finish: "#2B4BFF" };
+  var ON_COLOR = { three: "#141413", build: "#141413" }; // text on the step color: ink on Build yellow, white elsewhere
   var VERSION = { polished: "Polished", warm: "Warm", playful: "Playful" };
   var KEYSTORE = "aigsb-w3-instructor-key";
   var params = new URLSearchParams(location.search);
@@ -239,7 +240,7 @@
       var done = id === "finish" ? (hereBy.finish || []).length : d.students.filter(function (s) { return s.steps[id]; }).length;
       var here = id === "finish" ? [] : (hereBy[id] || []);
       var pct = n ? Math.round(100 * done / n) : 0;
-      return '<div class="where-row" style="--rc:' + COLOR[id] + '"><span class="where-n">' + NUM[id] + '</span><span class="where-t">' + esc(TITLES[id]) +
+      return '<div class="where-row" style="--rc:' + COLOR[id] + ';--on-rc:' + (ON_COLOR[id] || "#fff") + '"><span class="where-n">' + NUM[id] + '</span><span class="where-t">' + esc(TITLES[id]) +
         "<small>" + (id === "finish" ? done + " finished every step" : done + " done | " + here.length + " here now") +
         (id === "host" && d.quests.length ? " | side quests: " + d.quests.map(function (q) { return q.slice(-1) + ": " + d.students.filter(function (s) { return s.steps[q]; }).length; }).join(", ") : "") + "</small></span>" +
         '<div class="where-bar"><i style="width:' + pct + '%"></i><span>' + pct + "%</span></div>" +
