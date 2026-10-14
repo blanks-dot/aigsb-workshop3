@@ -12,6 +12,9 @@
  * link + gallery opt-in (step 6, in the room), the deploy date fallback, and
  * the ladder at the top of the Stuck? drawer. Revision 3 removed the track
  * toggle: there is one path, the forms, with "build it with Claude" as an aside.
+ * Revision 4: rail groups WHY / VOICE / DESIGN / BUILD / HOST, step 6 hosts with
+ * Vercel Drop, the forms are grouped by the formula (samples + qualities + nevers,
+ * assets + vibe + nevers), and the GSB voice starter downloads from step 2.
  *
  * Content lives in index.html. This file only wires it up.
  * Form values (writing samples, colors) are never saved or sent anywhere.
@@ -22,9 +25,9 @@
   /* ---------- config ---------- */
 
   const STEPS = ["what", "setup", "version", "voice", "design", "three", "build", "host"]; // in order, then "finish"
-  const SUBS = ["setup-1", "setup-2", "setup-3", "setup-4", "setup-5", "setup-6"];
+  const SUBS = ["setup-1", "setup-2", "setup-3", "setup-4", "setup-5"]; // 0.5 is the optional Vercel account (revision 4 dropped the GitHub one)
   const QUESTS = ["quest-1", "quest-2", "quest-3", "quest-4", "quest-5", "quest-6", "quest-7"]; // side quests on step 6: one-line cards, tick in any order
-  const REQUIRED_SUBS = ["setup-1"]; // 0.2 to 0.6 are optional
+  const REQUIRED_SUBS = ["setup-1"]; // 0.2 to 0.5 are optional
   const CHECKPOINTS = { voice: 1, build: 2 }; // 2 = the bigger one (step 5, Build it once)
   const RATED = { build: 1 }; // steps whose Done button asks for a 1 to 5 rating (step 5)
   const KEY = "aigsb-workshop3-v1";
@@ -146,7 +149,7 @@
   const ctx = canvas.getContext("2d");
   let parts = [];
   let raf = 0;
-  const PALETTE = { why: ["#FF6A3D", "#FFD23F", "#FFE1D6"], voice: ["#7C5CFF", "#FFD23F", "#E6DFFF"], design: ["#14B8A6", "#FFD23F", "#D4F3EE"], deploy: ["#2B4BFF", "#FFD23F", "#DCE2FF"], core: ["#141413", "#FFD23F", "#FF6A3D", "#7C5CFF", "#14B8A6", "#2B4BFF"], finish: ["#2B4BFF", "#FFD23F", "#FF6A3D", "#7C5CFF", "#14B8A6"] };
+  const PALETTE = { why: ["#FF6A3D", "#FFD23F", "#FFE1D6"], voice: ["#7C5CFF", "#FFD23F", "#E6DFFF"], design: ["#14B8A6", "#FFD23F", "#D4F3EE"], build: ["#F2B705", "#141413", "#FCEFB4"], deploy: ["#2B4BFF", "#FFD23F", "#DCE2FF"], core: ["#141413", "#F2B705", "#FF6A3D", "#7C5CFF", "#14B8A6", "#2B4BFF"], finish: ["#2B4BFF", "#F2B705", "#FF6A3D", "#7C5CFF", "#14B8A6"] };
   function sizeCanvas() {
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     canvas.width = innerWidth * dpr; canvas.height = innerHeight * dpr;
@@ -240,11 +243,11 @@
       rail.appendChild(li);
       railItems[id] = li;
     });
-    // Under DEPLOY: the long version of step 6 is its own page, no sign-in needed
+    // Under HOST: the long version of step 6 is its own page, no sign-in needed
     const li = document.createElement("li");
     li.className = "rail-item rail-link";
     li.dataset.part = "deploy";
-    li.innerHTML = '<a href="deploy.html"><span class="node"><span class="n">↗</span></span><span class="rail-text"><span class="rail-title">The long version</span><span class="rail-sub">every deploy screen</span></span></a>';
+    li.innerHTML = '<a href="deploy.html"><span class="node"><span class="n">↗</span></span><span class="rail-text"><span class="rail-title">The long version</span><span class="rail-sub">every hosting screen</span></span></a>';
     rail.appendChild(li);
   })();
 
@@ -645,7 +648,7 @@
     const capHtml = cap ? cap.innerHTML : "";
     const img = new Image();
     img.alt = cap ? cap.textContent : "Screenshot " + id;
-    const exts = ["webp", "png", "jpg"];
+    const exts = ["png", "jpg", "webp"];
     let i = 0;
     const placeholder = () => {
       const ph = document.createElement("div");
@@ -674,8 +677,8 @@
     }
   });
 
-  /* Placeholder links: <span class="link-pending" data-url="[POLLEV_URL]" data-label="Open PollEv">. Once data-url is a real
-     URL (Mary swaps the bracket for the link), the span turns into a go-link. */
+  /* Placeholder links: <span class="link-pending" data-url="[SOME_URL]" data-label="Open it">. Once data-url is a real
+     URL (swap the bracket for the link), the span turns into a go-link. None are left on the page as of revision 4. */
   $all(".link-pending[data-url]").forEach((s) => {
     const url = (s.dataset.url || "").trim();
     if (!/^https?:\/\//.test(url)) return;
@@ -769,22 +772,28 @@
     if (kind === "voice") {
       el.innerHTML = '<form class="myform-inner" novalidate>' +
         '<div class="mf-head"><span class="mf-file">voice/SKILL.md</span><span class="mf-tag">Make it yours</span></div>' +
-        versionRadios("voice") +
+        '<div class="mf-group"><span class="mf-group-label">Qualities</span>' + versionRadios("voice") + "</div>" +
+        '<div class="mf-group"><span class="mf-group-label">Samples</span>' +
         '<label class="field"><span>My samples <small>3 things you wrote, a <code>---</code> line between them</small></span><textarea name="samples" rows="9" placeholder="Hey Sam, quick one. Can you send the deck by Thursday? Thanks tons.&#10;---&#10;Second sample&#10;---&#10;Third sample" spellcheck="false"></textarea></label>' +
         '<label class="field"><span>Words and phrases I actually use <small>comma-separated</small></span><input name="words" placeholder="quick one, thanks tons, no worries" autocomplete="off"></label>' +
-        '<label class="field"><span>How I sign off</span><input name="signoff" value="' + esc(firstName()) + '" placeholder="Mary" autocomplete="off"></label>' +
-        '<div class="field"><span>Never say <small>up to 3</small></span><div class="mf-three"><input name="never1" placeholder="excited to share" autocomplete="off"><input name="never2" placeholder="circle back" autocomplete="off"><input name="never3" placeholder="" autocomplete="off"></div></div>' +
+        '<label class="field"><span>How I sign off</span><input name="signoff" value="' + esc(firstName()) + '" placeholder="Mary" autocomplete="off"></label></div>' +
+        '<div class="mf-group"><span class="mf-group-label">Nevers</span>' +
+        '<div class="field"><span>Never say <small>up to 3</small></span><div class="mf-three"><input name="never1" placeholder="excited to share" autocomplete="off"><input name="never2" placeholder="circle back" autocomplete="off"><input name="never3" placeholder="" autocomplete="off"></div></div></div>' +
         '<div class="mf-foot"><button type="submit" class="btn accent mf-dl">Download voice.zip</button><span class="small">Built on your laptop. Nothing is sent.</span></div>' +
         "</form>";
     } else {
       el.innerHTML = '<form class="myform-inner" novalidate>' +
         '<div class="mf-head"><span class="mf-file"><span data-design-name>' + esc(DESIGN_SKILL[v]) + "</span>/SKILL.md</span><span class=\"mf-tag\">Make it yours</span></div>" +
         versionRadios("design") +
+        '<div class="mf-group"><span class="mf-group-label">Assets</span>' +
+        '<fieldset class="mf-row"><legend>Photo</legend>' + radioHtml("design-photo", "yes", "Yes, use my photo", false) + radioHtml("design-photo", "no", "No photo", false) + "</fieldset>" +
+        '<div class="field"><span>Sites I like <small>up to 2 links, optional</small></span><div class="mf-two"><input name="site1" type="url" inputmode="url" placeholder="https://a-site-you-like.com" autocomplete="off" spellcheck="false" aria-label="Site I like, 1"><input name="site2" type="url" inputmode="url" placeholder="https://another-one.com" autocomplete="off" spellcheck="false" aria-label="Site I like, 2"></div></div></div>' +
+        '<div class="mf-group"><span class="mf-group-label">Vibe</span>' +
         '<div class="field"><span>Accent color <small>one color, the rest stays neutral</small></span><div class="mf-accent"><div class="swatches"></div><label class="hex-wrap"><span class="hex-dot"></span><input name="accent" class="hex" placeholder="#24426B" maxlength="7" autocomplete="off" spellcheck="false" aria-label="Hex color"></label></div></div>' +
         '<label class="field"><span>Font pair</span><select name="font">' + FONTS.map((f) => '<option value="' + esc(f) + '"' + (f === DEFAULT_FONT[v] ? " selected" : "") + ">" + esc(f) + "</option>").join("") + "</select></label>" +
-        '<fieldset class="mf-row"><legend>Photo</legend>' + radioHtml("design-photo", "yes", "Yes, use my photo", false) + radioHtml("design-photo", "no", "No photo", false) + "</fieldset>" +
-        '<label class="field"><span>3 words for how it should feel</span><input name="feel" placeholder="' + esc(DEFAULT_FEEL[v]) + '" autocomplete="off"></label>' +
-        '<div class="field"><span>Never do <small>up to 3</small></span><div class="mf-three"><input name="never1" placeholder="no stock photos" autocomplete="off"><input name="never2" placeholder="" autocomplete="off"><input name="never3" placeholder="" autocomplete="off"></div></div>' +
+        '<label class="field"><span>3 words for how it should feel</span><input name="feel" placeholder="' + esc(DEFAULT_FEEL[v]) + '" autocomplete="off"></label></div>' +
+        '<div class="mf-group"><span class="mf-group-label">Nevers</span>' +
+        '<div class="field"><span>Never do <small>up to 3, your icks</small></span><div class="mf-three"><input name="never1" placeholder="no stock photos" autocomplete="off"><input name="never2" placeholder="no rainbow gradients" autocomplete="off"><input name="never3" placeholder="" autocomplete="off"></div></div></div>' +
         '<div class="mf-foot"><button type="submit" class="btn accent mf-dl">Download design.zip</button><span class="small">Built on your laptop. Nothing is sent.</span></div>' +
         "</form>";
       renderSwatches(el);
@@ -822,7 +831,7 @@
     const hexV = g("accent");
     const accent = /^#[0-9a-f]{6}$/i.test(hexV) ? (sw && sw.dataset.hex.toLowerCase() === hexV.toLowerCase() ? sw.getAttribute("aria-label").replace(/ #.*/, "") + " " + hexV : hexV) : "";
     const photo = f.querySelector('input[name="design-photo"]:checked');
-    return { name: fullName(), accent, font: g("font"), photo: photo ? photo.value : "", feel: g("feel"), neverDo: [g("never1"), g("never2"), g("never3")] };
+    return { name: fullName(), accent, font: g("font"), photo: photo ? photo.value : "", sites: [g("site1"), g("site2")], feel: g("feel"), neverDo: [g("never1"), g("never2"), g("never3")] };
   }
   function downloadFromForm(el) {
     const kind = el.dataset.kind;
@@ -846,14 +855,16 @@
   }
   $all(".myform[data-kind]").forEach(renderForm);
 
-  /* "Borrow ours" in the Stuck? drawer: a blank starter, zipped. Only [name] is filled in. */
+  /* "Borrow ours" in the Stuck? drawer, and the GSB starter on step 2: a starter, zipped. Only [name] is filled in.
+     The GSB starter's skill name is "voice", so its folder in the zip is voice/ (the zip itself is voice-gsb.zip). */
+  const STARTER_FOLDER = { "voice-gsb": "voice" };
   document.addEventListener("click", (e) => {
     const b = e.target.closest("[data-starter]");
     if (!b) return;
     const skill = b.dataset.starter;
     b.disabled = true;
     fetchSkill(skill).then((template) => {
-      download(skill + ".zip", new Blob([SkillZip.buildSkillZip(skill, template, { name: fullName() })], { type: "application/zip" }));
+      download(skill + ".zip", new Blob([SkillZip.buildSkillZip(STARTER_FOLDER[skill] || skill, template, { name: fullName() })], { type: "application/zip" }));
       toast("Downloaded " + skill + ".zip. Upload it under Customize › Skills.");
       b.disabled = false;
     }).catch(() => { b.disabled = false; toast("Couldn't build " + skill + ".zip. Reload and try again."); });

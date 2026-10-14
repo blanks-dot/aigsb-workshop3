@@ -71,6 +71,7 @@
    *   accent    string, e.g. "#24426B" or "navy #24426B"   (design)
    *   font      string, e.g. "Poppins + Source Sans 3"
    *   photo     "yes" | "no"
+   *   sites     array of up to 2 links, or one per line ("Sites I like:", design)
    *   feel      string, e.g. "clear, structured, confident"
    *   neverDo   array of up to 3 strings            (design)
    */
@@ -134,6 +135,7 @@
     replaceList(edit, /^How I sign off:/, signoff ? [signoff] : []);
     replaceList(edit, /^Never say/, list(fields.neverSay).slice(0, 3));
     replaceList(edit, /^Never do/, list(fields.neverDo).slice(0, 3));
+    replaceList(edit, /^Sites I like:/, list(fields.sites).slice(0, 2));
 
     var out = head.concat(edit, rest).join("\n");
     var name = clean(fields.name);
