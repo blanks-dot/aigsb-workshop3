@@ -15,6 +15,9 @@ Font pair: "Nunito + JetBrains Mono"
 
 Photo: [yes, use my photo] / [no photo]
 
+Sites I like:
+- [example: a link]
+
 3 words for how it should feel: playful, candid, light
 
 Never do (up to 3 of your own):
