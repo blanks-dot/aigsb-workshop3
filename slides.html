@@ -1,426 +1,589 @@
 <!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Make your AI look and sound like you | AI@GSB Workshop 3</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&family=Caveat:wght@600&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Source+Sans+3:wght@400;600&family=Poppins:wght@500;600&family=Nunito:wght@800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Make your AI look &amp; sound like you | AI@GSB Workshop 3 slides</title>
+<link rel="icon" href="img/favicon.svg">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&amp;display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&amp;display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;display=swap">
 <style>
-:root{--beige:#F3EDE2;--beige2:#EAE2D4;--card:#FBF8F2;--ink:#141413;--ink2:#4D4A44;--mute:#8C8178;
-  --why:#FF6A3D;--voice:#7C5CFF;--design:#14B8A6;--deploy:#2B4BFF;
-  --why-s:#FFE1D6;--voice-s:#E6DFFF;--design-s:#D4F3EE;--deploy-s:#DCE2FF;
-  --serif:"Instrument Serif",serif;--sans:"DM Sans",system-ui,sans-serif;--mono:"DM Mono",ui-monospace,monospace;--hand:"Caveat",cursive}
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;background:#E8E0D2;color:var(--ink);font:400 16px/1.5 var(--sans);-webkit-font-smoothing:antialiased;overflow:hidden}
-#stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
-.slide{--a:var(--why);--s:var(--why-s);width:1600px;height:900px;padding:64px 96px 56px;background:var(--beige);display:none;flex-direction:column;gap:28px;position:relative;transform-origin:center}
-.slide.on{display:flex;animation:in .45s cubic-bezier(.16,1,.3,1)}
-@keyframes in{from{opacity:0;transform:translateY(12px) scale(var(--sc,1))}to{opacity:1;transform:translateY(0) scale(var(--sc,1))}}
-.slide[data-act="voice"]{--a:var(--voice);--s:var(--voice-s)}.slide[data-act="design"]{--a:var(--design);--s:var(--design-s)}.slide[data-act="deploy"]{--a:var(--deploy);--s:var(--deploy-s)}
-.acts{display:flex;align-items:center;gap:6px;font:500 15px var(--mono)}
-.acts span{padding:7px 14px;border-radius:999px}
-.acts .on{background:var(--a);color:#fff}
-.acts .why{color:var(--why)}.acts .voice{color:var(--voice)}.acts .design{color:var(--design)}.acts .deploy{color:var(--deploy)}.acts .go{color:var(--mute)}
-.acts .meta{margin-left:auto;color:var(--mute)}
-h1{font:400 84px/.98 var(--serif);letter-spacing:-.02em;max-width:1380px}
-h1 em{font-style:normal;color:var(--a)}
-h1.xl{font-size:120px}
-.sub{font:400 26px/1.4 var(--sans);color:var(--ink2);max-width:900px}
-.row{display:flex;gap:28px;align-items:stretch}.fill{flex:1;min-height:0}
-.grid{display:grid;gap:22px}.g2{grid-template-columns:repeat(2,minmax(0,1fr));gap:32px}.g3{grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}.g4{grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}.g6{grid-template-columns:repeat(6,minmax(0,1fr));gap:18px}
-.card{background:var(--card);border-radius:16px;padding:28px;display:flex;flex-direction:column;gap:14px}
-.card.quiet{background:var(--beige2)}
-.card.acc{background:var(--a);color:#fff}
-.card.soft{background:var(--s)}
-.tag{font:500 13px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
-.card.acc .tag{color:rgba(255,255,255,.75)}
-.lbl{font:400 34px/1.1 var(--serif)}
-.pill{display:inline-flex;align-items:center;border-radius:999px;padding:.5em 1em;font:700 16px var(--sans);background:var(--ink);color:#fff;white-space:nowrap}
-.pill.acc{background:var(--a)}.pill.ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 2px var(--beige2)}
-.num{font:400 170px/1 var(--serif);letter-spacing:-.03em}
-.bar{height:10px;border-radius:5px;background:var(--beige2)}
-.bars{position:absolute;left:96px;right:96px;bottom:28px;display:flex;gap:6px;height:8px}
-.bars i{flex:1;border-radius:4px;opacity:.3}
-.bars .why{background:var(--why)}.bars .voice{background:var(--voice)}.bars .design{background:var(--design)}.bars .deploy{background:var(--deploy)}
-.bars i.on{opacity:1}
-.foot{margin-top:auto;display:flex;justify-content:space-between;font:500 15px var(--mono);color:var(--mute);padding-bottom:18px}
-.file{background:var(--card);border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
-.file .top{display:flex;align-items:center;gap:8px;padding:12px 18px;background:var(--beige2);font:500 14px var(--mono);color:var(--mute)}
-.file .top i{width:11px;height:11px;border-radius:50%;background:#D4C9B8;display:inline-block}
-.file .body{padding:20px;display:flex;flex-direction:column;gap:12px;font:400 18px/1.5 var(--mono)}
-.edit{background:var(--s);border-radius:12px;padding:16px;box-shadow:inset 0 0 0 2px var(--a);position:relative}
-.locked{background:var(--beige2);border-radius:12px;padding:14px 16px;color:var(--ink2)}
-.hand{font:600 30px var(--hand);color:var(--a);line-height:1.1}
-.callout{position:absolute;pointer-events:none}
-.callout.st{position:static;pointer-events:auto;display:flex;align-items:flex-end;gap:8px;min-height:84px}
-.callout svg{overflow:visible}
-.callout path,.callout ellipse{fill:none;stroke:var(--a);stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
-.site{height:230px;border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:9px;background:var(--beige2)}
-.site small{font-size:13px;line-height:1.35;color:var(--mute)}
-.after{border-radius:14px;background:var(--card);border:1.5px dashed #D4C9B8;display:flex;align-items:center;justify-content:center;color:var(--mute);font:500 16px var(--mono);text-align:center;padding:12px}
-.name{font:400 22px var(--serif);text-align:center;margin-top:10px}
-.motif{height:128px;border-radius:14px;background:var(--card);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;font:500 16px/1.2 var(--sans);text-align:center;padding:0 10px}
-.motif svg{width:40px;height:40px;stroke:var(--a);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.mini{flex:1;background:var(--card);border-radius:10px;padding:12px 8px;font:500 16px/1.2 var(--sans);text-align:center}
-.leg{display:flex;gap:10px;font:400 16px/1.3 var(--sans);color:var(--ink2)}
-.leg b{font:700 16px var(--sans);color:var(--ink);width:70px;flex:none}
-.step{display:flex;flex-direction:column;gap:10px;background:var(--card);border-radius:16px;padding:24px}
-.step b{font:400 64px/1 var(--serif);color:var(--a)}
-.tbl{display:grid;grid-template-columns:170px repeat(3,minmax(0,1fr));gap:12px;align-items:stretch}
-.tbl .h{font:400 30px var(--serif);padding:0 16px 4px}
-.tbl .r{font:500 13px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--mute);padding:16px 0}
-.tbl .c{background:var(--card);border-radius:12px;padding:14px 16px;font:400 16px/1.35 var(--sans);color:var(--ink2)}
-.tbl .c b{color:var(--ink);font-weight:700}
-.sticky{background:#FFF4C7;border-radius:12px;padding:16px 20px;font:600 27px/1.15 var(--hand);color:var(--ink);transform:rotate(-1deg)}
-.fstep{flex:1;height:400px;background:var(--card);border-radius:20px;padding:40px 34px;display:flex;flex-direction:column;gap:20px;justify-content:flex-start}
-.ico{width:88px;height:88px;border-radius:22px;background:var(--s);display:flex;align-items:center;justify-content:center}
-.ico svg{width:48px;height:48px;stroke:var(--a);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.ex{font:400 21px/1.4 var(--mono);color:var(--ink2)}
-.tchip{display:inline-flex;align-items:center;gap:8px;background:var(--beige2);border-radius:999px;padding:9px 16px;font:500 17px var(--mono)}
-.tchip svg{width:20px;height:20px;stroke:var(--a);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.arr{flex:none;overflow:visible}.arr path{fill:none;stroke:var(--a);stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
-.part{display:flex;flex-direction:column;gap:6px;border-radius:12px;background:var(--beige);padding:14px 16px;font:400 19px/1.45 var(--mono)}
-.pk{font:500 14px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--a)}
-.skchip{display:flex;align-items:baseline;justify-content:space-between;font:700 26px var(--sans);padding:20px 24px}
-.skchip small{font:500 15px var(--mono);color:var(--mute)}
-.qual{display:flex;align-items:center;gap:14px;background:var(--card);border-radius:14px;padding:12px 14px;font:400 17px/1.3 var(--sans);color:var(--ink2)}
-.qual .pill{width:108px;justify-content:center;flex:none}
-.qual.pick{box-shadow:inset 0 0 0 3px var(--a);color:var(--ink)}
-.mcol{width:440px;display:flex;flex-direction:column}
-.mlabel{font:400 32px/1 var(--serif);margin-bottom:12px}
-.mock{height:410px;border-radius:14px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 14px 34px -16px rgba(60,40,20,.35),0 0 0 1px rgba(20,20,19,.06)}
-.mock .bb{height:32px;flex:none;background:#E6DED1;display:flex;align-items:center;gap:6px;padding:0 12px}
-.mock .bb i{width:9px;height:9px;border-radius:50%;background:#CBBFAD}
-.mock .bb span{margin-left:10px;flex:1;background:#F6F2EB;border-radius:6px;padding:3px 10px;font:400 11px var(--mono);color:var(--mute)}
-.mock .pg{flex:1;padding:24px 30px;overflow:hidden}
-.psec{display:flex;align-items:baseline;gap:12px;border-top:1px solid #E2E2E2;padding:9px 0}
-.psec b{font:600 12px 'Source Sans 3',sans-serif;color:#24426B;width:18px}
-.psec span{font:500 16px 'Playfair Display',serif;color:#161616;width:96px}
-.psec small{font-size:13px;color:#6B6B6B}
-.wli{font-size:15px;padding:3px 0 3px 18px;position:relative}
-.wli:before{content:"";position:absolute;left:2px;top:11px;width:7px;height:7px;border-radius:50%;background:#B4532A}
-.pli{font-size:15px;padding:7px 0}.pli b{color:#38B6FF;font-weight:500;margin-right:10px}
-.ul{text-decoration:underline;text-decoration-color:#38B6FF;text-decoration-thickness:2px;text-underline-offset:4px}
-.spec{display:grid;grid-template-columns:78px 1fr;row-gap:7px;margin-top:16px;font:400 16px/1.3 var(--sans);color:var(--ink2)}
-.spec .k{font:500 12px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--mute);padding-top:3px}
-.dot{width:14px;height:14px;border-radius:50%;display:inline-block;vertical-align:-2px;margin-right:3px;box-shadow:inset 0 0 0 1px rgba(20,20,19,.18)}
-#notes{position:fixed;left:0;right:0;bottom:0;background:var(--ink);color:#F3EDE2;padding:22px 32px;font:400 21px/1.5 var(--sans);display:none;max-height:36vh;overflow:auto}
-#notes.on{display:block}#notes b{color:#FFD23F;font-family:var(--mono);margin-right:12px}
-#hud{position:fixed;top:12px;right:16px;font:500 13px var(--mono);color:#8C8178}
-.ink{background:var(--ink);color:#F3EDE2}.ink h1,.ink .sub{color:#F3EDE2}.ink .acts .meta,.ink .foot,.ink .acts .go{color:#A89E94}
-</style>
-</head>
-<body>
-<div id="hud">← →   N notes   F fullscreen</div>
+*{box-sizing:border-box;margin:0}
+html,body{height:100%;background:#141413;overflow:hidden}
+#stage{position:absolute;left:50%;top:50%;width:1920px;height:1080px;transform-origin:0 0}
+#stage>section{position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:hidden;visibility:hidden;opacity:0;transition:opacity .25s;font-family:'DM Sans',Arial,sans-serif;color:#141413;font-size:32px}
+#stage>section.on{visibility:visible;opacity:1}
+div{display:flex;flex-direction:column;min-width:0} div[style*="display:flex"],div[style*="display: flex"]{flex-direction:row}
+h1{font-size:96px;font-weight:600;line-height:1.1} h2{font-size:64px;font-weight:600;line-height:1.15} h3{font-size:44px;font-weight:600;line-height:1.2} p{font-size:32px;line-height:1.4}
+aside{display:none}
+img{display:block}
+.xarrow{display:block;clip-path:polygon(0 30%,60% 30%,60% 0,100% 50%,60% 100%,60% 70%,0 70%);flex:none}
+#notes{position:fixed;left:0;right:0;bottom:0;max-height:38vh;overflow:auto;background:#fbf8f2;color:#141413;font:16px/1.5 'DM Sans',Arial,sans-serif;padding:16px 24px;white-space:pre-wrap;display:none;box-shadow:0 -8px 24px rgba(0,0,0,.25)}
+#notes.show{display:block}
+#hud{position:fixed;right:14px;bottom:10px;font:12px 'DM Mono',monospace;color:#8c8178;opacity:.7}
+#notes.show~#hud{display:none}
+</style></head><body>
 <div id="stage">
-
-<!-- 1 walk-in -->
-<section class="slide" data-act="why" data-notes="Up as people walk in. Nothing to say yet.">
-  <div class="acts"><span class="on">1 WHY</span><span class="voice">2 VOICE</span><span class="design">3 DESIGN</span><span class="deploy">4 DEPLOY</span><span class="go">5 GO</span><span class="meta">AI@GSB | Workshop 3 01 / 14</span></div>
-  <div class="row fill" style="align-items:center;gap:72px">
-    <div style="flex:1;display:flex;flex-direction:column;gap:26px">
-      <h1 class="xl" style="font-size:104px">Make your AI look and sound <em>like you</em></h1>
-      <div class="sub" style="font-size:30px">AI@GSB Workshop 3</div>
-      <div style="font:400 40px var(--serif);color:var(--a)">[TUTORIAL_URL]</div>
-      <div class="row" style="gap:12px;align-items:center"><span class="pill ghost">Open Claude and sign in</span><span class="pill ghost">Laptop charged</span><span class="pill ghost">Phone for the QR</span></div>
-    </div>
-    <div style="width:300px;height:300px;background:var(--card);border-radius:24px;display:flex;align-items:center;justify-content:center;color:var(--mute);font:500 18px var(--mono);flex:none;border:1.5px dashed #D4C9B8">[QR code]</div>
+<section id="walkin" data-transition="fade" style="display:flex; flex-direction:column; gap:40px; padding:96px 128px 128px; background:#f3ede2">
+  <div style="display:flex; flex-direction:row; gap:12px; align-items:center">
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#c2471f; border-radius:256px">1 Why</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#6a48f0; border-radius:256px">2 Voice</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#0f8c80; border-radius:256px">3 Design</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#a86b00; border-radius:256px">4 Build</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#2b4bff; border-radius:256px">5 Host</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#6e645b; border-radius:256px">6 Go</p>
   </div>
-  <div class="foot"><span>Make your AI look and sound like you</span><span>01 / 14</span></div>
-  <div class="bars"><i class="why on"></i><i class="voice"></i><i class="design"></i><i class="deploy"></i></div>
+  <div style="flex:1"></div>
+  <h1 style="width:1400px; font-family:'Instrument Serif', Georgia, serif; font-size:168px; font-weight:400; line-height:0.95; letter-spacing:-3px; color:#141413">Make your AI look &amp; sound like <span style="color:#ff6a3d">you</span></h1>
+  <p style="font-family:'DM Mono', monospace; font-size:24px; color:#6e645b">AI@GSB Workshop 3</p>
+  <p style="position:absolute; top:300px; right:128px; width:420px; font-family:Caveat, 'Brush Script MT', serif; font-size:48px; line-height:1.1; color:#c2471f; transform:rotate(-4deg)">grab a seat, we start at 6:20</p>
+  <aside>Up while people walk in. Nothing to say yet. Music on, lights up. Helpers at the doors pointing people to seats and wraps. If you walk around: "Open Claude and sign in now, it saves you five minutes later." That's the only ask before we start. Start at 6:20 so the late wave isn't lost.</aside>
 </section>
-
-<!-- 2 framing -->
-<section class="slide" data-act="why" data-notes="The promise first. You leave tonight with a live link, in your voice, in your look. Four acts. Why it matters, then your voice, then your design, each one a single text file. Then build and host it. 20 minutes of me talking, 50 minutes of you building. Keep moving.">
-  <div class="acts"><span class="on">1 WHY</span><span class="voice">2 VOICE</span><span class="design">3 DESIGN</span><span class="deploy">4 DEPLOY</span><span class="go">5 GO</span><span class="meta">02 / 14</span></div>
-  <h1>Tonight you leave with a live site, <em>in your voice and your look.</em></h1>
-  <div class="grid g4 fill" style="align-content:center">
-    <div class="step"><b style="color:var(--why)">1</b><div class="lbl">Why</div><div class="sub" style="font-size:20px">AI sounds like AI until you give it you.</div></div>
-    <div class="step"><b style="color:var(--voice)">2</b><div class="lbl">Voice</div><div class="sub" style="font-size:20px">How you sound. One text file.</div></div>
-    <div class="step"><b style="color:var(--design)">3</b><div class="lbl">Design</div><div class="sub" style="font-size:20px">How you look. One text file.</div></div>
-    <div class="step"><b style="color:var(--deploy)">4</b><div class="lbl">Deploy</div><div class="sub" style="font-size:20px">Build one site, host it live.</div></div>
+<section id="tonight" data-transition="fade" style="background:#f3ede2">
+  <div id="p20216d415b83r0-3336aec8" style="position:absolute; top:96px; left:128px; width:1665px; height:46px; display:flex; flex-direction:row; gap:12px; align-items:center">
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#c2471f; border-radius:256px">1 Why</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#6a48f0; border-radius:256px">2 Voice</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#0f8c80; border-radius:256px">3 Design</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#a86b00; border-radius:256px">4 Build</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#2b4bff; border-radius:256px">5 Host</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#6e645b; border-radius:256px">6 Go</p>
   </div>
-  <div style="font:400 36px var(--serif);color:var(--ink2)">20 minutes of me. <span style="color:var(--a)">50 minutes of you.</span></div>
-  <div class="foot"><span>Make your AI look and sound like you</span><span>02 / 14</span></div>
-  <div class="bars"><i class="why on"></i><i class="voice"></i><i class="design"></i><i class="deploy"></i></div>
-</section>
-
-<!-- 3 before/after -->
-<section class="slide" data-act="why" data-notes="Five seconds of silence. Let them look. Same prompt, my own LinkedIn text, before and after two small files. Left is what everyone gets. Right is me. Then your name, ten seconds, not more.">
-  <div class="acts"><span class="on">1 WHY</span><span class="voice">2 VOICE</span><span class="design">3 DESIGN</span><span class="deploy">4 DEPLOY</span><span class="go">5 GO</span><span class="meta">03 / 14</span></div>
-  <h1>Left alone, AI builds the same site for <em>everyone.</em></h1>
-  <div class="sub">Same prompt, same LinkedIn text, plus two small files.</div>
-  <div class="row fill" style="align-items:center;gap:36px">
-    <div class="card quiet" style="flex:1;height:420px;padding:36px;gap:18px"><div class="tag">Before</div><div class="bar" style="width:50%;background:#DDD3C4"></div><div style="width:52px;height:52px;border-radius:50%;background:#DDD3C4"></div><div style="font-size:22px;color:var(--mute);line-height:1.4">Hi, I'm Mary. A dynamic leader with a proven track record of driving impact at scale.</div><div class="bar" style="width:90%;margin-top:auto"></div></div>
-    <div style="width:150px;display:flex;flex-direction:column;align-items:center;gap:8px"><div class="hand">voice + design</div><svg width="110" height="70" viewBox="0 0 110 70"><path d="M6 10 C 30 60, 70 60, 100 22" fill="none" stroke="currentColor" style="stroke:var(--a)" stroke-width="4" stroke-linecap="round"/><path d="M84 18 L102 20 L96 36" fill="none" style="stroke:var(--a)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-    <div class="card acc" style="flex:1;height:420px;padding:36px;gap:18px"><div class="tag">After</div><div class="lbl" style="font-size:52px">Hi, I'm Mary. I build things that help kids run.</div><div style="font-size:22px;line-height:1.4;opacity:.9">Oak Park kid. Bain, then healthcare. Now at the GSB, running a nonprofit on the side.</div><div style="margin-top:auto"><span class="pill" style="background:var(--ink)">Say hi</span></div></div>
+  <h2 id="p20216d415b83r1-3336aec8" style="position:absolute; top:182px; left:128px; width:1665px; font-family:'Instrument Serif', Georgia, serif; font-size:96px; font-weight:400; line-height:1; letter-spacing:-1px; color:#141413">Tonight you leave with a live site in <span style="color:#ff6a3d">your ~style~</span></h2>
+  <p id="p20216d415b83r4-3336aec8" style="position:absolute; top:890px; left:128px; width:1665px; font-family:'Instrument Serif', Georgia, serif; font-size:56px; line-height:1.1; color:#141413">20 minutes of me, <span style="color:#ff6a3d">50 minutes of you</span></p>
+  <div id="p20216d415b83r2_0-3336aec8" style="position:absolute; top:412.69px; left:128.01px; width:314px; height:319px; display:flex; flex-direction:column; gap:12px; padding:32px; background:#fbf8f2; border-radius:20px">
+    <p style="height:58px; font-family:'Instrument Serif', Georgia, serif; font-size:64px; line-height:1; color:#ff6a3d">1</p>
+    <h3 style="height:71px; font-family:'Instrument Serif', Georgia, serif; font-size:65px; font-weight:400; color:#141413">Why</h3>
+    <p style="font-family:'DM Sans', Arial, sans-serif; font-size:28px; line-height:1.35; color:#4d4a44">Literally <b>what is the point?</b></p>
   </div>
-  <div class="foot"><span>Make your AI look and sound like you</span><span>03 / 14</span></div>
-  <div class="bars"><i class="why on"></i><i class="voice"></i><i class="design"></i><i class="deploy"></i></div>
-</section>
-
-<!-- 4 trust -->
-<section class="slide" data-act="why" data-notes="One number. Schilke and Reimann, 2025. 13 experiments, over 5,000 people. Trust drops 16 to 20 percent the moment people learn AI was involved. Worse when someone else catches it than when you say so. Nobody can tell by reading, but everybody judges once they know. So make the work yours.">
-  <div class="acts"><span class="on">1 WHY</span><span class="voice">2 VOICE</span><span class="design">3 DESIGN</span><span class="deploy">4 DEPLOY</span><span class="go">5 GO</span><span class="meta">04 / 14</span></div>
-  <h1>People trust work less <em>when they think AI made it.</em></h1>
-  <div class="row fill" style="justify-content:center;align-items:center">
-    <div class="card soft" style="width:1100px;height:100%;padding:48px;justify-content:center;align-items:center;text-align:center;gap:22px"><div class="num" style="color:var(--a);font-size:230px">16 to 20%</div><div class="sub" style="font-size:36px;max-width:none">drop in trust once people learn AI was used</div><div class="tag" style="font-size:15px">Schilke &amp; Reimann 2025 | 13 experiments, 5,000+ people</div></div>
+  <div id="p20216d415b83r2_1-3336aec8" style="position:absolute; top:412.69px; left:466.01px; width:314px; height:319px; display:flex; flex-direction:column; gap:12px; padding:32px; background:#fbf8f2; border-radius:20px">
+    <p style="font-family:'Instrument Serif', Georgia, serif; font-size:64px; line-height:1; color:#7c5cff">2</p>
+    <h3 style="font-family:'Instrument Serif', Georgia, serif; font-size:65px; font-weight:400; color:#141413">Voice</h3>
+    <p style="font-family:'DM Sans', Arial, sans-serif; font-size:28px; line-height:1.35; color:#4d4a44">How do I <b>pin down how I sound </b>&amp; teach it to AI?</p>
   </div>
-  <div class="foot"><span>Make your AI look and sound like you</span><span>04 / 14</span></div>
-  <div class="bars"><i class="why on"></i><i class="voice"></i><i class="design"></i><i class="deploy"></i></div>
+  <div id="p20216d415b83r2_2-3336aec8" style="position:absolute; top:412.69px; left:803.01px; width:314px; height:319px; display:flex; flex-direction:column; gap:12px; padding:32px; background:#fbf8f2; border-radius:20px">
+    <p style="font-family:'Instrument Serif', Georgia, serif; font-size:64px; line-height:1; color:#14b8a6">3</p>
+    <h3 style="font-family:'Instrument Serif', Georgia, serif; font-size:65px; font-weight:400; color:#141413">Design</h3>
+    <p style="font-family:'DM Sans', Arial, sans-serif; font-size:28px; line-height:1.35; color:#4d4a44">How do I <b>figure out my taste </b>&amp; teach it to AI?</p>
+  </div>
+  <div id="p20216d415b83r2_3-3336aec8" style="position:absolute; top:412.69px; left:1141.01px; width:314px; height:319px; display:flex; flex-direction:column; gap:12px; padding:32px; background:#fbf8f2; border-radius:20px">
+    <p style="font-family:'Instrument Serif', Georgia, serif; font-size:64px; line-height:1; color:#d99a00">4</p>
+    <h3 style="font-family:'Instrument Serif', Georgia, serif; font-size:65px; font-weight:400; color:#141413">Build</h3>
+    <p style="font-family:'DM Sans', Arial, sans-serif; font-size:28px; line-height:1.35; color:#4d4a44">How do I <b>turn my style into a </b>personal <b>website?</b></p>
+  </div>
+  <div id="p20216d415b83r2_4-3336aec8" style="position:absolute; top:412.69px; right:128px; width:314px; height:319px; display:flex; flex-direction:column; gap:12px; padding:32px; background:#fbf8f2; border-radius:20px">
+    <p style="font-family:'Instrument Serif', Georgia, serif; font-size:64px; line-height:1; color:#2b4bff">5</p>
+    <h3 style="font-family:'Instrument Serif', Georgia, serif; font-size:65px; font-weight:400; color:#141413">Host</h3>
+    <p style="font-family:'DM Sans', Arial, sans-serif; font-size:28px; line-height:1.35; color:#4d4a44">How do I <b>put it online </b>for the world to see?</p>
+  </div>
+  <aside>Set expectations up front. "Tonight has five parts, and each one answers a question you'd actually ask." Walk the cards left to right, one breath each. Why: why bother, when AI can already write and design? Voice: how do I get AI to write like me, not like a LinkedIn bot? Design: how do I get it to look like me? Build: how do I turn my résumé and my goals into an actual site? Host: how do I put it on the internet so I can text someone the link? "I talk for 20 minutes. Then you build for 50, with a step-by-step tutorial and helpers in the room. Zero coding. If you can drag a file into a folder, you can do tonight." Metaphor to land it: "Think of AI as a really talented new hire on day one. Smart, fast, and has no idea who you are. Tonight we write their onboarding binder."</aside>
 </section>
-
-<!-- 5 motifs -->
-<section class="slide" data-act="why" data-notes="An image AI and a caption AI in a loop. Draw. Describe. Draw the description. A hundred rounds, no human in the loop. Over a thousand runs. Almost every single one ended on one of these twelve pictures. Lighthouses. City at night. Gothic cathedrals. The authors called it visual elevator music. Left alone, AI drifts to the average. Your before site is the average. Hintze and team, Patterns, December 2025.">
-  <div class="acts"><span class="on">1 WHY</span><span class="voice">2 VOICE</span><span class="design">3 DESIGN</span><span class="deploy">4 DEPLOY</span><span class="go">5 GO</span><span class="meta">05 / 14</span></div>
-  <h1>Left alone, AI drifts <em>to the average.</em></h1>
-  <div class="row fill" style="gap:48px">
-    <div style="width:520px;display:flex;flex-direction:column;justify-content:center;gap:22px">
-      <div><h1 class="xl" style="font-size:96px">1,000 runs.</h1><h1 class="xl" style="font-size:96px"><em>12 pictures.</em></h1></div>
-      <div class="row" style="gap:8px;align-items:center">
-        <div class="mini">AI draws</div>
-        <svg width="34" height="20" viewBox="0 0 34 20" style="flex:none"><path d="M2 10h26M20 3l9 7-9 7" fill="none" style="stroke:var(--a)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <div class="mini">AI describes</div>
-        <svg width="34" height="20" viewBox="0 0 34 20" style="flex:none"><path d="M2 10h26M20 3l9 7-9 7" fill="none" style="stroke:var(--a)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <div class="mini">draws the description</div>
+<section id="samesite" data-transition="fade" style="background:#f3ede2">
+  <div id="pe39427448f4ar0-84e75c6f" style="position:absolute; top:96px; left:128px; width:1665px; height:46px; display:flex; flex-direction:row; gap:12px; align-items:center">
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#141413; background:#ff6a3d; border-radius:256px">1 Why</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#6a48f0; border-radius:256px">2 Voice</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#0f8c80; border-radius:256px">3 Design</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#a86b00; border-radius:256px">4 Build</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#2b4bff; border-radius:256px">5 Host</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#6e645b; border-radius:256px">6 Go</p>
+  </div>
+  <h2 id="pe39427448f4ar1-84e75c6f" style="position:absolute; top:182px; left:128px; width:1665px; font-family:'Instrument Serif', Georgia, serif; font-size:96px; font-weight:400; line-height:1; letter-spacing:-1px; color:#141413">Left alone, AI builds the same site for <span style="color:#ff6a3d">everyone</span></h2>
+  <div id="pe39427448f4ar2-84e75c6f" style="position:absolute; top:318px; left:128px; width:1665px; height:635px; display:flex; flex-direction:row; gap:40px">
+    <div style="display:flex; flex-direction:column; gap:24px; flex:1; padding:48px; background:#eae2d4; border-radius:24px">
+      <p style="font-family:'DM Mono', monospace; font-size:24px; color:#8c8178">BEFORE</p>
+      <div style="width:420px; height:20px; display:flex; flex-direction:column; background:#ddd3c3; border-radius:10px">
       </div>
-      <div class="tag" style="text-transform:none;letter-spacing:0;font-size:15px">100 rounds, no human. Hintze et al., Patterns, 2025.</div>
+      <div style="width:88px; height:88px; display:flex; flex-direction:column; background:#ddd3c3; border-radius:44px">
+      </div>
+      <p style="font-family:'DM Sans', Arial, sans-serif; font-size:32px; line-height:1.4; color:#8c8178">Hi, I'm Mary. A dynamic leader with a proven track record of driving impact at scale.</p>
     </div>
-    <div class="grid g4 fill" style="align-content:center;gap:16px" id="motifs"></div>
-  </div>
-  <div class="foot"><span>Make your AI look and sound like you</span><span>05 / 14</span></div>
-  <div class="bars"><i class="why on"></i><i class="voice"></i><i class="design"></i><i class="deploy"></i></div>
-</section>
-
-<!-- 6 agent -->
-<section class="slide" data-act="voice" data-notes="Sixty seconds for anyone who missed Workshop 1. A chatbot answers. An agent does the task. You give it a goal, it makes a plan, it uses tools like a browser, your files or code, and it hands back a finished thing. Abhi built a whole team of these for outreach in Workshop 1.">
-  <div class="acts"><span class="why">1 WHY</span><span class="on">2 VOICE</span><span class="design">3 DESIGN</span><span class="deploy">4 DEPLOY</span><span class="go">5 GO</span><span class="meta">06 / 14</span></div>
-  <h1>An agent is AI that <em>does the task for you.</em></h1>
-  <div class="row fill" style="align-items:center;gap:20px">
-    <div class="fstep"><div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2"/></svg></div><div class="lbl" style="font-size:44px">You give a goal</div><div class="ex">"Find 20 alumni in climate and draft intros."</div></div>
-    <svg class="arr" width="56" height="30" viewBox="0 0 56 30"><path d="M3 15h44M38 6l10 9-10 9"/></svg>
-    <div class="fstep"><div class="ico"><svg viewBox="0 0 24 24"><path d="M4 6h10M4 12h16M4 18h8"/><circle cx="18" cy="6" r="2"/><circle cx="16" cy="18" r="2"/></svg></div><div class="lbl" style="font-size:44px">It plans and uses tools</div><div class="row" style="gap:10px;flex-wrap:wrap"><span class="tchip"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg>Browser</span><span class="tchip"><svg viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Files</span><span class="tchip"><svg viewBox="0 0 24 24"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/></svg>Code</span></div></div>
-    <svg class="arr" width="56" height="30" viewBox="0 0 56 30"><path d="M3 15h44M38 6l10 9-10 9"/></svg>
-    <div class="fstep" style="box-shadow:inset 0 0 0 3px var(--a)"><div class="ico"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M9 14l2.5 2.5L16 12"/></svg></div><div class="lbl" style="font-size:44px">It hands back a finished thing</div><div class="ex">20 names, 20 drafts, ready to send.</div></div>
-  </div>
-  <div class="tag" style="font-size:15px">Workshop 1: Abhi's outreach agent team.</div>
-  <div class="foot"><span>Make your AI look and sound like you</span><span>06 / 14</span></div>
-  <div class="bars"><i class="why on"></i><i class="voice on"></i><i class="design"></i><i class="deploy"></i></div>
-</section>
-
-<!-- 7 skill -->
-<section class="slide" data-act="voice" data-notes="A skill is a text file the agent reads before it starts. Three parts: a name and when to use it, how to do it, and a few examples. Kate's room built one in Workshop 2 to log conversations. Tonight you write two more, both about you: voice and design. Nothing new after this slide.">
-  <div class="acts"><span class="why">1 WHY</span><span class="on">2 VOICE</span><span class="design">3 DESIGN</span><span class="deploy">4 DEPLOY</span><span class="go">5 GO</span><span class="meta">07 / 14</span></div>
-  <h1>A skill is a playbook <em>the agent reads before it works.</em></h1>
-  <div class="sub">Write it once. Claude uses it every time it fits.</div>
-  <div class="row fill" style="gap:56px;align-items:center">
-    <div class="file" style="width:820px;flex:none"><div class="top"><i></i><i></i><i></i>&nbsp; log-a-conversation / SKILL.md</div><div class="body" style="gap:14px;padding:24px">
-      <div class="part"><div class="pk">1 Name + when to use it</div><div>Log a conversation. Use when I paste notes from a coffee chat.</div></div>
-      <div class="part"><div class="pk">2 How to do it</div><div>Pull out name, company, next step. Add a row to my tracker.</div></div>
-      <div class="part"><div class="pk">3 Examples</div><div>"Met Priya at Stripe" → Priya | Stripe | send intro</div></div>
-    </div></div>
-    <div class="fill" style="display:flex;flex-direction:column;gap:14px">
-      <div class="tag">Your shelf</div>
-      <div class="skchip locked"><span>Log a conversation</span><small>Workshop 2</small></div>
-      <div class="skchip edit"><span>Voice</span><small>tonight</small></div>
-      <div class="skchip edit" style="--s:var(--design-s);--a:var(--design)"><span>Design</span><small>tonight</small></div>
-      <div style="height:10px;border-radius:5px;background:#D4C9B8;margin-top:4px"></div>
+    <div style="width:120px; display:flex; flex-direction:column; gap:8px; align-items:center; justify-content:center">
+      <p style="font-family:Caveat, 'Brush Script MT', serif; font-size:40px; line-height:1; text-align:center; color:#c2471f">voice + design</p>
+      <div class="xarrow" style="width:96px; height:48px; background:#c2471f; opacity:0.34"></div>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:24px; flex:1; padding:48px; background:#ff6a3d; border-radius:24px">
+      <p style="font-family:'DM Mono', monospace; font-size:24px; color:#4a1a08">AFTER</p>
+      <p style="font-family:'Instrument Serif', Georgia, serif; font-size:60px; line-height:1.05; color:#141413">Hi, I'm Mary. I build things that help kids run.</p>
+      <p style="font-family:'DM Sans', Arial, sans-serif; font-size:30px; line-height:1.4; color:#2a1208">Oak Park kid. Bain, then health care. Now at the GSB, running a nonprofit on the side.</p>
+      <div style="flex:1"></div>
+      <p style="align-self:start; padding:10px 24px; font-family:'DM Sans', Arial, sans-serif; font-size:26px; font-weight:700; color:#fbf8f2; background:#141413; border-radius:256px">Say hi</p>
     </div>
   </div>
-  <div class="foot"><span>Make your AI look and sound like you</span><span>07 / 14</span></div>
-  <div class="bars"><i class="why on"></i><i class="voice on"></i><i class="design"></i><i class="deploy"></i></div>
+  <aside>Read the left card out loud, a little flat. Wait for the groan. "Every one of us has gotten this from AI. Ask it for a bio and you get the 'dynamic leader with a proven track record.' Ask it for a website and you get the website-shaped average." Why? "AI learned from basically everything ever written. So its default is the middle of everything. It's like asking a room of a million people to describe you and averaging the answers. Nobody's wrong, and nobody's you." Point right: "Same AI, same facts about me. The only difference is two small files: one that teaches it how I sound, one that teaches it how I look. That's what you'll build tonight."</aside>
 </section>
-
-<!-- 8 voice -->
-<section class="slide" data-act="voice" data-notes="The voice skill is one text file. Two inputs. First, samples: three things you actually wrote, an email, a post, a text to a friend. Second, the qualities you want. Pick one: Intense, Polished, Warm or Playful. Warm fits most people. The bottom of the file is locked: read the samples first, say less, no em dashes, no buzzwords. Then test it. New chat, ask for a two-line intro, read it out loud. Would a friend know you wrote it?">
-  <div class="acts"><span class="why">1 WHY</span><span class="on">2 VOICE</span><span class="design">3 DESIGN</span><span class="deploy">4 DEPLOY</span><span class="go">5 GO</span><span class="meta">08 / 14</span></div>
-  <h1 style="font-size:74px">Your voice is your samples <em>plus the qualities you want.</em></h1>
-  <div class="row fill" style="gap:18px;align-items:center">
-    <div style="width:260px;flex:none;display:flex;flex-direction:column;gap:12px"><div class="tag">Samples</div><div class="card" style="padding:16px;gap:8px"><b>An email you sent</b><div class="bar" style="width:90%"></div></div><div class="card" style="padding:16px;gap:8px"><b>A post</b><div class="bar" style="width:70%"></div></div><div class="card" style="padding:16px;gap:8px"><b>A text to a friend</b><div class="bar" style="width:55%"></div></div></div>
-    <svg class="arr" width="44" height="30" viewBox="0 0 44 30"><path d="M3 15h32M26 6l10 9-10 9"/></svg>
-    <div class="file fill" style="position:relative;align-self:center"><div class="top"><i></i><i></i><i></i>&nbsp; voice / SKILL.md</div><div class="body"><div class="edit">## Make it yours<br>Version: Warm<br>My samples: [3 things you wrote]<br>Words I use: [yours]<br>Never say: [up to 3]</div><div class="locked">## Locked<br>Read my samples first. Say less. Opinions over adjectives.</div><div class="locked">## Never<br>em dashes | buzzwords | "proven track record"</div></div>
-      <div class="callout" style="right:34px;top:66px;display:flex;align-items:flex-start;gap:6px"><svg width="70" height="60" viewBox="0 0 70 60"><path d="M66 8 C 50 28, 36 40, 10 46" /><path d="M24 36 L8 48 L26 54"/></svg><div class="hand" style="transform:rotate(4deg)">edit this part</div></div>
-    </div>
-    <svg class="arr" width="44" height="30" viewBox="0 0 44 30"><path d="M41 15H9M18 6L8 15l10 9"/></svg>
-    <div style="width:380px;flex:none;display:flex;flex-direction:column;gap:10px"><div class="tag">Qualities: pick one</div>
-      <div class="qual"><span class="pill ghost">Intense</span><span>blunt, high energy, short sentences</span></div>
-      <div class="qual"><span class="pill ghost">Polished</span><span>structured, confident, buttoned up</span></div>
-      <div class="qual pick"><span class="pill acc">Warm</span><span>direct, sounds like you talk</span></div>
-      <div class="qual"><span class="pill ghost">Playful</span><span>loose, candid, fragments allowed</span></div>
-    </div>
+<section id="trust" data-transition="fade" style="background:#f3ede2">
+  <div id="p528da4ac1787r0-aa60287f" style="position:absolute; top:96px; left:128px; width:1665px; height:46px; display:flex; flex-direction:row; gap:12px; align-items:center">
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#141413; background:#ff6a3d; border-radius:256px">1 Why</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#6a48f0; border-radius:256px">2 Voice</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#0f8c80; border-radius:256px">3 Design</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#a86b00; border-radius:256px">4 Build</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#2b4bff; border-radius:256px">5 Host</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#6e645b; border-radius:256px">6 Go</p>
   </div>
-  <div style="font:500 17px var(--mono);color:var(--ink2)"><span style="color:var(--a)">Test it:</span> ask for a two-line intro, read it out loud.</div>
-  <div class="foot"><span>Make your AI look and sound like you</span><span>08 / 14</span></div>
-  <div class="bars"><i class="why on"></i><i class="voice on"></i><i class="design"></i><i class="deploy"></i></div>
-</section>
-
-<!-- 9 design -->
-<section class="slide" data-act="design" style="gap:20px" data-notes="Design, same move. Three decisions: colors, fonts, nevers. Here is one made-up classmate, Jordan, three ways. Polished: navy on white, a classic serif, numbered sections, no emojis. Warm: clay on warm white, a round friendly font, a big photo, a button that says hi. Playful: sky blue, lowercase, a tilted photo, a code-style font for the details. Same person. The only thing that changed is those three decisions. Pick the starter for who your site is for, then make the three decisions yours.">
-  <div class="acts"><span class="why">1 WHY</span><span class="voice">2 VOICE</span><span class="on">3 DESIGN</span><span class="deploy">4 DEPLOY</span><span class="go">5 GO</span><span class="meta">09 / 14</span></div>
-  <h1 style="font-size:66px">Three decisions make your look: <em>colors, fonts, nevers.</em></h1>
-  <div class="row fill" style="gap:44px;justify-content:center;align-items:flex-start">
-
-    <div class="mcol"><div class="mlabel">Polished</div>
-      <div class="mock"><div class="bb"><i></i><i></i><i></i><span>jordanlee.com</span></div>
-        <div class="pg" style="background:#fff;font-family:'Source Sans 3',sans-serif;color:#2B2B2B">
-          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:26px"><span style="font:600 16px 'Playfair Display',serif;color:#24426B">JL</span><span style="font-size:12px;color:#6B6B6B;word-spacing:10px">Work About Contact</span></div>
-          <div style="display:flex;gap:16px;align-items:center;margin-bottom:24px"><div style="width:68px;height:68px;background:#D9D9D9;display:flex;align-items:center;justify-content:center;font:600 18px 'Source Sans 3';color:#7A7A7A;flex:none">JL</div><div><div style="font:500 38px/1.05 'Playfair Display',serif;color:#161616">Jordan Lee</div><div style="font-size:14px;color:#5A5A5A;margin-top:6px">Strategy and climate finance. Stanford GSB '27.</div></div></div>
-          <div class="psec"><b>01</b><span>Experience</span><small>Consulting, then a climate fund</small></div>
-          <div class="psec"><b>02</b><span>Projects</span><small>Grid storage finance model</small></div>
-          <div class="psec" style="border-bottom:1px solid #E2E2E2"><b>03</b><span>Writing</span><small>Notes on carbon markets</small></div>
-          <div style="margin-top:20px;font:600 14px 'Source Sans 3';color:#24426B">Get in touch →</div>
-        </div></div>
-      <div class="spec"><div class="k">Colors</div><div><i class="dot" style="background:#fff"></i><i class="dot" style="background:#24426B"></i> Navy on white</div><div class="k">Fonts</div><div>Playfair Display + Source Sans 3</div><div class="k">Nevers</div><div>no emojis, no stock photos</div></div>
-    </div>
-
-    <div class="mcol"><div class="mlabel">Warm</div>
-      <div class="mock"><div class="bb"><i></i><i></i><i></i><span>jordanlee.com</span></div>
-        <div class="pg" style="background:#FAF8F4;font-family:'Source Sans 3',sans-serif;color:#3A302A">
-          <div style="font:500 13px Poppins,sans-serif;color:#B4532A;margin-bottom:20px">jordan lee</div>
-          <div style="display:flex;gap:18px;align-items:center;margin-bottom:22px"><div style="width:118px;height:136px;border-radius:24px;background:#EBD6C7;display:flex;align-items:center;justify-content:center;font:600 30px Poppins,sans-serif;color:#B4532A;flex:none">JL</div><div style="font:600 23px/1.25 Poppins,sans-serif;color:#2A211C">Hi, I'm Jordan. I build things for small farms.</div></div>
-          <div style="font:500 14px Poppins,sans-serif;color:#B4532A;margin-bottom:8px">Working on</div>
-          <div class="wli">A seed-swap app for Bay Area growers</div>
-          <div class="wli">Cheaper cold storage for farm co-ops</div>
-          <div style="margin-top:20px"><span style="display:inline-block;background:#B4532A;color:#fff;border-radius:999px;padding:10px 24px;font:500 14px Poppins,sans-serif">Say hi</span></div>
-        </div></div>
-      <div class="spec"><div class="k">Colors</div><div><i class="dot" style="background:#FAF8F4"></i><i class="dot" style="background:#B4532A"></i> Clay on warm white</div><div class="k">Fonts</div><div>Poppins + Source Sans 3</div><div class="k">Nevers</div><div>no gradients, no all caps</div></div>
-    </div>
-
-    <div class="mcol"><div class="mlabel">Playful</div>
-      <div class="mock"><div class="bb"><i></i><i></i><i></i><span>jordanlee.com</span></div>
-        <div class="pg" style="background:#F2FAFF;font-family:'JetBrains Mono',monospace;color:#14213D">
-          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:22px"><div style="font:800 35px/1.05 Nunito,sans-serif;margin-top:26px">hey, i'm jordan</div><div style="width:88px;height:88px;border-radius:50%;background:#CDEBFF;box-shadow:inset 0 0 0 4px #38B6FF;transform:rotate(-10deg);display:flex;align-items:center;justify-content:center;font:800 26px Nunito,sans-serif;color:#38B6FF;flex:none">jl</div></div>
-          <div style="font-size:12px;color:#5A7489;margin-bottom:10px">episodes</div>
-          <div class="pli"><b>01</b> learning to bake bread</div>
-          <div class="pli"><b>02</b> a newsletter about tractors</div>
-          <div style="margin-top:24px;font-size:14px;display:flex;gap:22px"><span class="ul">email me</span><span class="ul">read the newsletter</span></div>
-        </div></div>
-      <div class="spec"><div class="k">Colors</div><div><i class="dot" style="background:#fff"></i><i class="dot" style="background:#38B6FF"></i> Sky blue on white</div><div class="k">Fonts</div><div>Nunito + JetBrains Mono</div><div class="k">Nevers</div><div>no corporate words, no gray-on-gray</div></div>
-    </div>
-
+  <h2 id="p528da4ac1787r1-aa60287f" style="position:absolute; top:182px; left:128px; width:1665px; font-family:'Instrument Serif', Georgia, serif; font-size:96px; font-weight:400; line-height:1; letter-spacing:-1px; color:#141413">People trust work less <span style="color:#ff6a3d">when they think AI made it</span></h2>
+  <div id="p528da4ac1787r2-aa60287f" style="position:absolute; top:318px; left:128px; width:1665px; height:635px; display:flex; flex-direction:column; gap:20px; align-items:center; justify-content:center; padding:56px; background:#ffe1d6; border-radius:28px">
+    <p style="font-family:'Instrument Serif', Georgia, serif; font-size:260px; line-height:0.9; text-align:center; color:#e0552a">16 to 20%</p>
+    <p style="font-family:'DM Sans', Arial, sans-serif; font-size:40px; text-align:center; color:#4d4a44"><b>drop in trust</b> once people learn AI was used</p>
+    <p style="font-family:'DM Mono', monospace; font-size:24px; text-align:center; color:#8c8178">SCHILKE &amp; REIMANN 2025</p>
   </div>
-  <div class="foot" style="padding-bottom:16px"><span>Same person. <span style="color:var(--a)">Only the three decisions changed.</span></span><span>09 / 14</span></div>
-  <div class="bars"><i class="why on"></i><i class="voice on"></i><i class="design on"></i><i class="deploy"></i></div>
+  <p id="p528da4ac1787r2_3-aa60287f" style="position:absolute; top:932.45px; left:1342.81px; width:391px; font-family:Caveat, 'Brush Script MT', serif; font-size:40px; line-height:1; text-align:center; color:#c2471f">let's listen to the data people!</p>
+  <aside>"Here's why this matters for your career, not just your website." Researchers ran 13 experiments with over 5,000 people. Same work, but some people were told AI helped. Trust dropped 16 to 20 percent. Same email, same essay, same pitch. Metaphor: "It's like finding out the home-cooked meal came from a meal kit. It tasted fine a second ago. Now you're judging it." "So the goal isn't hiding that you use AI. It's making sure what comes out is so clearly you that nobody's looking for the meal kit."</aside>
 </section>
-
-<!-- 10 how I made mine -->
-<section class="slide" data-act="design" data-notes="Sixty seconds on mine. The site should feel like my notes, pen on paper. So the ink is blue pen blue. The highlighter is a yellow-green I pulled straight from the background of my headshot, so the photo and the page agree. Fonts: Poppins for body, Give You Glory for the handwriting. The nevers came from things that made me wince when I tried them. Emojis felt like a group chat. Tape on photos felt like a scrapbook kit. Big-number stats felt like a pitch deck. That is the method: build once, look at what makes you wince, write it down as a never.">
-  <div class="acts"><span class="why">1 WHY</span><span class="voice">2 VOICE</span><span class="on">3 DESIGN</span><span class="deploy">4 DEPLOY</span><span class="go">5 GO</span><span class="meta">10 / 14</span></div>
-  <h1>Mine: pen on paper, one highlighter, <em>three nevers.</em></h1>
-  <div class="row fill" style="gap:36px">
-    <div class="after" style="width:560px;flex:none">[screenshot: mary-blankemeier.vercel.app]</div>
-    <div style="flex:1;display:flex;flex-direction:column;gap:14px;justify-content:center">
-      <div class="card" style="flex-direction:row;align-items:center;gap:20px;padding:20px 24px"><div class="tag" style="width:70px;flex:none;color:var(--a)">Color</div><div class="sub" style="font-size:22px">blue pen ink + a yellow-green highlighter pulled from my headshot</div></div>
-      <div class="card" style="flex-direction:row;align-items:center;gap:20px;padding:20px 24px"><div class="tag" style="width:70px;flex:none;color:var(--a)">Fonts</div><div class="sub" style="font-size:22px">Poppins + Give You Glory</div></div>
-      <div class="card" style="flex-direction:row;align-items:center;gap:20px;padding:20px 24px"><div class="tag" style="width:70px;flex:none;color:var(--a)">Nevers</div><div class="sub" style="font-size:22px">no emojis, no tape on photos, no big-number stats</div></div>
-      <div class="sticky" style="margin-top:10px">How to find your nevers: build once, look at what makes you wince, write it down.</div>
+<section id="average" data-transition="fade" style="display:flex; flex-direction:column; gap:32px; padding:96px 128px 128px; background:#f3ede2">
+  <div style="display:flex; flex-direction:row; gap:12px; align-items:center">
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#141413; background:#ff6a3d; border-radius:256px">1 Why</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#6a48f0; border-radius:256px">2 Voice</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#0f8c80; border-radius:256px">3 Design</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#a86b00; border-radius:256px">4 Build</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#2b4bff; border-radius:256px">5 Host</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#6e645b; border-radius:256px">6 Go</p>
+  </div>
+  <div style="display:flex; flex-direction:column; gap:12px">
+    <h2 style="font-family:'Instrument Serif', Georgia, serif; font-size:96px; font-weight:400; line-height:1; letter-spacing:-1px; color:#141413">Left alone, AI drifts <span style="color:#ff6a3d">to the average</span></h2>
+    <p style="font-family:'DM Sans', Arial, sans-serif; font-size:32px; color:#4d4a44">Researchers played the telephone game with AI, 1,000 times</p>
+  </div>
+  <div style="display:flex; flex-direction:row; gap:24px; align-items:stretch; flex:1">
+    <div style="width:520px; display:flex; flex-direction:column; gap:14px; padding:32px; background:#fbf8f2; border-radius:24px">
+      <p style="font-family:'DM Mono', monospace; font-size:24px; color:#c2471f">START</p>
+      <h3 style="font-family:'Instrument Serif', Georgia, serif; font-size:40px; font-weight:400; line-height:1.1; color:#141413">1,000 different starting pictures</h3>
+      <svg aria-label="Seventy scattered dots in many colors, standing for 1,000 different starting pictures" width="456" height="280" viewBox="0 0 456 280"><circle cx="179" cy="256" r="8" fill="#3E6B4A" opacity="0.85"/><circle cx="347" cy="26" r="6" fill="#7C5CFF" opacity="0.85"/><circle cx="201" cy="163" r="6" fill="#2B4BFF" opacity="0.85"/><circle cx="33" cy="36" r="12" fill="#3E6B4A" opacity="0.85"/><circle cx="49" cy="75" r="6" fill="#3E6B4A" opacity="0.85"/><circle cx="44" cy="225" r="6" fill="#2B4BFF" opacity="0.85"/><circle cx="336" cy="174" r="6" fill="#3E6B4A" opacity="0.85"/><circle cx="39" cy="263" r="8" fill="#FF6A3D" opacity="0.85"/><circle cx="299" cy="233" r="8" fill="#F2B705" opacity="0.85"/><circle cx="228" cy="50" r="6" fill="#F2B705" opacity="0.85"/><circle cx="300" cy="222" r="8" fill="#7C5CFF" opacity="0.85"/><circle cx="311" cy="160" r="8" fill="#E03870" opacity="0.85"/><circle cx="63" cy="154" r="6" fill="#FF6A3D" opacity="0.85"/><circle cx="330" cy="66" r="12" fill="#3E6B4A" opacity="0.85"/><circle cx="411" cy="94" r="12" fill="#8C8178" opacity="0.85"/><circle cx="199" cy="90" r="8" fill="#14B8A6" opacity="0.85"/><circle cx="371" cy="213" r="8" fill="#7C5CFF" opacity="0.85"/><circle cx="308" cy="90" r="12" fill="#E03870" opacity="0.85"/><circle cx="387" cy="128" r="10" fill="#7C5CFF" opacity="0.85"/><circle cx="74" cy="145" r="12" fill="#14B8A6" opacity="0.85"/><circle cx="401" cy="101" r="8" fill="#8C8178" opacity="0.85"/><circle cx="229" cy="24" r="6" fill="#E03870" opacity="0.85"/><circle cx="188" cy="191" r="10" fill="#8C8178" opacity="0.85"/><circle cx="310" cy="218" r="12" fill="#7C5CFF" opacity="0.85"/><circle cx="61" cy="255" r="10" fill="#8C8178" opacity="0.85"/><circle cx="370" cy="184" r="6" fill="#FF6A3D" opacity="0.85"/><circle cx="388" cy="193" r="10" fill="#8C8178" opacity="0.85"/><circle cx="159" cy="197" r="12" fill="#E03870" opacity="0.85"/><circle cx="25" cy="254" r="12" fill="#E03870" opacity="0.85"/><circle cx="100" cy="170" r="6" fill="#8C8178" opacity="0.85"/><circle cx="44" cy="69" r="10" fill="#14B8A6" opacity="0.85"/><circle cx="392" cy="77" r="12" fill="#3E6B4A" opacity="0.85"/><circle cx="268" cy="34" r="8" fill="#8C8178" opacity="0.85"/><circle cx="219" cy="154" r="10" fill="#14B8A6" opacity="0.85"/><circle cx="433" cy="124" r="10" fill="#3E6B4A" opacity="0.85"/><circle cx="197" cy="188" r="12" fill="#2B4BFF" opacity="0.85"/><circle cx="91" cy="35" r="8" fill="#14B8A6" opacity="0.85"/><circle cx="132" cy="182" r="8" fill="#FF6A3D" opacity="0.85"/><circle cx="262" cy="226" r="8" fill="#F2B705" opacity="0.85"/><circle cx="158" cy="15" r="8" fill="#3E6B4A" opacity="0.85"/><circle cx="287" cy="108" r="10" fill="#14B8A6" opacity="0.85"/><circle cx="367" cy="233" r="6" fill="#8C8178" opacity="0.85"/><circle cx="413" cy="257" r="12" fill="#3E6B4A" opacity="0.85"/><circle cx="218" cy="114" r="6" fill="#8C8178" opacity="0.85"/><circle cx="338" cy="116" r="6" fill="#2B4BFF" opacity="0.85"/><circle cx="48" cy="266" r="8" fill="#8C8178" opacity="0.85"/><circle cx="97" cy="42" r="10" fill="#FF6A3D" opacity="0.85"/><circle cx="66" cy="14" r="8" fill="#7C5CFF" opacity="0.85"/><circle cx="200" cy="171" r="6" fill="#7C5CFF" opacity="0.85"/><circle cx="120" cy="171" r="12" fill="#14B8A6" opacity="0.85"/><circle cx="338" cy="78" r="10" fill="#E03870" opacity="0.85"/><circle cx="256" cy="45" r="6" fill="#8C8178" opacity="0.85"/><circle cx="252" cy="136" r="12" fill="#F2B705" opacity="0.85"/><circle cx="57" cy="50" r="6" fill="#E03870" opacity="0.85"/><circle cx="393" cy="81" r="12" fill="#14B8A6" opacity="0.85"/><circle cx="278" cy="19" r="8" fill="#E03870" opacity="0.85"/><circle cx="89" cy="190" r="6" fill="#F2B705" opacity="0.85"/><circle cx="343" cy="235" r="6" fill="#F2B705" opacity="0.85"/><circle cx="279" cy="107" r="8" fill="#E03870" opacity="0.85"/><circle cx="409" cy="71" r="10" fill="#2B4BFF" opacity="0.85"/><circle cx="327" cy="221" r="8" fill="#2B4BFF" opacity="0.85"/><circle cx="432" cy="116" r="8" fill="#2B4BFF" opacity="0.85"/><circle cx="279" cy="140" r="10" fill="#FF6A3D" opacity="0.85"/><circle cx="28" cy="216" r="10" fill="#8C8178" opacity="0.85"/><circle cx="146" cy="63" r="10" fill="#8C8178" opacity="0.85"/><circle cx="427" cy="253" r="10" fill="#E03870" opacity="0.85"/><circle cx="55" cy="70" r="6" fill="#2B4BFF" opacity="0.85"/><circle cx="254" cy="64" r="10" fill="#2B4BFF" opacity="0.85"/><circle cx="261" cy="173" r="6" fill="#8C8178" opacity="0.85"/><circle cx="348" cy="102" r="6" fill="#7C5CFF" opacity="0.85"/></svg>
+    </div>
+    <div style="width:300px; display:flex; flex-direction:column; gap:10px; justify-content:center">
+      <p style="font-family:'DM Mono', monospace; font-size:24px; color:#8c8178; text-align:center">EACH ROUND</p>
+      <p style="padding:12px 16px; font-family:'DM Sans', Arial, sans-serif; font-size:26px; font-weight:500; color:#141413; background:#ffe1d6; border-radius:12px; text-align:center">AI draws it</p>
+      <p style="padding:12px 16px; font-family:'DM Sans', Arial, sans-serif; font-size:26px; font-weight:500; color:#141413; background:#ffe1d6; border-radius:12px; text-align:center">AI describes it</p>
+      <p style="padding:12px 16px; font-family:'DM Sans', Arial, sans-serif; font-size:26px; font-weight:500; color:#141413; background:#ffe1d6; border-radius:12px; text-align:center">AI redraws from the words</p>
+      <p style="font-family:Caveat, 'Brush Script MT', serif; font-size:38px; line-height:1.05; color:#c2471f; text-align:center">100 rounds, no human touching it</p>
+      <div class="xarrow" style="width:120px; height:60px; background:#ff6a3d; align-self:center"></div>
+    </div>
+    <div style="flex:1; display:flex; flex-direction:column; gap:14px; padding:32px; background:#fbf8f2; border-radius:24px">
+      <p style="font-family:'DM Mono', monospace; font-size:24px; color:#c2471f">END</p>
+      <h3 style="font-family:'Instrument Serif', Georgia, serif; font-size:40px; font-weight:400; line-height:1.1; color:#141413">Almost every run became 1 of <span style="color:#ff6a3d">12 stock scenes</span></h3>
+      <div style="display:grid; gap:10px; grid-template-columns:1fr 1fr 1fr">
+        <p style="padding:12px 14px; font-family:'DM Sans', Arial, sans-serif; font-size:24px; line-height:1.2; color:#141413; background:#efe8dc; border-radius:10px">Lighthouse &amp; sea</p>
+        <p style="padding:12px 14px; font-family:'DM Sans', Arial, sans-serif; font-size:24px; line-height:1.2; color:#141413; background:#efe8dc; border-radius:10px">City at night</p>
+        <p style="padding:12px 14px; font-family:'DM Sans', Arial, sans-serif; font-size:24px; line-height:1.2; color:#141413; background:#efe8dc; border-radius:10px">Gothic cathedral</p>
+        <p style="padding:12px 14px; font-family:'DM Sans', Arial, sans-serif; font-size:24px; line-height:1.2; color:#141413; background:#efe8dc; border-radius:10px">Palace interior</p>
+        <p style="padding:12px 14px; font-family:'DM Sans', Arial, sans-serif; font-size:24px; line-height:1.2; color:#141413; background:#efe8dc; border-radius:10px">Luxury interior</p>
+        <p style="padding:12px 14px; font-family:'DM Sans', Arial, sans-serif; font-size:24px; line-height:1.2; color:#141413; background:#efe8dc; border-radius:10px">Formal room</p>
+        <p style="padding:12px 14px; font-family:'DM Sans', Arial, sans-serif; font-size:24px; line-height:1.2; color:#141413; background:#efe8dc; border-radius:10px">Rural village</p>
+        <p style="padding:12px 14px; font-family:'DM Sans', Arial, sans-serif; font-size:24px; line-height:1.2; color:#141413; background:#efe8dc; border-radius:10px">Animals in a landscape</p>
+        <p style="padding:12px 14px; font-family:'DM Sans', Arial, sans-serif; font-size:24px; line-height:1.2; color:#141413; background:#efe8dc; border-radius:10px">Home &amp; food</p>
+        <p style="padding:12px 14px; font-family:'DM Sans', Arial, sans-serif; font-size:24px; line-height:1.2; color:#141413; background:#efe8dc; border-radius:10px">Industrial vintage</p>
+        <p style="padding:12px 14px; font-family:'DM Sans', Arial, sans-serif; font-size:24px; line-height:1.2; color:#141413; background:#efe8dc; border-radius:10px">Plain buildings</p>
+        <p style="padding:12px 14px; font-family:'DM Sans', Arial, sans-serif; font-size:24px; line-height:1.2; color:#141413; background:#efe8dc; border-radius:10px">Sports &amp; action</p>
+      </div>
+      <p style="font-family:'DM Sans', Arial, sans-serif; font-size:26px; color:#4d4a44">Their name for it: <i>visual elevator music</i></p>
+      <p style="font-family:'DM Mono', monospace; font-size:24px; color:#8c8178">HINTZE ET AL., PATTERNS, 2025</p>
     </div>
   </div>
-  <div class="foot"><span>Make your AI look and sound like you</span><span>10 / 14</span></div>
-  <div class="bars"><i class="why on"></i><i class="voice on"></i><i class="design on"></i><i class="deploy"></i></div>
-</section>
+  <p id="c351928f" style="position:absolute; top:932.45px; left:1342.81px; width:391px; font-family:Caveat, 'Brush Script MT', serif; font-size:40px; line-height:1; text-align:center; color:#c2471f">ok I promise... last study!</p>
+  <aside>This is the "why" in one picture. Read it left to right: lots of different starts, one loop, a handful of endings.
 
-<!-- 11 iterate -->
-<section class="slide" data-act="deploy" data-notes="Never say 'make it better'. Ask for three options. Point at one. Name the one thing that is off, in plain words, like you would to a friend. Then build it once with both skills on. When something is still wrong, fix the skill, not the page. A fix on the page dies with the page. A fix in the skill follows you to every email and deck.">
-  <div class="acts"><span class="why">1 WHY</span><span class="voice">2 VOICE</span><span class="design">3 DESIGN</span><span class="on">4 DEPLOY</span><span class="go">5 GO</span><span class="meta">11 / 14</span></div>
-  <h1>Ask for three options. Pick one. <em>Name what's off.</em></h1>
-  <div class="grid g3 fill" style="gap:28px">
-    <div style="display:flex;flex-direction:column;gap:10px;opacity:.45"><div class="card fill" style="gap:12px"><div class="bar" style="width:70%;height:16px;background:#D4C9B8"></div><div style="flex:1;border-radius:12px;background:var(--beige2)"></div></div><div class="name">A</div></div>
-    <div style="display:flex;flex-direction:column;gap:10px;position:relative"><div class="card fill" style="gap:12px;box-shadow:inset 0 0 0 3px var(--a)"><div class="bar" style="width:70%;height:16px;background:var(--ink)"></div><div style="flex:1;border-radius:12px;background:#F7F1EA"></div></div><div class="name" style="color:var(--a)">B, this one</div><div class="callout" style="left:50%;top:18px;transform:translateX(-50%);width:420px;text-align:center"><div class="hand" style="transform:rotate(-2deg);font-size:28px;background:#FFF4C7;border-radius:10px;padding:8px 14px;display:inline-block;color:var(--ink)">"Love B. Headline's too stiff. Say it like my emails."</div></div></div>
-    <div style="display:flex;flex-direction:column;gap:10px;opacity:.45"><div class="card fill" style="gap:12px"><div class="bar" style="width:50%;height:16px;background:#D4C9B8"></div><div style="flex:1;border-radius:12px;background:#EAF6FD"></div></div><div class="name">C</div></div>
+Explain it like the telephone game: "Remember telephone as a kid? One person whispers, the next repeats it, and by the end 'purple elephant' turns into 'pickle sandwich.' Researchers played telephone with AI."
+
+Point at the middle: each round, AI draws a picture, then looks at its own picture and describes it in words, then draws a new picture from just those words. 100 rounds, no human touching it.
+
+Point at the dots: "They started from 1,000 totally different places. You'd expect 1,000 different endings."
+
+Point at the grid: "Instead, almost every run ended up as one of twelve stock scenes. A lighthouse. A city at night. A cozy kitchen. The researchers called it visual elevator music. Pleasant, familiar, about nothing."
+
+Land it: "That's what AI does when nobody steers. It slides to the most average version. Your website is the same. If you don't steer, you get the lighthouse. Tonight you learn to steer." Then: "OK, I promise, last study."</aside>
+</section>
+<section id="skill" data-transition="fade" style="display:flex; flex-direction:column; gap:40px; padding:96px 128px 128px; background:#f3ede2">
+  <div style="display:flex; flex-direction:row; gap:12px; align-items:center">
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#c2471f; border-radius:256px">1 Why</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#fbf8f2; background:#7c5cff; border-radius:256px">2 Voice</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#0f8c80; border-radius:256px">3 Design</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#a86b00; border-radius:256px">4 Build</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#2b4bff; border-radius:256px">5 Host</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#6e645b; border-radius:256px">6 Go</p>
   </div>
-  <div class="card soft" style="flex-direction:row;align-items:center;gap:18px;padding:20px 28px"><span class="pill acc">Then</span><div class="sub" style="font-size:24px"><b>Build it once, both skills on.</b> Fix the skill, not the page.</div></div>
-  <div class="foot"><span>Make your AI look and sound like you</span><span>11 / 14</span></div>
-  <div class="bars"><i class="why on"></i><i class="voice on"></i><i class="design on"></i><i class="deploy on"></i></div>
-</section>
-
-<!-- 12 host it live -->
-<section class="slide" data-act="deploy" data-notes="Do this live, 60 seconds, my own site. GitHub: new repo, upload index.html. Vercel: import, deploy. Copy the link. Both free, Vercel signs in with GitHub. If you made the accounts in the pre-work, this is four clicks tonight. If not, it is the take-home. Stuck on either one? Ask Claude to walk you through it, it can do most of it. Your link goes in the class gallery unless you untick the box in the walkthrough.">
-  <div class="acts"><span class="why">1 WHY</span><span class="voice">2 VOICE</span><span class="design">3 DESIGN</span><span class="on">4 DEPLOY</span><span class="go">5 GO</span><span class="meta">12 / 14</span></div>
-  <h1>Host it live in <em>four clicks.</em></h1>
-  <div class="grid g4 fill" style="align-content:center">
-    <div class="step"><b>1</b><div class="lbl">New repo</div><div class="sub" style="font-size:19px">github.com → New → public → yourname-site</div></div>
-    <div class="step"><b>2</b><div class="lbl">Upload index.html</div><div class="sub" style="font-size:19px">Add file → Upload files → Commit</div></div>
-    <div class="step"><b>3</b><div class="lbl">Import to Vercel</div><div class="sub" style="font-size:19px">vercel.com → sign in with GitHub → Add New → Project</div></div>
-    <div class="step" style="box-shadow:inset 0 0 0 3px var(--a)"><b>4</b><div class="lbl">Deploy</div><div class="sub" style="font-size:19px">Copy your live link into the walkthrough.</div></div>
+  <div style="display:flex; flex-direction:column; gap:16px">
+    <h2 style="font-family:'Instrument Serif', Georgia, serif; font-size:80px; font-weight:400; line-height:1; letter-spacing:-1px; color:#141413"><span style="color:#7c5cff">A skill is a playbook</span> that AI reads before it works</h2>
+    <p style="font-family:'DM Sans', Arial, sans-serif; font-size:32px; color:#4d4a44">Write it once &amp; AI uses it every time it fits</p>
   </div>
-  <div class="row" style="gap:14px;align-items:center"><span class="pill ghost">Both free</span><span class="pill ghost">Stuck? Ask Claude to walk you through it</span></div>
-  <div class="foot"><span>Make your AI look and sound like you</span><span>12 / 14</span></div>
-  <div class="bars"><i class="why on"></i><i class="voice on"></i><i class="design on"></i><i class="deploy on"></i></div>
-</section>
-
-<!-- 13 which tool, which account -->
-<section class="slide" data-act="deploy" data-notes="Quick one. Any of the three tools works tonight. The two files are text, they go anywhere. Stanford Claude gives you room to work tonight, no usage cap worries, but no Design and no publishing, you download the HTML. Personal Claude is yours forever but the free plan can run out mid-build. Josh's rule: build in the account you will keep, nothing to migrate later. And the Oct 15 thing: if your personal Claude is on a stanford.edu email, it stops working. Switch to the Stanford workspace or a personal email before Thursday.">
-  <div class="acts"><span class="why">1 WHY</span><span class="voice">2 VOICE</span><span class="design">3 DESIGN</span><span class="on">4 DEPLOY</span><span class="go">5 GO</span><span class="meta">13 / 14</span></div>
-  <h1>Build in the account <em>you'll keep.</em></h1>
-  <div class="tbl">
-    <div></div><div class="h">Claude</div><div class="h">ChatGPT</div><div class="h">Gemini</div>
-    <div class="r">Stanford account</div>
-    <div class="c"><b>Claude for Education.</b> Chat, Code, Cowork, Skills, projects. No Design or publishing. Request at uit.stanford.edu/service/claude.</div>
-    <div class="c"><b>ChatGPT Edu.</b> Projects and custom GPTs. Skills admin-gated. Request at uit.stanford.edu/service/openai-chatgpt-edu.</div>
-    <div class="c"><b>Gemini Enterprise.</b> Gems. Already on with your Stanford Google account.</div>
-    <div class="r">Personal account</div>
-    <div class="c"><b>Free, Pro or Max.</b> Turn on Code execution in Settings. Free cap can run out mid-build. Pro adds Design and publishing.</div>
-    <div class="c"><b>Free or Plus.</b> Projects and custom GPTs on both.</div>
-    <div class="c"><b>Free or AI Pro.</b> Gems on both.</div>
-    <div class="r">Where your two files go</div>
-    <div class="c">Skills</div>
-    <div class="c">Project or custom GPT instructions</div>
-    <div class="c">Gem instructions</div>
-  </div>
-  <div class="card soft" style="padding:18px 28px;font:400 23px/1.3 var(--serif)">Build in the account you'll keep using. (Josh's rule: nothing to migrate later.) Stanford if you want room to work tonight. Personal if you want it forever. Either way your two files go anywhere: they are text.</div>
-  <div style="font:500 16px var(--mono);color:#C0392B">Oct 15: personal Claude accounts on a stanford.edu email stop working. Switch to the Stanford workspace or a personal email.</div>
-  <div class="foot"><span>Make your AI look and sound like you</span><span>13 / 14</span></div>
-  <div class="bars"><i class="why on"></i><i class="voice on"></i><i class="design on"></i><i class="deploy on"></i></div>
-</section>
-
-<!-- 14 your turn -->
-<section class="slide ink" data-act="deploy" data-notes="Open the site. Then the ask, and wait for hands: raise your hand when everything is closed except Claude and this tab. Stuck? Stay in your chat and ask Claude first, copy the prompt. Then the Stuck button. Then PollEv. Then a hand, and someone will come. Helpers for logins and frozen laptops. 7:25, we regroup. Go.">
-  <div class="acts"><span class="why">1 WHY</span><span class="voice">2 VOICE</span><span class="design">3 DESIGN</span><span class="deploy">4 DEPLOY</span><span class="on">5 GO</span><span class="meta">14 / 14</span></div>
-  <h1 class="xl">Your turn.</h1>
-  <div class="row fill" style="gap:64px;align-items:center">
-    <div style="width:320px;height:320px;background:#F3EDE2;border-radius:24px;display:flex;align-items:center;justify-content:center;color:var(--mute);font:500 18px var(--mono);flex:none">[QR code]</div>
-    <div style="display:flex;flex-direction:column;gap:28px;min-width:0">
-      <div style="font:400 52px var(--serif);color:var(--a)">[TUTORIAL_URL]</div>
-      <div style="background:rgba(255,255,255,.08);border-radius:16px;padding:26px 30px;font:400 30px/1.3 var(--sans)">Raise your hand when everything is closed but Claude and this tab.</div>
-      <div class="row" style="gap:12px;align-items:center;font-size:20px;color:#A89E94;flex-wrap:wrap">Stuck?&nbsp;<span class="pill" style="background:#F3EDE2;color:var(--ink)">1 Ask Claude in your chat</span><span class="pill" style="background:#FFD23F;color:var(--ink)">2 Stuck? button</span><span class="pill acc">3 PollEv</span><span class="pill" style="background:#A89E94;color:var(--ink)">4 Raise your hand</span></div>
+  <div style="display:flex; flex-direction:row; gap:48px; align-items:center; flex:1">
+    <div style="width:560px; display:flex; flex-direction:column; gap:12px">
+      <p style="font-family:'DM Mono', monospace; font-size:24px; color:#8c8178">MY SHELF</p>
+      <div style="display:flex; flex-direction:row; align-items:center; justify-content:space-between; padding:14px 26px; background:#eae2d4; border-radius:14px">
+        <p style="font-family:'DM Sans', Arial, sans-serif; font-size:30px; font-weight:500; color:#141413">undyslexify</p>
+        <p style="font-family:'DM Mono', monospace; font-size:24px; color:#8c8178">plain words</p>
+      </div>
+      <div style="display:flex; flex-direction:row; align-items:center; justify-content:space-between; padding:14px 26px; background:#eae2d4; border-radius:14px">
+        <p style="font-family:'DM Sans', Arial, sans-serif; font-size:30px; font-weight:500; color:#141413">winning-writing</p>
+        <p style="font-family:'DM Mono', monospace; font-size:24px; color:#8c8178">tighter emails</p>
+      </div>
+      <div style="display:flex; flex-direction:row; align-items:center; justify-content:space-between; padding:14px 26px; background:#fbf8f2; border:3px solid #141413; border-radius:14px">
+        <p style="font-family:'DM Sans', Arial, sans-serif; font-size:30px; font-weight:700; color:#141413">humanizer</p>
+        <p style="font-family:'DM Mono', monospace; font-size:24px; color:#141413">opened →</p>
+      </div>
+      <div style="display:flex; flex-direction:row; align-items:center; justify-content:space-between; padding:14px 26px; background:#e6dfff; border:3px solid #7c5cff; border-radius:14px">
+        <p style="font-family:'DM Sans', Arial, sans-serif; font-size:30px; font-weight:500; color:#141413">voice</p>
+        <p style="font-family:'DM Mono', monospace; font-size:24px; color:#6a48f0">yours tonight</p>
+      </div>
+      <div style="display:flex; flex-direction:row; align-items:center; justify-content:space-between; padding:14px 26px; background:#d4f3ee; border:3px solid #14b8a6; border-radius:14px">
+        <p style="font-family:'DM Sans', Arial, sans-serif; font-size:30px; font-weight:500; color:#141413">design</p>
+        <p style="font-family:'DM Mono', monospace; font-size:24px; color:#0f8c80">yours tonight</p>
+      </div>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:16px; flex:1; padding:16px 32px 32px; background:#fbf8f2; border:3px solid #141413; border-radius:24px">
+      <p style="padding:8px 0; font-family:'DM Mono', monospace; font-size:24px; color:#8c8178">humanizer / SKILL.md</p>
+      <div style="display:flex; flex-direction:column; gap:4px; padding:14px 22px; background:#efe8dc; border-radius:14px">
+        <p style="font-family:'DM Mono', monospace; font-size:24px; color:#6a48f0">1 WHEN TO USE IT</p>
+        <p style="font-family:'DM Sans', Arial, sans-serif; font-size:26px; color:#141413">Anytime I edit writing so it sounds like a person</p>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:4px; padding:14px 22px; background:#efe8dc; border-radius:14px">
+        <p style="font-family:'DM Mono', monospace; font-size:24px; color:#6a48f0">2 HOW TO DO IT</p>
+        <p style="font-family:'DM Sans', Arial, sans-serif; font-size:26px; color:#141413">Spot the AI tells, like em dashes, "delve" &amp; lists of three. Rewrite them plainly.</p>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:4px; padding:14px 22px; background:#efe8dc; border-radius:14px">
+        <p style="font-family:'DM Mono', monospace; font-size:24px; color:#6a48f0">3 EXAMPLE</p>
+        <p style="font-family:'DM Sans', Arial, sans-serif; font-size:26px; color:#8c8178; text-decoration:line-through">"I'm passionate about leveraging synergies"</p>
+        <p style="font-family:'DM Sans', Arial, sans-serif; font-size:26px; color:#141413">→ "I like fixing broken things"</p>
+      </div>
     </div>
   </div>
-  <div class="foot"><span>Make your AI look and sound like you</span><span>14 / 14</span></div>
-  <div class="bars"><i class="why on"></i><i class="voice on"></i><i class="design on"></i><i class="deploy on"></i></div>
-</section>
+  <aside>Thirty seconds, and make it personal. "Here's my actual shelf."
 
+Metaphor: "A skill is a recipe card. Claude is a great cook, but it doesn't know your family's recipe. So you write it on a card and tape it inside the cabinet. Every time it makes that dish, it reads the card first."
+
+Point at the shelf on the left: "These are skills I use every week. Undyslexify turns dense reading into plain words for me. Winning-writing tightens my emails. Humanizer makes AI writing sound like a person."
+
+Point at the open card on the right, the humanizer skill: three parts. When to use it (which dish this card is for). How to do it (the steps). An example (a photo of how it should turn out).
+
+"Claude reads the shelf and grabs the right card when it fits. You don't have to remember to ask."
+
+"Tonight you add two cards to your own shelf: voice, for how you sound, and design, for how you look. Unlike a prompt you retype every time, these stick around."</aside>
+</section>
+<section id="voice" data-transition="fade" style="background:#f3ede2">
+  <div id="p947aaf50ec8cr0-38222a98" style="position:absolute; top:96px; left:128px; width:1665px; height:46px; display:flex; flex-direction:row; gap:12px; align-items:center">
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#c2471f; border-radius:256px">1 Why</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#fbf8f2; background:#7c5cff; border-radius:256px">2 Voice</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#0f8c80; border-radius:256px">3 Design</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#a86b00; border-radius:256px">4 Build</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#2b4bff; border-radius:256px">5 Host</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#6e645b; border-radius:256px">6 Go</p>
+  </div>
+  <h2 id="p947aaf50ec8cr1-38222a98" style="position:absolute; top:182px; left:128px; width:1665px; font-family:'Instrument Serif', Georgia, serif; font-size:96px; font-weight:400; line-height:1; letter-spacing:-1px; color:#141413">Samples + tone + nevers = <span style="color:#7c5cff">your voice</span></h2>
+  <div id="p947aaf50ec8cr2-38222a98" style="position:absolute; top:318px; left:128px; width:1665px; height:505px; display:flex; flex-direction:row; gap:20px">
+    <div style="display:flex; flex-direction:column; gap:16px; flex:1; min-width:503px; min-height:505px; padding:36px; background:#fbf8f2; border-radius:24px">
+      <p style="font-family:'DM Mono', monospace; font-size:24px; color:#6a48f0">SAMPLES</p>
+      <h3 style="font-family:'Instrument Serif', Georgia, serif; font-size:44px; font-weight:400; line-height:1.05; color:#141413">How you write</h3>
+      <p style="padding:12px 20px; font-family:'DM Sans', Arial, sans-serif; font-size:28px; color:#141413; background:#efe8dc; border-radius:12px">An email you sent</p>
+      <p style="padding:12px 20px; font-family:'DM Sans', Arial, sans-serif; font-size:28px; color:#141413; background:#efe8dc; border-radius:12px">A post you wrote</p>
+      <p style="padding:12px 20px; font-family:'DM Sans', Arial, sans-serif; font-size:28px; color:#141413; background:#efe8dc; border-radius:12px">A text to a friend</p>
+      <p style="font-family:Caveat, 'Brush Script MT', serif; font-size:36px; color:#6a48f0">Or ask Claude, “hey bestie, give me examples of how I write”</p>
+    </div>
+    <p style="align-self:center; font-family:'Instrument Serif', Georgia, serif; font-size:72px; color:#7c5cff">+</p>
+    <div style="display:flex; flex-direction:column; gap:16px; flex:1; padding:36px; background:#fbf8f2; border-radius:24px">
+      <p style="font-family:'DM Mono', monospace; font-size:24px; color:#6a48f0">TONE, PICK ONE</p>
+      <h3 style="font-family:'Instrument Serif', Georgia, serif; font-size:44px; font-weight:400; line-height:1.05; color:#141413">How you communicate</h3>
+      <p style="padding:12px 20px; font-family:'DM Sans', Arial, sans-serif; font-size:28px; line-height:1.3; color:#141413; background:#efe8dc; border-radius:12px"><b>Polished</b> structured, concise</p>
+      <p style="padding:12px 20px; font-family:'DM Sans', Arial, sans-serif; font-size:28px; line-height:1.3; color:#141413; background:#efe8dc; border:2px solid #f3ede2; border-radius:12px"><b>Warm</b> direct, humble</p>
+      <p style="padding:12px 20px; font-family:'DM Sans', Arial, sans-serif; font-size:28px; line-height:1.3; color:#141413; background:#efe8dc; border-radius:12px"><b>Playful</b> candid, fun</p>
+    </div>
+    <p style="align-self:center; font-family:'Instrument Serif', Georgia, serif; font-size:72px; color:#7c5cff">+</p>
+    <div style="display:flex; flex-direction:column; gap:16px; flex:1; padding:36px; background:#fbf8f2; border-radius:24px">
+      <p style="font-family:'DM Mono', monospace; font-size:24px; color:#6a48f0">NEVERS</p>
+      <h3 style="font-family:'Instrument Serif', Georgia, serif; font-size:44px; font-weight:400; line-height:1.05; color:#141413">Ish that makes you cringe</h3>
+      <p style="padding:12px 20px; font-family:'DM Sans', Arial, sans-serif; font-size:28px; text-decoration:line-through; color:#141413; background:#efe8dc; border-radius:12px">passionate about</p>
+      <p style="padding:12px 20px; font-family:'DM Sans', Arial, sans-serif; font-size:28px; text-decoration:line-through; color:#141413; background:#efe8dc; border-radius:12px">excited to share</p>
+      <p style="padding:12px 20px; font-family:'DM Sans', Arial, sans-serif; font-size:28px; text-decoration:line-through; color:#141413; background:#efe8dc; border-radius:12px">proven track record</p>
+    </div>
+  </div>
+  <div id="p947aaf50ec8cr3-38222a98" style="position:absolute; top:862px; left:128px; width:1665px; height:90px; display:flex; flex-direction:row; gap:20px; align-items:center; padding:22px 32px; background:#e6dfff; border-radius:18px">
+    <p style="padding:6px 16px; font-family:'DM Mono', monospace; font-size:24px; font-weight:500; color:#fbf8f2; background:#7c5cff; border-radius:256px">Test it</p>
+    <p style="font-family:'DM Sans', Arial, sans-serif; font-size:30px; color:#141413">Ask Claude for a two-line intro in your voice &amp; read it out loud. Give feedback, srsly not time to be shy</p>
+  </div>
+  <aside>Now the first skill: your voice. The formula: samples plus qualities plus nevers. Samples are the most important part. "Claude learns your voice the way a cover band learns a song: by listening to the recording, not by reading a description of it. Three real things you wrote do more than a paragraph about how you write." An email, a post, a text. Tip: you can talk instead of type. Hit the mic and just ramble about yourself. Qualities: "Which version of you shows up? You don't sound the same in a cover letter and a group chat." Pick Polished, Warm or Playful as a starting point. You can keep more than one inside the same voice skill and say "use my interview voice" later. Nevers: "The words that make you cringe when you see them. For me it's 'passionate about.' Write down three." Then test it. "Ask Claude for a two-line intro. Read it out loud. If a friend would say 'that's so you,' you're done. If not, add a better sample, not more rules."</aside>
+</section>
+<section id="design" data-transition="fade" style="background:#f3ede2">
+  <div id="pcfcf6b0dae90r0-a2a69a46" style="position:absolute; top:96px; left:128px; width:1665px; height:46px; display:flex; flex-direction:row; gap:12px; align-items:center">
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#c2471f; border-radius:256px">1 Why</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#6a48f0; border-radius:256px">2 Voice</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#141413; background:#14b8a6; border-radius:256px">3 Design</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#a86b00; border-radius:256px">4 Build</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#2b4bff; border-radius:256px">5 Host</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#6e645b; border-radius:256px">6 Go</p>
+  </div>
+  <h2 id="pcfcf6b0dae90r1-a2a69a46" style="position:absolute; top:182px; left:128px; width:1665px; font-family:'Instrument Serif', Georgia, serif; font-size:96px; font-weight:400; line-height:1; letter-spacing:-1px; color:#141413">Assets + vibe + nevers = <span style="color:#0f8c80">your look</span></h2>
+  <div id="pcfcf6b0dae90r2-a2a69a46" style="position:absolute; top:318px; left:128px; width:1665px; display:flex; flex-direction:row; gap:20px">
+    <div style="display:flex; flex-direction:column; gap:16px; flex:1; padding:36px; background:#fbf8f2; border-radius:24px">
+      <p style="font-family:'DM Mono', monospace; font-size:24px; color:#0f8c80">ASSETS</p>
+      <h3 style="font-family:'Instrument Serif', Georgia, serif; font-size:44px; font-weight:400; line-height:1.05; color:#141413">Your deets</h3>
+      <p style="padding:12px 20px; font-family:'DM Sans', Arial, sans-serif; font-size:28px; color:#141413; background:#efe8dc; border-radius:12px">Photos (e.g., headshot)</p>
+      <p style="padding:12px 20px; font-family:'DM Sans', Arial, sans-serif; font-size:28px; color:#141413; background:#efe8dc; border-radius:12px">Details (e.g., resume or LinkedIn text)</p>
+    </div>
+    <p style="align-self:center; font-family:'Instrument Serif', Georgia, serif; font-size:72px; color:#0f8c80">+</p>
+    <div style="display:flex; flex-direction:column; gap:16px; flex:1; padding:36px; background:#fbf8f2; border-radius:24px">
+      <p style="font-family:'DM Mono', monospace; font-size:24px; color:#0f8c80">VIBE</p>
+      <h3 style="font-family:'Instrument Serif', Georgia, serif; font-size:44px; font-weight:400; line-height:1.05; color:#141413">How you want&nbsp;</h3>
+      <p style="padding:12px 20px; font-family:'DM Sans', Arial, sans-serif; font-size:28px; color:#141413; background:#efe8dc; border-radius:12px">Example output</p>
+      <p style="padding:12px 20px; font-family:'DM Sans', Arial, sans-serif; font-size:28px; line-height:1.3; color:#141413; background:#efe8dc; border-radius:12px"><b>Colors</b></p>
+      <p style="padding:12px 20px; font-family:'DM Sans', Arial, sans-serif; font-size:28px; line-height:1.3; color:#141413; background:#efe8dc; border-radius:12px"><b>Fonts&nbsp;</b></p>
+      <p style="padding:12px 20px; font-family:'DM Sans', Arial, sans-serif; font-size:28px; line-height:1.3; color:#141413; background:#efe8dc; border-radius:12px"><b>Descriptors </b>(e.g., warm, direct, bright)</p>
+    </div>
+    <p style="align-self:center; font-family:'Instrument Serif', Georgia, serif; font-size:72px; color:#0f8c80">+</p>
+    <div style="display:flex; flex-direction:column; gap:16px; flex:1; padding:36px; background:#fbf8f2; border-radius:24px">
+      <p style="font-family:'DM Mono', monospace; font-size:24px; color:#0f8c80">NEVERS</p>
+      <h3 style="font-family:'Instrument Serif', Georgia, serif; font-size:44px; font-weight:400; line-height:1.05; color:#141413">The icks</h3>
+      <p style="padding:12px 20px; font-family:'DM Sans', Arial, sans-serif; font-size:28px; text-decoration:line-through; color:#141413; background:#efe8dc; border-radius:12px">stock photos</p>
+      <p style="padding:12px 20px; font-family:'DM Sans', Arial, sans-serif; font-size:28px; text-decoration:line-through; color:#141413; background:#efe8dc; border-radius:12px">rainbow gradients</p>
+      <p style="padding:12px 20px; font-family:'DM Sans', Arial, sans-serif; font-size:28px; text-decoration:line-through; color:#141413; background:#efe8dc; border-radius:12px">dots</p>
+      <p style="padding:12px 20px; font-family:'DM Sans', Arial, sans-serif; font-size:28px; text-decoration:line-through; color:#141413; background:#efe8dc; border-radius:12px">unnecessary whitespace</p>
+    </div>
+  </div>
+  <div id="pcfcf6b0dae90r3-a2a69a46" style="position:absolute; top:862px; left:128px; width:1665px; height:90px; display:flex; flex-direction:row; gap:20px; align-items:center; padding:22px 32px; background:#d4f3ee; border-radius:18px">
+    <p style="padding:6px 16px; font-family:'DM Mono', monospace; font-size:24px; font-weight:500; color:#141413; background:#14b8a6; border-radius:256px">Shortcut</p>
+    <p style="font-family:'DM Sans', Arial, sans-serif; font-size:30px; color:#141413">Show Claude your 2 favorite sites &amp; ask what they have in common. Turn the answer into rules.</p>
+  </div>
+  <aside>Second skill: your look. Same shape as voice. Metaphor: "Think about briefing a florist for a wedding. You show them a Pinterest board (assets), you describe the mood (vibe), and you tell them what you hate: 'no carnations' (nevers). Three things, and they get it." Assets: what goes on the page, like a photo of you or your projects, and sites you love that set the bar. "You don't have to know design words. Pointing at a site you love is enough." Vibe: one accent color, meaning one pop of color on a calm background, not five colors fighting. A font pair is just two fonts: one for big headlines, one for regular text. And three words for how it should feel. Nevers: the icks. "Stock photos of people shaking hands. Rainbow gradients. The same three boxes every AI site has." Write down whatever makes you wince. Shortcut: "If you have no idea what you like, show Claude two sites you love and ask what they have in common. It'll name it for you."</aside>
+</section>
+<section id="mine" data-transition="fade" style="display:flex; flex-direction:column; gap:40px; padding:96px 128px 128px; background:#f3ede2">
+  <div style="display:flex; flex-direction:row; gap:12px; align-items:center">
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#c2471f; border-radius:256px">1 Why</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#6a48f0; border-radius:256px">2 Voice</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#141413; background:#14b8a6; border-radius:256px">3 Design</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#a86b00; border-radius:256px">4 Build</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#2b4bff; border-radius:256px">5 Host</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#6e645b; border-radius:256px">6 Go</p>
+  </div>
+  <h2 style="font-family:'Instrument Serif', Georgia, serif; font-size:96px; font-weight:400; line-height:1; letter-spacing:-1px; color:#141413">Not to make it about me, but <span style="color:#0f8c80">here's mine</span></h2>
+  <div style="display:flex; flex-direction:row; gap:56px; flex:1">
+    <div style="width:780px; display:flex; flex-direction:column; gap:12px">
+      <img src="img/slides/mary-text.jpg" alt="The text version of Mary's site: pen-on-paper page with her headshot" style="width:780px; height:488px; object-fit:cover; border:2px solid #ddd3c3; border-radius:16px">
+      <p style="font-family:'DM Mono', monospace; font-size:24px; color:#8c8178">mary-blankemeier.vercel.app</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:16px; flex:1">
+      <div style="display:flex; flex-direction:row; gap:24px; align-items:baseline; padding:20px 28px; background:#fbf8f2; border-radius:16px">
+        <p style="width:120px; font-family:'DM Mono', monospace; font-size:24px; color:#0f8c80">ASSETS</p>
+        <p style="flex:1; font-family:'DM Sans', Arial, sans-serif; font-size:28px; line-height:1.35; color:#141413">My headshot, paintings &amp; resume</p>
+      </div>
+      <div style="display:flex; flex-direction:row; gap:24px; align-items:baseline; padding:20px 28px; background:#fbf8f2; border-radius:16px">
+        <p style="width:120px; font-family:'DM Mono', monospace; font-size:24px; color:#0f8c80">VIBE</p>
+        <p style="flex:1; font-family:'DM Sans', Arial, sans-serif; font-size:28px; line-height:1.35; color:#141413">Blue pen + a yellow-green highlighter pulled from my headshot. Poppins + handwriting.</p>
+      </div>
+      <div style="display:flex; flex-direction:row; gap:24px; align-items:baseline; padding:20px 28px; background:#fbf8f2; border-radius:16px">
+        <p style="width:120px; font-family:'DM Mono', monospace; font-size:24px; color:#0f8c80">NEVERS</p>
+        <p style="flex:1; font-family:'DM Sans', Arial, sans-serif; font-size:28px; line-height:1.35; color:#141413">No emojis, no tape on photos, no big-number stats</p>
+      </div>
+      <p style="padding:16px 24px; font-family:Caveat, 'Brush Script MT', serif; font-size:40px; line-height:1.15; color:#141413; background:#fcefb4; border-radius:6px; transform:rotate(-1deg)">How to find your nevers: build once, see what makes you wince, write it down... do that ish again</p>
+      <div style="flex:1"></div>
+      <p style="font-family:Caveat, 'Brush Script MT', serif; font-size:40px; line-height:1.15; color:#2b4bff">P.S. Share feedback &amp; I'll send you the code for my 3D + text site</p>
+    </div>
+  </div>
+  <img src="img/slides/mary-3d.jpg" alt="Mary's site home: a 3D running track with her projects placed around it" style="position:absolute; top:690px; left:640px; width:300px; height:188px; border:3px solid #2b4bff; border-radius:12px; box-shadow:0 12px 32px #1414132e; transform:rotate(3deg)">
+  <aside>Keep this one short and a little self-aware. "Not to make it about me, but it's easier to show you than tell you." Walk the three parts: Assets: my headshot, my paintings, and a running track, because running is how I started Run Your City. Vibe: blue pen and a yellow-green highlighter. I literally pulled the green from the background of my headshot. Fonts: one clean font for text and one that looks like handwriting, so it feels like someone marked up a page. Nevers: no emojis, no tape on photos (I tried it, it looked like a middle school scrapbook), no giant stat numbers, which felt like a consulting deck. How I found my nevers: "I didn't know them up front. I built it once, looked at it, and wrote down everything that made me wince. That list became my nevers." Encourage them to do the same tonight. The big screenshot is the main page, pen on paper. The small one is the 3D version, a running track you can click around. P.S.: "If you fill out the feedback form at the end, I'll send you the code for both, and you can make it yours."</aside>
+</section>
+<section id="build" data-transition="fade" style="background:#F3EDE2;color:#141413;font-family:'DM Sans', Arial, sans-serif;padding:96px 128px 128px;display:flex;flex-direction:column;gap:40px">
+<div style="display:flex;gap:12px;align-items:center">
+<p style="font-family:'DM Mono', monospace;font-size:24px;padding:6px 18px;border-radius:999px;color:#C2471F">1 Why</p>
+<p style="font-family:'DM Mono', monospace;font-size:24px;padding:6px 18px;border-radius:999px;color:#6A48F0">2 Voice</p>
+<p style="font-family:'DM Mono', monospace;font-size:24px;padding:6px 18px;border-radius:999px;color:#0F8C80">3 Design</p>
+<p style="font-family:'DM Mono', monospace;font-size:24px;padding:6px 18px;border-radius:999px;background:#F2B705;color:#141413">4 Build</p>
+<p style="font-family:'DM Mono', monospace;font-size:24px;padding:6px 18px;border-radius:999px;color:#2B4BFF">5 Host</p>
+<p style="font-family:'DM Mono', monospace;font-size:24px;padding:6px 18px;border-radius:999px;color:#6E645B">6 Go</p>
+</div>
+<h2 style="font-family:'Instrument Serif', Georgia, serif;font-size:96px;font-weight:400;line-height:1;letter-spacing:-1px">Hand Claude your story &amp; goal, then <span style="color:#B7791F">ask for three options</span></h2>
+<div style="flex:1;display:flex;gap:48px">
+<div style="width:640px;display:flex;flex-direction:column;gap:14px">
+<p style="font-family:'DM Mono', monospace;font-size:24px;color:#A86B00">WHAT YOU HAND OVER</p>
+<p style="font-size:28px;line-height:1.3;background:#FBF8F2;padding:16px 22px;border-radius:14px">Your LinkedIn saved as a PDF, or your résumé</p>
+<p style="font-size:28px;line-height:1.3;background:#FBF8F2;padding:16px 22px;border-radius:14px">Projects or research you're proud of</p>
+<p style="font-size:28px;line-height:1.3;background:#FBF8F2;padding:16px 22px;border-radius:14px">Your goal: what should a visitor do or feel?</p>
+<p style="font-size:28px;line-height:1.3;background:#FCEFB4;padding:16px 22px;border-radius:14px">Both skills switched on</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:20px">
+<div style="flex:1;display:flex;gap:20px">
+<div style="flex:1;display:flex;flex-direction:column;gap:12px">
+<div style="flex:1;background:#EAE2D4;border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:12px">
+<div style="background:#DDD3C3;height:18px;width:160px;border-radius:9px"></div>
+<div style="background:#DDD3C3;flex:1;border-radius:10px"></div>
+</div>
+<p style="font-family:'Instrument Serif', Georgia, serif;font-size:36px;text-align:center;color:#8C8178">A</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:12px">
+<div style="flex:1;background:#FBF8F2;border:4px solid #D99A00;border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:12px">
+<p style="font-family:'Caveat', 'Brush Script MT', cursive;font-size:34px;line-height:1.1;background:#FCEFB4;padding:12px 16px;border-radius:4px;transform:rotate(-2deg)">"Love B. Headline's too stiff. Say it like my emails."</p>
+<div style="background:#F3EDE2;flex:1;border-radius:10px"></div>
+</div>
+<p style="font-family:'Instrument Serif', Georgia, serif;font-size:36px;text-align:center;color:#B7791F">B, this one</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:12px">
+<div style="flex:1;background:#E9EEF2;border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:12px">
+<div style="background:#D3DBE2;height:18px;width:160px;border-radius:9px"></div>
+<div style="background:#D3DBE2;flex:1;border-radius:10px"></div>
+</div>
+<p style="font-family:'Instrument Serif', Georgia, serif;font-size:36px;text-align:center;color:#8C8178">C</p>
+</div>
+</div>
+<div style="background:#FCEFB4;border-radius:16px;padding:18px 28px;display:flex;gap:20px;align-items:center">
+<p style="font-size:30px"><b>Ask for three options</b>  →  <b>Pick one</b>  →  <b>Name what's off</b></p>
+</div>
+</div>
+</div>
+<aside>Now we put it together. Two minutes.
+
+Metaphor: "Think of Claude like an architect. You don't say 'build me a house' and walk away. You hand over what matters: who lives there, how you live, what you love. Then you ask for three sketches before anyone pours concrete."
+
+What you hand over:
+Your LinkedIn as a PDF (on LinkedIn: More, then Save to PDF) or your résumé. A PDF catches education and volunteering that copy-paste misses.
+Projects or research you're proud of.
+Your goal. "This is the one people skip. What should someone do after visiting? Hire you? Join your nonprofit? Just get you? Tell Claude."
+And both skills switched on.
+
+Then: ask for three options of just the top of the page. Pick one. Name what's off in plain words: "Love B, headline's too stiff, say it like my emails." That's it. You don't need design vocabulary.
+
+Pro tip: if the same fix keeps coming up, put it in the skill, not the page. Then it's fixed for everything you make, not just this site.</aside>
+</section>
+<section id="host" data-transition="fade" style="display:flex; flex-direction:column; gap:40px; padding:96px 128px 128px; background:#f3ede2">
+  <div style="display:flex; flex-direction:row; gap:12px; align-items:center">
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#c2471f; border-radius:256px">1 Why</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#6a48f0; border-radius:256px">2 Voice</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#0f8c80; border-radius:256px">3 Design</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#a86b00; border-radius:256px">4 Build</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#fbf8f2; background:#2b4bff; border-radius:256px">5 Host</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#6e645b; border-radius:256px">6 Go</p>
+  </div>
+  <div style="display:flex; flex-direction:column; gap:16px">
+    <h2 style="font-family:'Instrument Serif', Georgia, serif; font-size:96px; font-weight:400; line-height:1; letter-spacing:-1px; color:#141413">Host it live: <span style="color:#2b4bff">drag one file to vercel.com/drop</span></h2>
+    <p style="width:1621px; font-family:'DM Sans', Arial, sans-serif; font-size:32px; line-height:1.35; color:#4d4a44">Right now your site is a file on your laptop, like a letter in a drawer. Hosting mails it to an <b>address anyone can visit</b></p>
+  </div>
+  <div style="display:grid; gap:24px; grid-template-columns:1fr 1fr 1fr 1fr; flex:1">
+    <div style="display:flex; flex-direction:column; gap:14px; padding:36px; background:#fbf8f2; border-radius:20px">
+      <p style="font-family:'Instrument Serif', Georgia, serif; font-size:72px; line-height:1; color:#2b4bff">1</p>
+      <h3 style="font-family:'Instrument Serif', Georgia, serif; font-size:44px; font-weight:400; line-height:1.05; color:#141413">Get one file</h3>
+      <p style="font-family:'DM Sans', Arial, sans-serif; font-size:28px; line-height:1.35; color:#4d4a44">Ask Claude: "Give me my site as one file called index.html." Download it.</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:14px; padding:36px; background:#fbf8f2; border-radius:20px">
+      <p style="font-family:'Instrument Serif', Georgia, serif; font-size:72px; line-height:1; color:#2b4bff">2</p>
+      <h3 style="font-family:'Instrument Serif', Georgia, serif; font-size:44px; font-weight:400; line-height:1.05; color:#141413">Open the drop page</h3>
+      <p style="font-family:'DM Sans', Arial, sans-serif; font-size:28px; line-height:1.35; color:#4d4a44">Go to vercel.com/drop &amp; sign up free with GitHub or email</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:14px; padding:36px; background:#fbf8f2; border-radius:20px">
+      <p style="font-family:'Instrument Serif', Georgia, serif; font-size:72px; line-height:1; color:#2b4bff">3</p>
+      <h3 style="font-family:'Instrument Serif', Georgia, serif; font-size:44px; font-weight:400; line-height:1.05; color:#141413">Drag it in</h3>
+      <p style="font-family:'DM Sans', Arial, sans-serif; font-size:28px; line-height:1.35; color:#4d4a44">Drop index.html on the page, name it yourname-site &amp; hit Deploy</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:14px; padding:36px; background:#fbf8f2; border:3px solid #2b4bff; border-radius:20px">
+      <p style="font-family:'Instrument Serif', Georgia, serif; font-size:72px; line-height:1; color:#2b4bff">4</p>
+      <h3 style="font-family:'Instrument Serif', Georgia, serif; font-size:44px; font-weight:400; line-height:1.05; color:#141413">Copy your link</h3>
+      <p style="font-family:'DM Sans', Arial, sans-serif; font-size:28px; line-height:1.35; color:#4d4a44">Paste it into the tutorial, then text it to someone</p>
+    </div>
+  </div>
+  <div style="display:flex; flex-direction:row; gap:16px; align-items:center">
+    <p style="padding:10px 22px; font-family:'DM Sans', Arial, sans-serif; font-size:26px; font-weight:500; color:#141413; background:#dce2ff; border-radius:256px">Free</p>
+    <p style="padding:10px 22px; font-family:'DM Sans', Arial, sans-serif; font-size:26px; font-weight:500; color:#141413; background:#dce2ff; border-radius:256px">Stuck? Ask Claude to walk you through it</p>
+    <p style="padding:10px 22px; font-family:'DM Sans', Arial, sans-serif; font-size:26px; font-weight:500; color:#141413; background:#fbf8f2; border-radius:256px">Want edit history? GitHub side quest in the tutorial</p>
+  </div>
+  <aside>The part people assume is hard. It's four steps. Metaphor: "Right now your site is a file on your laptop. It's a letter in your desk drawer. Nobody can read it. Hosting is mailing it to a public address. Vercel is the post office, and the address is your link." Walk the four steps: 1. Ask Claude for your whole site as one file called index.html, and download it. index.html is just the name websites use for the front door. 2. Go to vercel.com/drop and sign up. It's free. GitHub or email both work. 3. Drag the file onto the page, give it a name like maryb-site, and hit Deploy. About 30 seconds. 4. You get a link. Paste it in the tutorial so it shows up in the class gallery, then text it to your mom. "If anything looks weird, take a screenshot and ask Claude: 'what do I click next?' It'll walk you through it." Want to edit later without re-dragging? There's a GitHub side quest in the tutorial. GitHub is like Google Docs version history for your site. Not needed tonight.</aside>
+</section>
+<section id="tips" data-transition="fade" style="display:flex; flex-direction:column; gap:40px; padding:96px 128px 128px; background:#f3ede2">
+  <div style="display:flex; flex-direction:row; gap:12px; align-items:center">
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#c2471f; border-radius:256px">1 Why</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#6a48f0; border-radius:256px">2 Voice</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#0f8c80; border-radius:256px">3 Design</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#a86b00; border-radius:256px">4 Build</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#2b4bff; border-radius:256px">5 Host</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#fbf8f2; background:#141413; border-radius:256px">6 Go</p>
+  </div>
+  <h2 style="font-family:'Instrument Serif', Georgia, serif; font-size:96px; font-weight:400; line-height:1; letter-spacing:-1px; color:#141413">Six habits that <span style="color:#6e645b">save you an hour</span></h2>
+  <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:24px; flex:1">
+    <div style="display:flex; flex-direction:column; gap:12px; padding:32px; background:#fbf8f2; border-radius:20px">
+      <h3 style="font-family:'Instrument Serif', Georgia, serif; font-size:40px; font-weight:400; line-height:1.1; color:#141413"><span style="color:#ff6a3d">1</span> New chat when it gets messy</h3>
+      <p style="font-family:'DM Sans', Arial, sans-serif; font-size:26px; line-height:1.35; color:#4d4a44">Long chats get foggy, like a full whiteboard. Wipe it &amp; start fresh. Your skills come with you.</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:12px; padding:32px; background:#fbf8f2; border-radius:20px">
+      <h3 style="font-family:'Instrument Serif', Georgia, serif; font-size:40px; font-weight:400; line-height:1.1; color:#141413"><span style="color:#7c5cff">2</span> Talk, don't type</h3>
+      <p style="font-family:'DM Sans', Arial, sans-serif; font-size:26px; line-height:1.35; color:#4d4a44">Hit the mic &amp; ramble about yourself. Claude cleans it up.</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:12px; padding:32px; background:#fbf8f2; border-radius:20px">
+      <h3 style="font-family:'Instrument Serif', Georgia, serif; font-size:40px; font-weight:400; line-height:1.1; color:#141413"><span style="color:#14b8a6">3</span> Let it interview you</h3>
+      <p style="font-family:'DM Sans', Arial, sans-serif; font-size:26px; line-height:1.35; color:#4d4a44">"Ask me 5 questions before you write anything."</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:12px; padding:32px; background:#fbf8f2; border-radius:20px">
+      <h3 style="font-family:'Instrument Serif', Georgia, serif; font-size:40px; font-weight:400; line-height:1.1; color:#141413"><span style="color:#d99a00">4</span> Show, don't describe</h3>
+      <p style="font-family:'DM Sans', Arial, sans-serif; font-size:26px; line-height:1.35; color:#4d4a44">Paste a screenshot or a site you love instead of hunting for adjectives.</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:12px; padding:32px; background:#fbf8f2; border-radius:20px">
+      <h3 style="font-family:'Instrument Serif', Georgia, serif; font-size:40px; font-weight:400; line-height:1.1; color:#141413"><span style="color:#2b4bff">5</span> Fix the skill, not the page</h3>
+      <p style="font-family:'DM Sans', Arial, sans-serif; font-size:26px; line-height:1.35; color:#4d4a44">Same fix twice? Say "add this to my skill" so it sticks for good.</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:12px; padding:32px; background:#fbf8f2; border-radius:20px">
+      <h3 style="font-family:'Instrument Serif', Georgia, serif; font-size:40px; font-weight:400; line-height:1.1; color:#141413"><span style="color:#6e645b">6</span> Call your skill by name</h3>
+      <p style="font-family:'DM Sans', Arial, sans-serif; font-size:26px; line-height:1.35; color:#4d4a44">If it forgets, say "use my voice skill."</p>
+    </div>
+  </div>
+  <aside>One minute, right before they start. "Six habits I wish someone told me on day one."
+
+1. New chat when it gets messy. "Claude reads the whole chat every time you send a message. After a long back and forth it gets foggy, and on a free plan it burns through your limit faster. Think of a whiteboard that's full: wipe it and start fresh. Your skills come with you, that's the whole point of them."
+
+2. Talk, don't type. "Hit the mic and ramble. You'll say more, and it sounds more like you than what you'd type."
+
+3. Let it interview you. "Before it writes anything, tell it: ask me five questions first. You get something about you, not about everyone."
+
+4. Show, don't describe. "You don't need design words. A screenshot of a site you love says more than 'clean and modern.'"
+
+5. Fix the skill, not the page. "If you're making the same correction twice, tell Claude: add this to my skill. Then it's fixed for every email and every page, forever."
+
+6. Call your skill by name. "Claude usually picks the right skill on its own. If it doesn't, just say 'use my voice skill.'"</aside>
+</section>
+<section id="yourturn" data-transition="fade" style="display:flex; flex-direction:column; gap:40px; padding:96px 128px 128px; background:#141413">
+  <div style="display:flex; flex-direction:row; gap:12px; align-items:center">
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#ff8a63; border-radius:256px">1 Why</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#a893ff; border-radius:256px">2 Voice</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#3fd3c0; border-radius:256px">3 Design</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#f2b705; border-radius:256px">4 Build</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#8fa3ff; border-radius:256px">5 Host</p>
+    <p style="padding:6px 18px; font-family:'DM Mono', monospace; font-size:24px; color:#141413; background:#fbf8f2; border-radius:256px">6 Go</p>
+  </div>
+  <div style="display:flex; flex-direction:row; gap:40px; align-items:baseline">
+    <h2 style="font-family:'Instrument Serif', Georgia, serif; font-size:160px; font-weight:400; line-height:0.95; letter-spacing:-2px; color:#fbf8f2">Your turn</h2>
+    <p style="font-family:Caveat, 'Brush Script MT', serif; font-size:56px; line-height:1.1; color:#f2b705">tutorial link is in your email (if you RSVP'd)</p>
+  </div>
+  <div style="display:flex; flex-direction:row; gap:64px; align-items:center; flex:1">
+    <div style="display:flex; flex-direction:row; gap:32px">
+      <div style="display:flex; flex-direction:column; gap:16px; align-items:center; padding:28px; background:#fbf8f2; border-radius:24px">
+        <img src="img/slides/qr-pollev.png" alt="QR code for the Poll Everywhere questions page" style="width:280px; height:280px; object-fit:contain">
+        <p style="font-family:'DM Sans', Arial, sans-serif; font-size:30px; font-weight:700; color:#141413">Questions</p>
+        <p style="font-family:'DM Mono', monospace; font-size:24px; color:#6e645b">PollEv</p>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:16px; align-items:center; padding:28px; background:#fbf8f2; border-radius:24px">
+        <img src="img/slides/qr-feedback.png" alt="QR code for the feedback form" style="width:280px; height:280px; object-fit:contain">
+        <p style="font-family:'DM Sans', Arial, sans-serif; font-size:30px; font-weight:700; color:#141413">Feedback</p>
+        <p style="font-family:'DM Mono', monospace; font-size:24px; color:#6e645b">2 minutes</p>
+      </div>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:14px; flex:1">
+      <p style="font-family:'DM Mono', monospace; font-size:24px; color:#a89e94">STUCK? DEBUG IN THIS ORDER</p>
+      <div style="display:flex; flex-direction:row; gap:24px; align-items:center; padding:14px 0; border-bottom:1px solid #3a3631">
+        <p style="width:48px; font-family:'Instrument Serif', Georgia, serif; font-size:56px; line-height:1; color:#ff8a63">1</p>
+        <p style="font-family:'DM Sans', Arial, sans-serif; font-size:30px; line-height:1.3; color:#fbf8f2">Ask AI in the chat you're building in</p>
+      </div>
+      <div style="display:flex; flex-direction:row; gap:24px; align-items:center; padding:14px 0; border-bottom:1px solid #3a3631">
+        <p style="width:48px; font-family:'Instrument Serif', Georgia, serif; font-size:56px; line-height:1; color:#f2b705">2</p>
+        <p style="font-family:'DM Sans', Arial, sans-serif; font-size:30px; line-height:1.3; color:#fbf8f2">Hit "Stuck?" in the tutorial</p>
+      </div>
+      <div style="display:flex; flex-direction:row; gap:24px; align-items:center; padding:14px 0; border-bottom:1px solid #3a3631">
+        <p style="width:48px; font-family:'Instrument Serif', Georgia, serif; font-size:56px; line-height:1; color:#8fa3ff">3</p>
+        <p style="font-family:'DM Sans', Arial, sans-serif; font-size:30px; line-height:1.3; color:#fbf8f2">Post on PollEv (QR on the left)</p>
+      </div>
+      <div style="display:flex; flex-direction:row; gap:24px; align-items:center; padding:14px 0">
+        <p style="width:48px; font-family:'Instrument Serif', Georgia, serif; font-size:56px; line-height:1; color:#3fd3c0">4</p>
+        <p style="font-family:'DM Sans', Arial, sans-serif; font-size:30px; line-height:1.3; color:#fbf8f2">Raise your hand &amp; we'll come running!</p>
+      </div>
+    </div>
+  </div>
+  <aside>Leave this up for the whole build. "Your turn. The tutorial link is in your email, if you RSVP'd. If you didn't, look at your neighbor's screen, we'll get it to you." "The tutorial walks you through every step: voice, design, build, host. You'll check off each step as you go, and helpers can see where the room is." Walk the stuck ladder. "If you get stuck, go in this order. One: ask Claude, right in the same chat you're building in, so it knows what you've done. Two: hit the Stuck button in the tutorial, it shows answers for the step you're on. Three: post on PollEv, we're watching it. Four: raise your hand and one of us will come to you." "Use your voice instead of typing if it's faster. Talking to Claude works great." Point at the QR codes. "Left one is for questions anytime. Right one is the feedback form. Fill it out before you leave, it takes two minutes, and I'll send you the code for my site." Then stop talking and let them build.</aside>
+</section>
 </div>
 <div id="notes"></div>
+<div id="hud">← → to move | N notes | F full screen</div>
 <script>
 (function(){
-  var ic={
-    light:'<svg viewBox="0 0 24 24"><path d="M10 21h4M9 21l1.5-12h3L15 21M8 6h8l-1 3H9zM12 3v3"/></svg>',
-    city:'<svg viewBox="0 0 24 24"><path d="M3 21V11h4v10M7 21V7h5v14M12 21v-8h4v8M16 21V9h5v12M9 10h1M9 13h1M18 12h1M18 15h1"/></svg>',
-    cath:'<svg viewBox="0 0 24 24"><path d="M4 21h16M6 21V10l2-4 2 4v11M14 21V10l2-4 2 4v11M10 21v-6a2 2 0 0 1 4 0v6"/></svg>',
-    palace:'<svg viewBox="0 0 24 24"><path d="M3 21h18M4 9h16M5 9v12M10 9v12M14 9v12M19 9v12M4 9l8-5 8 5M10 21v-5a2 2 0 0 1 4 0v5"/></svg>',
-    lux:'<svg viewBox="0 0 24 24"><path d="M12 3v3M5 9c0 5 14 5 14 0M5 9v4M12 9v6M19 9v4M3 13h4M10 15h4M17 13h4"/></svg>',
-    formal:'<svg viewBox="0 0 24 24"><path d="M2 11h20M6 11v9M18 11v9M10 11v6M14 11v6M4 7v4M20 7v4M2 7h4M18 7h4"/></svg>',
-    village:'<svg viewBox="0 0 24 24"><path d="M2 21h20M4 21v-7l4-4 4 4v7M10 21v-4h-2v4M14 21v-9l3-3 4 4v8M17 21v-3"/></svg>',
-    scenery:'<svg viewBox="0 0 24 24"><path d="M2 18L7 9l3 5 3-4 6 8H2M16 20v-3M19 20v-3M15 17h5l1-2M18 4a2 2 0 1 0 .01 0"/></svg>',
-    food:'<svg viewBox="0 0 24 24"><path d="M3 12h18a9 9 0 0 1-18 0zM8 8c0-2 1-2 1-4M12 8c0-2 1-2 1-4M16 8c0-2 1-2 1-4"/></svg>',
-    factory:'<svg viewBox="0 0 24 24"><path d="M3 21h18M3 21V11l5 3v-3l5 3V8h4v13M16 8V4h3v4M6 17h2M11 17h2"/></svg>',
-    plain:'<svg viewBox="0 0 24 24"><path d="M4 21V4h16v17M3 21h18M8 8h3M13 8h3M8 12h3M13 12h3M8 16h3M13 16h3"/></svg>',
-    sport:'<svg viewBox="0 0 24 24"><path d="M15 4a1.5 1.5 0 1 0 .01 0M5 21l5-6-1-4 3-2 2 3 4 1M9 11l-4 2M12 12l2 4 3 5"/></svg>'
-  };
-  var motifs=[['Lighthouse and sea','light'],['City at night','city'],['Gothic cathedral interior','cath'],['Palace interior','palace'],['Luxury interior','lux'],['Formal room','formal'],['Rural village','village'],['Dramatic landscape with animals','scenery'],['Home and food','food'],['Industrial vintage','factory'],['Plain architecture','plain'],['Sports and action','sport']];
-  var m=document.getElementById('motifs');
-  motifs.forEach(function(t){m.insertAdjacentHTML('beforeend','<div class="motif">'+ic[t[1]]+t[0]+'</div>');});
-
-  var slides=[].slice.call(document.querySelectorAll('.slide')),i=0,notes=document.getElementById('notes');
-  function fit(){var h=notes.classList.contains('on')?innerHeight*0.62:innerHeight;var s=Math.min(innerWidth/1600,h/900);slides.forEach(function(el){el.style.setProperty('--sc',s);el.style.transform='scale('+s+')';});}
-  function show(n){i=Math.max(0,Math.min(slides.length-1,n));slides.forEach(function(el,k){el.classList.toggle('on',k===i);});notes.innerHTML='<b>'+(i+1)+'/'+slides.length+'</b>'+slides[i].getAttribute('data-notes');history.replaceState(null,'','#'+(i+1));fit();}
-  addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();show(i+1);}else if(e.key==='ArrowLeft'||e.key==='PageUp')show(i-1);else if(e.key.toLowerCase()==='n'){notes.classList.toggle('on');fit();}else if(e.key.toLowerCase()==='f'){document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();}});
-  addEventListener('resize',fit);document.getElementById('stage').addEventListener('click',function(){show(i+1);});
-  show(parseInt(location.hash.slice(1)||'1',10)-1);
+var st=document.getElementById('stage'),S=[].slice.call(st.children),i=0,notes=document.getElementById('notes');
+function fit(){var k=Math.min(innerWidth/1920,innerHeight/1080);st.style.transform='scale('+k+') translate(-50%,-50%)';st.style.transformOrigin='0 0';st.style.left='50%';st.style.top='50%';st.style.transform='translate(-50%,-50%) scale('+k+')';st.style.transformOrigin='center center'}
+function go(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach(function(s,j){s.classList.toggle('on',j===i)});var a=S[i].querySelector('aside');notes.textContent=(i+1)+' / '+S.length+'\n\n'+(a?a.textContent.trim():'');history.replaceState(null,'','#'+(i+1))}
+addEventListener('keydown',function(e){var k=e.key;if(k==='ArrowRight'||k==='PageDown'||k===' '){e.preventDefault();go(i+1)}else if(k==='ArrowLeft'||k==='PageUp'){e.preventDefault();go(i-1)}else if(k==='Home')go(0);else if(k==='End')go(S.length-1);else if(k==='n'||k==='N')notes.classList.toggle('show');else if(k==='f'||k==='F'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen().catch(function(){})}});
+st.addEventListener('click',function(e){go(e.clientX>innerWidth/3?i+1:i-1)});
+addEventListener('resize',fit);addEventListener('hashchange',function(){var n=parseInt(location.hash.slice(1),10);if(n)go(n-1)});
+fit();go((parseInt(location.hash.slice(1),10)||1)-1);
 })();
 </script>
-</body>
-</html>
+</body></html>
