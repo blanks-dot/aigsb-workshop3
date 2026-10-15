@@ -630,11 +630,11 @@
   function zipName(skill) { return skill === "design" ? "design.zip" : skill + ".zip"; }
   function listName(skill) { return skill === "design" ? (DESIGN_SKILL[state.version] || "design-…") : skill; }
   function uploadSteps(skill) {
-    return '<figure class="shot" data-shot="claude-customize-skills"><figcaption>Customize › Skills › Yours. + Add › Upload skill.</figcaption></figure>' +
+    return '<figure class="shot" data-shot="claude-customize-skills"><figcaption>Customize › Skills › + › Create skill › Upload a skill.</figcaption></figure>' +
       '<ol class="do">' +
       '<li><strong>Customize</strong> in the left sidebar.</li>' +
       "<li><strong>Skills</strong> tab.</li>" +
-      "<li><strong>+ Add</strong> › <strong>Upload skill</strong>.</li>" +
+      "<li><strong>+</strong> › <strong>Create skill</strong> › <strong>Upload a skill</strong>.</li>" +
       "<li>Pick <code>" + esc(zipName(skill)) + "</code> from Downloads. The .zip itself, not unzipped.</li>" +
       '<li><strong>Yours</strong>. Check <strong><span data-list-name="' + esc(skill) + '">' + esc(listName(skill)) + "</span></strong> is there and on.</li>" +
       "</ol>" +

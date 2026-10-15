@@ -1,3 +1,10 @@
 {
-  "cleanUrls": true
+  "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/talking-points.pdf",
+      "destination": "/talking-points",
+      "permanent": false
+    }
+  ]
 }
