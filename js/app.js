@@ -13,7 +13,7 @@
  * the ladder at the top of the Stuck? drawer. Revision 3 removed the track
  * toggle: there is one path, the forms, with "build it with Claude" as an aside.
  * Revision 4: rail groups WHY / VOICE / DESIGN / BUILD / HOST, step 6 hosts with
- * Vercel Drop, the forms are grouped by the formula (samples + qualities + nevers,
+ * Vercel Drop, the forms are grouped by the formula (samples + tone + nevers,
  * assets + vibe + nevers), and the GSB voice starter downloads from step 2.
  *
  * Content lives in index.html. This file only wires it up.
@@ -26,7 +26,8 @@
 
   const STEPS = ["what", "setup", "version", "voice", "design", "three", "build", "host"]; // in order, then "finish"
   const SUBS = ["setup-1", "setup-2", "setup-3", "setup-4", "setup-5"]; // 0.5 is the optional Vercel account (revision 4 dropped the GitHub one)
-  const QUESTS = ["quest-1", "quest-2", "quest-3", "quest-4", "quest-5", "quest-6", "quest-7"]; // side quests on step 6: one-line cards, tick in any order
+  const QUESTS = ["quest-1", "quest-2", "quest-3", "quest-4", "quest-5", "quest-6", "quest-7", "quest-8"]; // side quests on Go further: one-line cards, tick in any order
+  const EXTRAS = ["further"]; // Go further: always open, never counted, sits between step 6 and Finish
   const REQUIRED_SUBS = ["setup-1"]; // 0.2 to 0.5 are optional
   const CHECKPOINTS = { voice: 1, build: 2 }; // 2 = the bigger one (step 5, Build it once)
   const RATED = { build: 1 }; // steps whose Done button asks for a 1 to 5 rating (step 5)
@@ -187,7 +188,8 @@
 
   const sections = {};
   $all(".step[data-step]").forEach((s) => { sections[s.dataset.step] = s; });
-  const ORDER = STEPS.concat(["finish"]);
+  const ORDER = STEPS.concat(EXTRAS, ["finish"]);
+  const isExtra = (id) => EXTRAS.indexOf(id) >= 0;
   const TITLES = {}; const LEARNED = {}; const PART = {};
   ORDER.forEach((id) => {
     const s = sections[id];
@@ -206,7 +208,7 @@
   const idx = (id) => ORDER.indexOf(id);
   /* Steps open in order. */
   function reachable(id) {
-    return isDone(id) || idx(id) <= idx(currentId());
+    return isExtra(id) || isDone(id) || idx(id) <= idx(currentId());
   }
   function stepLabel(id) {
     const n = sections[id].dataset.num;
@@ -301,7 +303,7 @@
 
   function paintBackbar() {
     const cur = currentId();
-    const show = viewing && viewing !== cur && $("#app") && !$("#app").hidden && idx(viewing) < idx(cur);
+    const show = viewing && !isExtra(viewing) && viewing !== cur && $("#app") && !$("#app").hidden && idx(viewing) < idx(cur);
     const bb = $("#backbar");
     bb.hidden = !show;
     if (show) $("#backbar-text").textContent = "You're looking back at " + stepLabel(viewing) + ". " + (cur === "finish" ? "You've finished every step." : "You're up to " + stepLabel(cur) + ": " + TITLES[cur] + ".");
@@ -359,7 +361,21 @@
     if (!foot) { foot = document.createElement("div"); foot.className = "step-foot"; sec.appendChild(foot); }
     let learned = $(".learned", sec);
     foot.innerHTML = "";
-    const nextId = ORDER[idx(id) + 1];
+    if (isExtra(id)) {
+      const cur = currentId();
+      const n = document.createElement("button");
+      n.type = "button"; n.className = "btn ghost";
+      n.textContent = cur === "finish" ? "Finish →" : "Back to " + (sections[cur].dataset.num !== undefined ? stepLabel(cur) + ": " : "") + TITLES[cur] + " →";
+      n.addEventListener("click", () => go(cur));
+      foot.appendChild(n);
+      const st = document.createElement("button");
+      st.type = "button"; st.className = "stuck-inline"; st.textContent = "Stuck?";
+      st.addEventListener("click", () => openDrawer(id));
+      foot.appendChild(st);
+      return;
+    }
+    let nextId = ORDER[idx(id) + 1];
+    while (nextId && isExtra(nextId)) nextId = ORDER[idx(nextId) + 1];
     if (isDone(id)) {
       const b = document.createElement("button");
       b.type = "button"; b.className = "btn complete is-done";
@@ -545,7 +561,7 @@
       if (!target) return;
       if (!drawer.hidden) closeDrawer();
       const show = () => { setOpen(target, true); setTimeout(() => target.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" }), 120); };
-      if (viewing !== "host") { if (reachable("host")) { go("host"); setTimeout(show, 450); } else toast("Finish " + stepLabel(currentId()) + " first."); }
+      if (viewing !== "further") { go("further"); setTimeout(show, 450); }
       else show();
     }
   });
@@ -699,7 +715,7 @@
     if (id === "stuck-ask") {
       const cur = viewing || currentId();
       const s = sections[cur] || sections.what;
-      t = t.replace(/\{\{STEP\}\}/g, s.dataset.num !== undefined ? "step " + s.dataset.num : cur === "finish" ? "the finish page" : "the start page").replace(/\{\{STEP_TITLE\}\}/g, TITLES[cur] || "");
+      t = t.replace(/\{\{STEP\}\}/g, s.dataset.num !== undefined ? "step " + s.dataset.num : cur === "finish" ? "the finish page" : cur === "further" ? "the Go further page" : "the start page").replace(/\{\{STEP_TITLE\}\}/g, TITLES[cur] || "");
     }
     return t;
   }
@@ -772,7 +788,7 @@
     if (kind === "voice") {
       el.innerHTML = '<form class="myform-inner" novalidate>' +
         '<div class="mf-head"><span class="mf-file">voice/SKILL.md</span><span class="mf-tag">Make it yours</span></div>' +
-        '<div class="mf-group"><span class="mf-group-label">Qualities</span>' + versionRadios("voice") + "</div>" +
+        '<div class="mf-group"><span class="mf-group-label">Tone</span>' + versionRadios("voice") + "</div>" +
         '<div class="mf-group"><span class="mf-group-label">Samples</span>' +
         '<label class="field"><span>My samples <small>3 things you wrote, a <code>---</code> line between them</small></span><textarea name="samples" rows="9" placeholder="Hey Sam, quick one. Can you send the deck by Thursday? Thanks tons.&#10;---&#10;Second sample&#10;---&#10;Third sample" spellcheck="false"></textarea></label>' +
         '<label class="field"><span>Words and phrases I actually use <small>comma-separated</small></span><input name="words" placeholder="quick one, thanks tons, no worries" autocomplete="off"></label>' +
@@ -1157,7 +1173,7 @@
     ORDER.forEach((id) => { sections[id].hidden = true; });
     app.hidden = false;
     viewing = null;
-    const deep = { "#side-quests": "host", "#deploy": "host" }[location.hash];
+    const deep = { "#side-quests": "further", "#further": "further", "#deploy": "host" }[location.hash];
     go(deep && reachable(deep) ? deep : currentId(), true);
     paintSubs();
     paintVersion();
