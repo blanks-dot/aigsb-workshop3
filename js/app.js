@@ -1,7 +1,7 @@
 /*
  * AI@GSB Workshop 3: student site mechanics.
  *
- * Structure carried over from Kate's Workshop 2 site (and Abhi's Workshop 1
+ * Structure carried over from the Workshop 2 site (and Abhi's Workshop 1
  * site before it): name + email sign-in, ?room=, one step at a time with a
  * side rail, steps open in order, progress saved in the browser and synced
  * to /api/progress keyed by email, "Now you know" after each step, copy
@@ -664,7 +664,8 @@
     const capHtml = cap ? cap.innerHTML : "";
     const img = new Image();
     img.alt = cap ? cap.textContent : "Screenshot " + id;
-    const exts = ["png", "jpg", "webp"];
+    const ALIAS = { "0.2-before": "img/slides/noskill-site.jpg", "3-test": "img/slides/mary-text.jpg", "4-preview": "img/slides/mary-text.jpg" };
+    const srcs = (ALIAS[id] ? [ALIAS[id]] : []).concat(["png", "svg", "jpg", "webp"].map((x) => "img/screens/" + id + "." + x));
     let i = 0;
     const placeholder = () => {
       const ph = document.createElement("div");
@@ -673,9 +674,9 @@
       if (cap) cap.hidden = true;
       fig.insertBefore(ph, fig.firstChild);
     };
-    img.onerror = () => { i++; if (i < exts.length) img.src = "img/screens/" + id + "." + exts[i]; else placeholder(); };
+    img.onerror = () => { i++; if (i < srcs.length) img.src = srcs[i]; else placeholder(); };
     img.onload = () => { fig.insertBefore(img, fig.firstChild); };
-    img.src = "img/screens/" + id + "." + exts[0];
+    img.src = srcs[0];
     img.addEventListener("click", () => {
       const lb = document.createElement("div");
       lb.className = "lightbox";

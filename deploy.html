@@ -100,14 +100,14 @@
   "use strict";
   var $all = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   var esc = function (s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); };
-  /* screenshot slots: img/screens/<id>.png (then .jpg, .webp), else a labeled placeholder */
+  /* screenshot slots: img/screens/<id>.png (then .svg, .jpg, .webp), else a labeled placeholder */
   $all("figure.shot[data-shot]").forEach(function (fig) {
     var id = fig.dataset.shot, cap = fig.querySelector("figcaption"), capHtml = cap ? cap.innerHTML : "";
-    var img = new Image(), exts = ["png", "jpg", "webp"], i = 0;
+    var img = new Image(), srcs = ["png", "svg", "jpg", "webp"].map(function (x) { return "img/screens/" + id + "." + x; }), i = 0;
     img.alt = cap ? cap.textContent : "Screenshot " + id;
-    img.onerror = function () { i++; if (i < exts.length) img.src = "img/screens/" + id + "." + exts[i]; else { var ph = document.createElement("div"); ph.className = "shot-empty"; ph.innerHTML = '<svg aria-hidden="true"><use href="#i-img"/></svg><div><b>Screenshot ' + esc(id) + "</b>" + capHtml + "</div>"; if (cap) cap.hidden = true; fig.insertBefore(ph, fig.firstChild); } };
+    img.onerror = function () { i++; if (i < srcs.length) img.src = srcs[i]; else { var ph = document.createElement("div"); ph.className = "shot-empty"; ph.innerHTML = '<svg aria-hidden="true"><use href="#i-img"/></svg><div><b>Screenshot ' + esc(id) + "</b>" + capHtml + "</div>"; if (cap) cap.hidden = true; fig.insertBefore(ph, fig.firstChild); } };
     img.onload = function () { fig.insertBefore(img, fig.firstChild); };
-    img.src = "img/screens/" + id + "." + exts[0];
+    img.src = srcs[0];
     img.addEventListener("click", function () { var lb = document.createElement("div"); lb.className = "lightbox"; lb.innerHTML = '<img alt="">'; lb.firstChild.src = img.src; lb.addEventListener("click", function () { lb.remove(); }); document.body.appendChild(lb); });
   });
   $all("a.go-link").forEach(function (a) { a.insertAdjacentHTML("beforeend", '<svg aria-hidden="true"><use href="#i-ext"/></svg>'); });

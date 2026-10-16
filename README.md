@@ -15,7 +15,7 @@ color each. WHY (Start here, Before class) orange, VOICE (version, voice) violet
 DESIGN (look) teal, BUILD (three options, build it once) yellow #F2B705 with ink
 text, HOST (host it live, finish) blue.
 
-Built on Kate's Workshop 2 site (the CRM workshop), which was built on Abhi's
+Built on the Workshop 2 site (the CRM workshop), which was built on Abhi's
 Workshop 1 site ([ADA110/outreach-workshop-site](https://github.com/ADA110/outreach-workshop-site)).
 Same stack and mechanics: static HTML, three Vercel functions, and Upstash
 Redis. No framework and no build step.
@@ -29,7 +29,7 @@ deploy.html           "the long version" of step 6: Vercel Drop first, then "Opt
 gallery.html          the class gallery: every student with a live link and the gallery box ticked.
                       No sign-in, no key. Served at /gallery (add ?room= for a room)
 instructor.html       the instructor dashboard, served at /instructor (needs the key)
-css/site.css          styles (palette, type, transitions). Kate's sheet plus the Workshop 3 components.
+css/site.css          styles (palette, type, transitions). the Workshop 2 sheet plus the Workshop 3 components.
 js/app.js             site mechanics: sign-in, rail, progress + sync, version picker, Make it yours
                       forms, copy cards (with the student's name filled in), skill anatomy, step 5
                       rating, live link + gallery opt-in, deploy date fallback, Stuck? drawer and
