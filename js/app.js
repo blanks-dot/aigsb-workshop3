@@ -654,8 +654,8 @@
     return '<ol class="do">' +
       '<li><strong>Customize</strong>, bottom of the left sidebar</li>' +
       "<li><strong>+ Add</strong>, top right, then <strong>Upload skill</strong></li>" +
-      "<li>Pick <code>" + esc(zipName(skill)) + "</code> from Downloads. The .zip, not the folder</li>" +
-      '<li><strong>Yours</strong> tab: <strong><span data-list-name="' + esc(skill) + '">' + esc(listName(skill)) + "</span></strong> is there and switched on</li>" +
+      "<li>Pick <code>" + esc(zipName(skill)) + "</code> from Downloads. The .zip, not the folder.</li>" +
+      '<li><strong>Yours</strong> tab: <strong><span data-list-name="' + esc(skill) + '">' + esc(listName(skill)) + "</span></strong> is there and switched on.</li>" +
       "</ol>" +
       '<div class="crops crops-small"><figure><img src="img/screens/claude-step-b.jpg" alt="The + Add button marked 2, Upload skill marked 3, the Yours tab marked 4" loading="lazy"></figure></div>';
   }
@@ -839,7 +839,7 @@
         versionRadios("design") +
         '<div class="mf-group"><span class="mf-group-label">Assets</span>' +
         '<fieldset class="mf-row"><legend>Photo</legend>' + radioHtml("design-photo", "yes", "Yes, use my photo", false) + radioHtml("design-photo", "no", "No photo", false) + "</fieldset>" +
-        '<p class="small photo-note" hidden>Nothing to upload here. Attach your photo in the Claude chat when you test this (below) and when you build your site in step 4. Claude puts it inside the file, so it still works once it\'s live</p>' +
+        '<p class="small photo-note" hidden>Nothing to upload here. Attach your photo in the Claude chat when you test this (below) and when you build your site in step 4. Claude puts it inside the file, so it still works once it\'s live.</p>' +
         '<div class="field"><span>Sites I like <small>up to 2 links, optional</small></span><div class="mf-two"><input name="site1" type="url" inputmode="url" placeholder="https://a-site-you-like.com" autocomplete="off" spellcheck="false" aria-label="Site I like, 1"><input name="site2" type="url" inputmode="url" placeholder="https://another-one.com" autocomplete="off" spellcheck="false" aria-label="Site I like, 2"></div></div></div>' +
         '<div class="mf-group"><span class="mf-group-label">Vibe</span>' +
         '<div class="field"><span>Accent color <small>one color, the rest stays neutral</small></span><div class="mf-accent"><div class="swatches"></div><label class="hex-wrap"><span class="hex-dot"></span><input name="accent" class="hex" placeholder="#24426B" maxlength="7" autocomplete="off" spellcheck="false" aria-label="Hex color"></label></div></div>' +
