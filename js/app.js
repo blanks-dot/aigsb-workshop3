@@ -826,7 +826,7 @@
         '<div class="mf-group"><span class="mf-group-label">Assets</span>' +
         '<label class="field"><span>My samples <small>3 things you wrote, a <code>---</code> line between them</small></span><textarea name="samples" rows="9" placeholder="Hey Sam, quick one. Can you send the deck by Thursday? Thanks tons.&#10;---&#10;Second sample&#10;---&#10;Third sample" spellcheck="false"></textarea></label>' +
         '<label class="field"><span>Words and phrases I actually use <small>comma-separated</small></span><input name="words" placeholder="quick one, thanks tons, no worries" autocomplete="off"></label>' +
-        '<label class="field"><span>How I sign off</span><input name="signoff" value="' + esc(firstName()) + '" placeholder="your first name" autocomplete="off"></label></div>' +
+        '<label class="field"><span>How I sign off</span><input name="signoff" placeholder="How you sign emails, e.g. your first name" autocomplete="off"></label></div>' +
         '<div class="mf-group"><span class="mf-group-label">Vibe</span>' + versionRadios("voice") +
         '<label class="field mf-own"' + (v === "custom" ? "" : " hidden") + '><span>My vibe, in my own words <small>3 words, like warm, direct, specific</small></span><input name="vibe" placeholder="warm, direct, specific" autocomplete="off"></label></div>' +
         '<div class="mf-group"><span class="mf-group-label">Icks</span>' +
