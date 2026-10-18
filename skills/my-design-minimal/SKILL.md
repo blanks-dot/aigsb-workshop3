@@ -1,9 +1,9 @@
 ---
-name: design-polished
-description: How my website, slides and documents should look. Use whenever you build or style anything visual for me, especially my personal website. The Polished version.
+name: my-design
+description: How my website, slides and documents should look. Use whenever you build or style anything visual for me, especially my personal website. The Minimal look.
 ---
 
-# My design: Polished
+# My design: Minimal
 
 ## Make it yours (edit this part)
 
@@ -23,7 +23,7 @@ Sites I like:
 Never do (up to 3 of your own):
 - [example: no stock photos]
 
-## This version's look (a starting point)
+## This look (a starting point)
 
 Background: [suggested: white] (change it if you want). Near-black text. Numbered sections (01, 02, 03) with a thin rule under each. Headline large and plain. Generous but not empty margins. Accent used only on section numbers, links and one button. Reference feel: a strategy site with diagrams, not a brochure.
 
@@ -43,4 +43,4 @@ One page. These sections are the default. If the brief gives you a better struct
 - Spacing on an 8px grid. Consistent corner radius. No drop shadows, no gradients, no glassmorphism.
 - No AI slop: no "hero with three feature cards" template, no icon-per-bullet, no multi-color palette, no excessive whitespace padding between tiny amounts of text. Never Poppins or Inter as the headline font, they read as AI defaults.
 - Fonts from Google Fonts only. Load only the two in my font pair.
-- Use my voice skill for every word on the page.
+- Use my-voice (my voice skill) for every word on the page.

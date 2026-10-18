@@ -25,7 +25,7 @@
   /* ---------- config ---------- */
 
   const STEPS = ["what", "setup", "voice", "design", "three", "build", "host"]; // Revision 6: picking a version is part of the voice step // in order, then "finish"
-  const SUBS = ["setup-1", "setup-2", "setup-3"]; // Revision 7: open Claude, raw material, Vercel
+  const SUBS = ["setup-1", "setup-2"]; // Revision 8: open Claude, raw material. Vercel moved to step 5
   const QUESTS = []; // Revision 7: no side quests, Go further is prompts
   const EXTRAS = ["further"]; // Go further: always open, never counted, sits between step 6 and Finish
   const REQUIRED_SUBS = []; // Revision 5: nothing in step 0 is required. Skip anything you've already done.
@@ -34,16 +34,27 @@
   const KEY = "aigsb-workshop3-v1";
 
   const VERSION_NAME = { polished: "Polished", warm: "Warm", playful: "Playful", custom: "Your own" }; // Revision 6: "custom" = start from scratch
-  const DESIGN_SKILL = { polished: "design-polished", warm: "design-warm", playful: "design-playful", custom: "design-custom" };
+  /* Revision 8: the design step has its own pick, named by look, not by the voice words. Defaults from the vibe. */
+  const LOOK_NAME = { minimal: "Minimal", warm: "Warm", bold: "Bold", custom: "Your own" };
+  const LOOK_FROM_VIBE = { polished: "minimal", warm: "warm", playful: "bold", custom: "custom" };
+  const DESIGN_SKILL = { minimal: "my-design-minimal", warm: "my-design-warm", bold: "my-design-bold", custom: "my-design-custom" }; // starter file; the skill itself is always named my-design
   const SWATCHES = {
-    polished: [["deep navy", "#24426B"], ["charcoal", "#1F1E1B"], ["Stanford red", "#8C1515"], ["forest", "#3E6B4A"]],
+    minimal: [["deep navy", "#24426B"], ["charcoal", "#1F1E1B"], ["Stanford red", "#8C1515"], ["forest", "#3E6B4A"]],
     warm: [["clay", "#B4532A"], ["forest", "#3E6B4A"], ["pink", "#E03870"], ["deep navy", "#24426B"]],
-    playful: [["sky blue", "#38B6FF"], ["sunshine", "#F5A623"], ["lime", "#7CB342"], ["pink", "#E03870"]],
+    bold: [["sky blue", "#38B6FF"], ["sunshine", "#F5A623"], ["lime", "#7CB342"], ["pink", "#E03870"]],
     custom: [["ink", "#141413"], ["clay", "#B4532A"], ["deep navy", "#24426B"], ["forest", "#3E6B4A"]],
   };
   const FONTS = ["Playfair Display + Source Sans 3", "Fraunces + Inter", "Nunito + JetBrains Mono"];
-  const DEFAULT_FONT = { polished: FONTS[0], warm: FONTS[1], playful: FONTS[2], custom: "" };
-  const DEFAULT_FEEL = { polished: "clear, structured, confident", warm: "warm, direct, bright", playful: "playful, candid, light", custom: "your 3 words" };
+  const DEFAULT_FONT = { minimal: FONTS[0], warm: FONTS[1], bold: FONTS[2], custom: "" };
+  const DEFAULT_FEEL = { minimal: "clear, quiet, confident", warm: "warm, direct, bright", bold: "bold, candid, light", custom: "your 3 words" };
+  /* Font previews (step 2): each pair rendered in the real fonts, loaded once from Google Fonts when step 2 first renders */
+  const FONT_CSS = { "Playfair Display + Source Sans 3": ["Playfair Display", "Source Sans 3"], "Fraunces + Inter": ["Fraunces", "Inter"], "Nunito + JetBrains Mono": ["Nunito", "JetBrains Mono"] };
+  let fontsLoaded = false;
+  function loadPreviewFonts() {
+    if (fontsLoaded) return; fontsLoaded = true;
+    const fams = [].concat.apply([], Object.values(FONT_CSS)).map((f) => "family=" + encodeURIComponent(f).replace(/%20/g, "+") + ":wght@400;600").join("&");
+    const l = document.createElement("link"); l.rel = "stylesheet"; l.href = "https://fonts.googleapis.com/css2?" + fams + "&display=swap"; document.head.appendChild(l);
+  }
 
   const params = new URLSearchParams(location.search);
   const ROOM = (params.get("room") || "default").toLowerCase().replace(/[^a-z0-9-]/g, "").slice(0, 40) || "default";
@@ -56,7 +67,7 @@
 
   /* ---------- state + sync ---------- */
 
-  const state = { name: "", email: "", version: "", deployDate: "", deployTime: "", liveUrl: "", galleryOptIn: true, step5Rating: 0, steps: {}, feedback: null, notes: {} };
+  const state = { name: "", email: "", version: "", look: "", deployDate: "", deployTime: "", liveUrl: "", galleryOptIn: true, step5Rating: 0, steps: {}, feedback: null, notes: {} };
   const LIVE_RE = /^https:\/\/[^\s]{4,}$/i; // same rule as lib/store.js cleanLiveUrl: https only, 200 chars max
   let syncOff = false;
   let saveTimer = null;
@@ -71,6 +82,7 @@
         ["name", "email", "deployDate", "deployTime", "liveUrl"].forEach((k) => { if (typeof p[k] === "string") state[k] = p[k]; });
         if (!LIVE_RE.test(state.liveUrl) || state.liveUrl.length > 200) state.liveUrl = "";
         if (VERSION_NAME[p.version]) state.version = p.version;
+        if (LOOK_NAME[p.look]) state.look = p.look;
         state.galleryOptIn = p.galleryOptIn !== false; // opt-out: on unless they unticked it
         if (Number.isInteger(p.step5Rating)) state.step5Rating = p.step5Rating;
         ["steps", "notes"].forEach((k) => { if (p[k] && typeof p[k] === "object") state[k] = p[k]; });
@@ -325,37 +337,65 @@
     $all(".version-card").forEach((c) => c.classList.toggle("chosen", c.dataset.version === v));
     $all(".pick-version").forEach((b) => { b.textContent = b.dataset.version === v ? "Your vibe ✓" : "This one"; });
     $all("[data-version-name]").forEach((el) => { el.textContent = v ? VERSION_NAME[v] : "your version"; });
-    $all("[data-design-name]").forEach((el) => { el.textContent = v ? DESIGN_SKILL[v] : "design-…"; });
+    $all("[data-design-name]").forEach((el) => { el.textContent = "my-design"; });
     const gate = $("#version-gate");
     if (gate) gate.hidden = !!v;
     const tc = $("#thumb-chip-text");
     if (tc) tc.textContent = v ? VERSION_NAME[v] : "Warm";
-    $all('.myform input[type="radio"][name$="-version"]').forEach((r) => { r.checked = r.value === v; });
-    $all(".mf-own").forEach((el) => { el.hidden = v !== "custom"; });
+    $all('.myform[data-kind="voice"] .mf-own').forEach((el) => { el.hidden = v !== "custom"; });
     $all(".copy-card[data-copy]").filter((c) => VERSION_CARDS[c.dataset.copy]).forEach(renderCopyCard);
     if (viewing === "version" && !isDone("version")) renderFooter("version");
   }
   function setVersion(v, fromForm) {
     if (!VERSION_NAME[v]) return;
     const changed = state.version !== v;
+    const oldV = state.version;
     const ownFlip = (state.version === "custom") !== (v === "custom");
     state.version = v;
     save();
     paintVersion();
-    if (changed && !fromForm) {
-      $all(".myform").forEach((f) => renderForm(f));
-      toast(VERSION_NAME[v] + ". It's in the header now");
-      const card = $('.version-card[data-version="' + v + '"]');
-      if (card) { const r = card.getBoundingClientRect(); burst(r.left + r.width / 2, r.top + 40, 40, PALETTE.voice, 8); }
-    } else if (changed && fromForm) {
-      $all(".myform").forEach((f) => { if (!f.contains(document.activeElement) || (ownFlip && f.dataset.kind === "design")) renderForm(f); });
-      $all('.myform[data-kind="design"]').forEach((f) => renderSwatches(f));
+    if (changed) {
+      $all('.myform[data-kind="voice"]').forEach((f) => { if (!f.contains(document.activeElement) || ownFlip) renderForm(f); });
+      if (!state.look || state.look === LOOK_FROM_VIBE[oldV]) setLook(LOOK_FROM_VIBE[v] || "warm", true); // the look follows the vibe until the student picks a look
+      if (!fromForm) {
+        toast(VERSION_NAME[v] + ". Written into your voice skill");
+        const card = $('.version-card[data-version="' + v + '"]');
+        if (card) { const r = card.getBoundingClientRect(); burst(r.left + r.width / 2, r.top + 40, 40, PALETTE.voice, 8); }
+      }
     }
   }
   document.addEventListener("click", (e) => {
     const b = e.target.closest(".pick-version");
     if (b) setVersion(b.dataset.version);
+    const l = e.target.closest(".pick-look");
+    if (l) setLook(l.dataset.look);
   });
+
+  /* ---------- look (step 2) ---------- */
+
+  const lookName = () => LOOK_NAME[state.look] || "";
+  function paintLook() {
+    const l = state.look;
+    $all(".look-card").forEach((c) => c.classList.toggle("chosen", c.dataset.look === l));
+    $all(".pick-look").forEach((b) => { b.textContent = b.dataset.look === l ? "Your look ✓" : "This one"; });
+    $all("[data-look-name]").forEach((el) => { el.textContent = l ? LOOK_NAME[l] : "your look"; });
+    $all(".copy-card[data-copy]").filter((c) => VERSION_CARDS[c.dataset.copy]).forEach(renderCopyCard);
+  }
+  function setLook(l, quiet) {
+    if (!LOOK_NAME[l]) return;
+    const changed = state.look !== l;
+    state.look = l;
+    save();
+    paintLook();
+    if (changed) {
+      $all('.myform[data-kind="design"]').forEach((f) => { if (!f.contains(document.activeElement) || quiet) renderForm(f); });
+      if (!quiet) {
+        toast(LOOK_NAME[l] + ". Your design skill starts from it");
+        const card = $('.look-card[data-look="' + l + '"]');
+        if (card) { const r = card.getBoundingClientRect(); burst(r.left + r.width / 2, r.top + 40, 40, PALETTE.design || PALETTE.voice, 8); }
+      }
+    }
+  }
 
   /* ---------- step footers ---------- */
 
@@ -648,22 +688,24 @@
 
   /* ---------- "Upload the skill to Claude" (shared block, steps 2 and 3) ---------- */
 
-  function zipName(skill) { return skill === "design" ? "design.zip" : skill + ".zip"; }
-  function listName(skill) { return skill === "design" ? (DESIGN_SKILL[state.version] || "design-…") : skill; }
-  function uploadSteps(skill) {
+  function zipName(skill) { return "my-" + skill + ".zip"; }
+  function listName(skill) { return "my-" + skill; }
+  function uploadSteps(skill, full) {
     return '<ol class="do">' +
       '<li><strong>Customize</strong>, bottom of the left sidebar</li>' +
       "<li><strong>+ Add</strong>, top right, then <strong>Upload skill</strong></li>" +
       "<li>Pick <code>" + esc(zipName(skill)) + "</code> from Downloads. The .zip, not the folder.</li>" +
       '<li><strong>Yours</strong> tab: <strong><span data-list-name="' + esc(skill) + '">' + esc(listName(skill)) + "</span></strong> is there and switched on.</li>" +
       "</ol>" +
-      '<div class="crops crops-small"><figure><img src="img/screens/claude-step-b.jpg" alt="The + Add button marked 2, Upload skill marked 3, the Yours tab marked 4" loading="lazy"></figure></div>';
+      (full
+        ? '<div class="crops crops-row"><figure><img src="img/screens/claude-step-a.jpg" alt="Claude\'s left sidebar, Customize marked 1" loading="lazy"><figcaption>1 Customize</figcaption></figure><figure><img src="img/screens/claude-step-b.jpg" alt="The + Add button marked 2, Upload skill marked 3, the Yours tab marked 4" loading="lazy"><figcaption>2 + Add, 3 Upload skill, 4 Yours, where ' + esc(listName(skill)) + ' shows up after</figcaption></figure></div>'
+        : '<div class="crops crops-small"><figure><img src="img/screens/claude-step-b.jpg" alt="The + Add button marked 2, Upload skill marked 3, the Yours tab marked 4" loading="lazy"></figure></div>');
   }
   $all(".upload-skill[data-skill]").forEach((el) => {
     const skill = el.dataset.skill;
     if (el.hasAttribute("data-open")) {
       el.classList.add("open-block");
-      el.innerHTML = uploadSteps(skill);
+      el.innerHTML = uploadSteps(skill, true);
     } else {
       el.innerHTML = '<div class="fold"><button type="button" class="fold-head" aria-expanded="false">Upload <code>' + esc(zipName(skill)) + '</code>, the steps again<svg class="chev" aria-hidden="true"><use href="#i-chev"/></svg></button>' +
         '<div class="collapse"><div class="collapse-inner"><div class="fold-body">' + uploadSteps(skill) + "</div></div></div></div>";
@@ -744,7 +786,8 @@
   const VERSION_CARDS = { "voice-builder": 1, "design-builder": 1 };
   function cardText(id) {
     let t = srcText(id);
-    if (VERSION_CARDS[id]) t = t.replace(/\{\{VERSION\}\}/g, state.version === "custom" ? "my own. Ask me to describe it in 3 words and show you 2 things I love" : versionName() || "[your version]");
+    if (VERSION_CARDS[id]) t = t.replace(/\{\{VERSION\}\}/g, state.version === "custom" ? "my own. Ask me to describe it in 3 words and show you 2 things I love" : versionName() || "[your version]")
+      .replace(/\{\{LOOK\}\}/g, state.look === "custom" ? "my own. Ask me for 3 words and 2 sites I love" : lookName() || "[your look]");
     if (fullName()) t = t.replace(/\[(name|your name)\]/gi, fullName());
     if (id === "stuck-ask") {
       const cur = viewing || currentId();
@@ -812,46 +855,56 @@
   function radioHtml(name, value, label, checked) {
     return '<label class="mf-radio"><input type="radio" name="' + name + '" value="' + value + '"' + (checked ? " checked" : "") + "><span>" + esc(label) + "</span></label>";
   }
-  function versionRadios(kind) {
-    return '<fieldset class="mf-row mf-versions"><legend>Pick one <span class="small muted">same as the cards above</span></legend>' +
-      Object.keys(VERSION_NAME).map((v) => radioHtml(kind + "-version", v, VERSION_NAME[v], state.version === v)).join("") + "</fieldset>";
+  function fontPreviewHtml(f, checked) {
+    const fam = FONT_CSS[f] || [f.split(" + ")[0], f.split(" + ")[1] || f];
+    return '<label class="font-opt' + (checked ? " on" : "") + '"><input type="radio" name="font" value="' + esc(f) + '"' + (checked ? " checked" : "") + '>' +
+      '<span class="fp-head" style="font-family:\'' + esc(fam[0]) + '\', serif">Hi, I\'m ' + esc(state.name ? state.name.split(" ")[0] : "Sam") + '.</span>' +
+      '<span class="fp-body" style="font-family:\'' + esc(fam[1]) + '\', sans-serif">I build small things for people I like. This is what your paragraphs would look like.</span>' +
+      '<span class="fp-name">' + esc(f) + "</span></label>";
   }
 
   function renderForm(el) {
     const kind = el.dataset.kind;
     const v = state.version || "warm";
     if (kind === "voice") {
+      /* Revision 8: the form follows the step's order. Assets (3 separate sample boxes), then the vibe you picked on the cards, then icks. No second vibe picker. */
       el.innerHTML = '<form class="myform-inner" novalidate>' +
-        '<div class="mf-head"><span class="mf-file">voice/SKILL.md</span><span class="mf-tag">Make it yours</span></div>' +
+        '<div class="mf-head"><span class="mf-file">my-voice/SKILL.md</span><span class="mf-tag">Make it yours</span></div>' +
         '<div class="mf-group"><span class="mf-group-label">Assets</span>' +
-        '<label class="field"><span>My samples <small>3 things you wrote, a <code>---</code> line between them</small></span><textarea name="samples" rows="9" placeholder="Hey Sam, quick one. Can you send the deck by Thursday? Thanks tons.&#10;---&#10;Second sample&#10;---&#10;Third sample" spellcheck="false"></textarea></label>' +
+        '<div class="field"><span>3 things you wrote <small>paste one per box, as sent, typos and all</small></span>' +
+        '<textarea name="sample1" rows="4" placeholder="Hey Sam, quick one. Can you send the deck by Thursday? Thanks tons." spellcheck="false" aria-label="Sample 1"></textarea>' +
+        '<textarea name="sample2" rows="4" placeholder="Second one. A Slack or a text counts." spellcheck="false" aria-label="Sample 2"></textarea>' +
+        '<textarea name="sample3" rows="4" placeholder="Third one. The more normal the better." spellcheck="false" aria-label="Sample 3"></textarea></div>' +
         '<label class="field"><span>Words and phrases I actually use <small>comma-separated</small></span><input name="words" placeholder="quick one, thanks tons, no worries" autocomplete="off"></label>' +
         '<label class="field"><span>How I sign off</span><input name="signoff" placeholder="How you sign emails, e.g. your first name" autocomplete="off"></label></div>' +
-        '<div class="mf-group"><span class="mf-group-label">Vibe</span>' + versionRadios("voice") +
+        '<div class="mf-group"><span class="mf-group-label">Vibe</span>' +
+        '<p class="mf-note">Your pick from the cards: <strong data-version-name>' + esc(versionName() || "none yet, pick one above") + '</strong>. It goes in as the Vibe line of the skill. Change it on the cards.</p>' +
         '<label class="field mf-own"' + (v === "custom" ? "" : " hidden") + '><span>My vibe, in my own words <small>3 words, like warm, direct, specific</small></span><input name="vibe" placeholder="warm, direct, specific" autocomplete="off"></label></div>' +
         '<div class="mf-group"><span class="mf-group-label">Icks</span>' +
         '<div class="field"><span>Never say <small>up to 3</small></span><div class="mf-three"><input name="never1" placeholder="excited to share" autocomplete="off"><input name="never2" placeholder="circle back" autocomplete="off"><input name="never3" placeholder="" autocomplete="off"></div></div></div>' +
-        '<div class="mf-foot"><button type="submit" class="btn accent mf-dl">Download voice.zip</button><span class="small">Built on your laptop. Nothing is sent</span></div>' +
+        '<div class="mf-foot"><button type="submit" class="btn accent mf-dl">Download my-voice.zip</button><span class="small">Built on your laptop. Nothing is sent</span></div>' +
         "</form>";
     } else {
+      const lk = state.look || LOOK_FROM_VIBE[state.version] || "warm";
+      loadPreviewFonts();
       el.innerHTML = '<form class="myform-inner" novalidate>' +
-        '<div class="mf-head"><span class="mf-file"><span data-design-name>' + esc(DESIGN_SKILL[v]) + "</span>/SKILL.md</span><span class=\"mf-tag\">Make it yours</span></div>" +
-        versionRadios("design") +
+        '<div class="mf-head"><span class="mf-file">my-design/SKILL.md</span><span class="mf-tag">Make it yours</span></div>' +
+        '<p class="mf-note">Starting from the <strong data-look-name>' + esc(LOOK_NAME[lk]) + '</strong> look. Change it on the cards above.</p>' +
         '<div class="mf-group"><span class="mf-group-label">Assets</span>' +
         '<fieldset class="mf-row"><legend>Photo</legend>' + radioHtml("design-photo", "yes", "Yes, use my photo", false) + radioHtml("design-photo", "no", "No photo", false) + "</fieldset>" +
         '<p class="small photo-note" hidden>Nothing to upload here. Attach your photo in the Claude chat when you test this (below) and when you build your site in step 4. Claude puts it inside the file, so it still works once it\'s live.</p>' +
         '<div class="field"><span>Sites I like <small>up to 2 links, optional</small></span><div class="mf-two"><input name="site1" type="url" inputmode="url" placeholder="https://a-site-you-like.com" autocomplete="off" spellcheck="false" aria-label="Site I like, 1"><input name="site2" type="url" inputmode="url" placeholder="https://another-one.com" autocomplete="off" spellcheck="false" aria-label="Site I like, 2"></div></div></div>' +
         '<div class="mf-group"><span class="mf-group-label">Vibe</span>' +
         '<div class="field"><span>Accent color <small>one color, the rest stays neutral</small></span><div class="mf-accent"><div class="swatches"></div><label class="hex-wrap"><span class="hex-dot"></span><input name="accent" class="hex" placeholder="#24426B" maxlength="7" autocomplete="off" spellcheck="false" aria-label="Hex color"></label></div></div>' +
-        (v === "custom"
-          ? '<label class="field"><span>Font pair <small>any two Google Fonts, headline + text</small></span><input name="font" placeholder="Fraunces + Inter" autocomplete="off"></label>'
-          : '<label class="field"><span>Font pair</span><select name="font">' + FONTS.map((f) => '<option value="' + esc(f) + '"' + (f === DEFAULT_FONT[v] ? " selected" : "") + ">" + esc(f) + "</option>").join("") + "</select></label>") +
-        '<label class="field"><span>3 words for how it should feel</span><input name="feel" placeholder="' + esc(DEFAULT_FEEL[v]) + '" autocomplete="off"></label></div>' +
+        '<div class="field"><span>Font pair <small>headline + text, shown in the real fonts</small></span><div class="font-opts">' + FONTS.map((f) => fontPreviewHtml(f, f === (DEFAULT_FONT[lk] || FONTS[1]))).join("") + '</div></div>' +
+        '<label class="field"><span>Or any two Google Fonts <small>optional, overrides the pick above</small></span><input name="fontown" placeholder="Lora + Work Sans" autocomplete="off"></label>' +
+        '<label class="field"><span>3 words for how it should feel</span><input name="feel" placeholder="' + esc(DEFAULT_FEEL[lk]) + '" autocomplete="off"></label></div>' +
         '<div class="mf-group"><span class="mf-group-label">Icks</span>' +
         '<div class="field"><span>Never do <small>up to 3</small></span><div class="mf-three"><input name="never1" placeholder="no stock photos" autocomplete="off"><input name="never2" placeholder="no rainbow gradients" autocomplete="off"><input name="never3" placeholder="" autocomplete="off"></div></div></div>' +
-        '<div class="mf-foot"><button type="submit" class="btn accent mf-dl">Download design.zip</button><span class="small">Built on your laptop. Nothing is sent</span></div>' +
+        '<div class="mf-foot"><button type="submit" class="btn accent mf-dl">Download my-design.zip</button><span class="small">Built on your laptop. Nothing is sent</span></div>' +
         "</form>";
       renderSwatches(el);
+      $all('input[name="font"]', el).forEach((r) => r.addEventListener("change", () => { $all(".font-opt", el).forEach((o) => o.classList.toggle("on", $("input", o).checked)); }));
       $all('input[name="design-photo"]', el).forEach((r) => r.addEventListener("change", () => { $(".photo-note", el).hidden = !$('input[name="design-photo"][value="yes"]', el).checked; }));
       const hex = $("input.hex", el), dot = $(".hex-dot", el);
       const paintDot = () => { const ok = /^#[0-9a-f]{6}$/i.test(hex.value.trim()); dot.style.background = ok ? hex.value.trim() : "transparent"; hex.classList.toggle("bad", !!hex.value.trim() && !ok); if (ok) $all(".swatch", el).forEach((s) => s.classList.toggle("on", s.dataset.hex.toLowerCase() === hex.value.trim().toLowerCase())); };
@@ -864,13 +917,12 @@
         paintDot();
       });
     }
-    $all('input[type="radio"][name$="-version"]', el).forEach((r) => r.addEventListener("change", () => { if (r.checked) setVersion(r.value, true); }));
     $("form", el).addEventListener("submit", (e) => { e.preventDefault(); downloadFromForm(el); });
   }
   function renderSwatches(el) {
     const box = $(".swatches", el);
     if (!box) return;
-    const v = state.version || "warm";
+    const v = state.look || LOOK_FROM_VIBE[state.version] || "warm";
     const hex = $("input.hex", el);
     box.innerHTML = SWATCHES[v].map((s) => '<button type="button" class="swatch' + (hex && hex.value.trim().toLowerCase() === s[1].toLowerCase() ? " on" : "") + '" data-hex="' + s[1] + '" style="--sw:' + s[1] + '" title="' + esc(s[0] + " " + s[1]) + '" aria-label="' + esc(s[0] + " " + s[1]) + '"><span class="sw-name">' + esc(s[0]) + "</span></button>").join("");
   }
@@ -878,24 +930,24 @@
     const f = $("form", el);
     const g = (n) => { const i = f.elements[n]; return i ? String(i.value || "").trim() : ""; };
     const kind = el.dataset.kind;
-    const vRadio = f.querySelector('input[name="' + kind + '-version"]:checked');
-    const version = vRadio ? VERSION_NAME[vRadio.value] : versionName();
     if (kind === "voice") {
-      const own = vRadio && vRadio.value === "custom";
+      const own = state.version === "custom";
       const vibeWords = g("vibe");
-      return { name: fullName(), version: own ? "My own" + (vibeWords ? ": " + vibeWords : ", described in my samples") : version, samples: g("samples"), words: g("words"), signoff: g("signoff"), neverSay: [g("never1"), g("never2"), g("never3")] };
+      const samples = [g("sample1"), g("sample2"), g("sample3")].filter(Boolean).join("\n---\n");
+      return { name: fullName(), version: own ? "My own" + (vibeWords ? ": " + vibeWords : ", described in my samples") : versionName(), samples, words: g("words"), signoff: g("signoff"), neverSay: [g("never1"), g("never2"), g("never3")] };
     }
     const sw = f.querySelector(".swatch.on");
     const hexV = g("accent");
     const accent = /^#[0-9a-f]{6}$/i.test(hexV) ? (sw && sw.dataset.hex.toLowerCase() === hexV.toLowerCase() ? sw.getAttribute("aria-label").replace(/ #.*/, "") + " " + hexV : hexV) : "";
     const photo = f.querySelector('input[name="design-photo"]:checked');
-    return { name: fullName(), accent, font: g("font"), photo: photo ? photo.value : "", sites: [g("site1"), g("site2")], feel: g("feel"), neverDo: [g("never1"), g("never2"), g("never3")] };
+    const fontPick = f.querySelector('input[name="font"]:checked');
+    return { name: fullName(), accent, font: g("fontown") || (fontPick ? fontPick.value : ""), photo: photo ? photo.value : "", sites: [g("site1"), g("site2")], feel: g("feel"), neverDo: [g("never1"), g("never2"), g("never3")] };
   }
   function downloadFromForm(el) {
     const kind = el.dataset.kind;
     const btn = $(".mf-dl", el);
-    if (kind === "design" && !state.version) setVersion("warm", true); // skipped step 1? Start on Warm, the default
-    const skill = kind === "voice" ? "voice" : DESIGN_SKILL[state.version];
+    if (kind === "design" && !state.look) setLook(LOOK_FROM_VIBE[state.version] || "warm", true); // skipped the cards? Start on the vibe's look, or Warm
+    const skill = kind === "voice" ? "my-voice" : DESIGN_SKILL[state.look];
     const fields = formFields(el);
     if (kind === "design") {
       const hexV = ($("input.hex", el).value || "").trim();
@@ -903,7 +955,7 @@
     }
     btn.disabled = true;
     fetchSkill(skill).then((template) => {
-      const zip = SkillZip.buildSkillZip(skill, template, fields);
+      const zip = SkillZip.buildSkillZip("my-" + kind, template, fields); // the folder in the zip is the skill's name: my-voice or my-design
       download(zipName(kind), new Blob([zip], { type: "application/zip" }));
       el.classList.add("downloaded");
       btn.disabled = false; btn.textContent = "Downloaded ✓ (again?)";
@@ -915,7 +967,7 @@
 
   /* "Borrow ours" in the Stuck? drawer, and the GSB starter on step 2: a starter, zipped. Only [name] is filled in.
      The GSB starter's skill name is "voice", so its folder in the zip is voice/ (the zip itself is voice-gsb.zip). */
-  const STARTER_FOLDER = { "voice-gsb": "voice" };
+  const STARTER_FOLDER = { "my-voice-gsb": "my-voice", "my-design-minimal": "my-design", "my-design-warm": "my-design", "my-design-bold": "my-design", "my-design-custom": "my-design" };
   document.addEventListener("click", (e) => {
     const b = e.target.closest("[data-starter]");
     if (!b) return;
@@ -1329,7 +1381,7 @@
 
   /* ---------- boot ---------- */
 
-  paintVersion();
+  paintVersion(); paintLook();
   if (state.name && state.email) { enterApp(); pushRemote(); } else showWelcome();
 
   /* expose a little for testing in the console */

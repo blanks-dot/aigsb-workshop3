@@ -46,7 +46,7 @@
     <span class="brand-text">The Art of <em>Personalization</em><span class="brand-note">tutorial</span></span>
   </div>
   <div class="spacer"></div>
-  <span class="version-chip" id="version-chip" hidden title="Your vibe. Change it in step 1"></span>
+  <span class="version-chip" id="version-chip" hidden title="Your vibe, from step 1. It's the Vibe line in my-voice"></span>
   <div class="progress" id="progress" hidden>
     <div class="progress-bar" id="progress-bar" aria-hidden="true"></div>
     <span id="progress-text">0 of 8 done</span>
@@ -171,7 +171,7 @@
 
 <!-- ================= STEP 0 ================= -->
 <section class="step" data-step="setup" data-num="0" data-title="Set up" data-sub-title="quick" data-group="WHY" data-part="why" hidden
-  data-learned="You know where skills live in Claude, and your raw material is in one place">
+  data-learned="You're in the account you'll keep, and the three things your skills are built from are in one place">
   <header class="step-head">
     <div class="step-meta"><span class="step-num">0</span><span class="part-chip">Set up</span><span class="when-chip">Quick</span></div>
     <h2>Get <em>set up</em></h2>
@@ -180,46 +180,33 @@
 
   <!-- 0.1 -->
   <div class="sub" data-sub="setup-1">
-    <button type="button" class="sub-head" aria-expanded="false"><span class="sub-num">0.1</span><span class="sub-title">Open Claude, find where skills live<small>Quick</small></span><span class="sub-tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span><svg class="chev" aria-hidden="true"><use href="#i-chev"/></svg></button>
+    <button type="button" class="sub-head" aria-expanded="false"><span class="sub-num">0.1</span><span class="sub-title">Open Claude<small>In the account you'll keep</small></span><span class="sub-tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span><svg class="chev" aria-hidden="true"><use href="#i-chev"/></svg></button>
     <div class="collapse"><div class="collapse-inner"><div class="sub-body">
-      <p>Two spots you'll use all night. Find both now.</p>
       <ol class="do">
-        <li>Sign in at <a class="go-link" href="https://claude.ai" target="_blank" rel="noopener">claude.ai</a> or in the desktop app, in the account you'll keep. Stanford workspace (<a class="go-link" href="https://stanford.service-now.com/it_services?id=sc_cat_item&amp;sys_id=d0605d9c2b558b10ee36fd3fc891bfe2" target="_blank" rel="noopener">request it here</a>) or personal.</li>
-        <li><strong>Customize</strong>, bottom of the left sidebar</li>
-        <li><strong>+ Add</strong>, top right. The menu shows <strong>Upload skill</strong>. That's where your skill files go later.</li>
-        <li><strong>Attaching a file to a chat</strong>, which you'll do a lot tonight: the <strong>+</strong> at the bottom left of the message box, then <strong>Upload a file</strong>. Or drag the file onto the chat.</li>
+        <li>Sign in at <a class="go-link" href="https://claude.ai" target="_blank" rel="noopener">claude.ai</a> or in the desktop app. Stanford workspace (<a class="go-link" href="https://stanford.service-now.com/it_services?id=sc_cat_item&amp;sys_id=d0605d9c2b558b10ee36fd3fc891bfe2" target="_blank" rel="noopener">request it here</a>) or personal, whichever you'll still be using next month. Your skills live in the account you build them in.</li>
+        <li>Leave the model picker on its default. If a build in step 4 comes back broken, switch to the biggest model your plan has and try again.</li>
       </ol>
-      <div class="crops crops-row">
-        <figure><img src="img/screens/claude-step-a.jpg" alt="Claude's left sidebar, Customize marked 1" loading="lazy"><figcaption>1 Customize</figcaption></figure>
-        <figure><img src="img/screens/claude-step-b.jpg" alt="The + Add button marked 2, Upload skill marked 3, the Yours tab marked 4" loading="lazy"><figcaption>2 + Add, 3 Upload skill, 4 Yours, where your skills show up after</figcaption></figure>
-      </div>
-      <div class="done-box"><div><b>Done looks like</b><p>The + Add menu is open and you can see Upload skill. Nothing uploaded yet.</p></div></div>
+      <p class="small">Where skills get uploaded comes in step 1, when you have one to upload.</p>
+      <div class="done-box"><div><b>Done looks like</b><p>A fresh, empty chat in the account you'll keep.</p></div></div>
       <div class="sub-foot"><button type="button" class="btn small accent sub-done">Done, next →</button><button type="button" class="linkish sub-skip">Skip</button><button type="button" class="stuck-inline" data-stuck="setup-1">Stuck on 0.1?</button></div>
     </div></div></div>
   </div>
 
   <!-- 0.2 -->
   <div class="sub" data-sub="setup-2">
-    <button type="button" class="sub-head" aria-expanded="false"><span class="sub-num">0.2</span><span class="sub-title">Gather your raw material<small>Everything the skills are built from</small></span><span class="sub-tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span><svg class="chev" aria-hidden="true"><use href="#i-chev"/></svg></button>
+    <button type="button" class="sub-head" aria-expanded="false"><span class="sub-num">0.2</span><span class="sub-title">Three things to have on hand<small>Your LinkedIn, a photo, two sites</small></span><span class="sub-tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span><svg class="chev" aria-hidden="true"><use href="#i-chev"/></svg></button>
     <div class="collapse"><div class="collapse-inner"><div class="sub-body">
-      <ul class="material">
-        <li><b>Your LinkedIn as a PDF</b><span>The facts on your site come from here, so nothing gets invented. On your profile page, the <strong>More</strong> button under your name, then <strong>Save to PDF</strong>. No LinkedIn? Three lines about you and your last two roles, typed.</span></li>
-        <li><b>5 things you wrote</b><span>Your five most recent sent emails, or texts and Slacks. You on a normal day, never the cover letter. These teach your voice, and more is better.</span></li>
-        <li><b>A photo of you</b><span>A real one you like. It goes on the site and sets your colors.</span></li>
-        <li><b>2 sites you love the look of</b><span>Showing beats describing. Nothing comes to mind? Ask Claude.</span></li>
-      </ul>
-      <div class="copy-card" data-copy="find-sites" data-title="Paste into Claude" data-sub="LinkedIn PDF attached"></div>
-      <div class="done-box"><div><b>Done looks like</b><p>One note with your three samples and two links, the PDF and photo in Downloads.</p></div></div>
+      <p>The facts, the face and the taste. Your writing samples come in step 1, nothing to paste yet.</p>
+      <ol class="do">
+        <li><b>Your LinkedIn as a PDF.</b> Every fact on your site comes from here, so nothing gets invented. On your own profile page (Me › View profile), the round button after <strong>Add section</strong>. It's three dots on most accounts, <strong>Resources</strong> or <strong>More</strong> on some. Then <strong>Save to PDF</strong>. It lands in Downloads. No LinkedIn? Type three lines about you and your last two roles into a note, that's your PDF tonight.</li>
+        <li><b>A photo of you.</b> A real one you like, saved on this laptop. It goes on the site and sets your colors.</li>
+        <li><b>Two sites you love the look of.</b> Showing beats describing. Nothing comes to mind? Ask Claude: new chat, click the <strong>+</strong> at the bottom left of the message box, <strong>Upload a file</strong>, pick your LinkedIn PDF, then paste this. Keep the two links it gives you.</li>
+      </ol>
+      <figure class="shot li-shot" data-shot="li-resources"><figcaption>1 the round button after Add section, 2 Save to PDF</figcaption></figure>
+      <div class="copy-card" data-copy="find-sites" data-title="Paste into Claude, after attaching the PDF" data-sub="Only if you don't have two sites in mind"></div>
+      <p class="aside-tip"><strong>Attach, don't paste.</strong> Files like the PDF and the photo get attached with the <strong>+</strong> in the chat. The only things you'll ever paste into a chat are the prompts in these cards.</p>
+      <div class="done-box"><div><b>Done looks like</b><p>The PDF and the photo in Downloads, two links in a note.</p></div></div>
       <div class="sub-foot"><button type="button" class="btn small accent sub-done">Done, next →</button><button type="button" class="linkish sub-skip">Skip</button><button type="button" class="stuck-inline" data-stuck="setup-2">Stuck on 0.2?</button></div>
-    </div></div></div>
-  </div>
-
-  <!-- 0.3 -->
-  <div class="sub" data-sub="setup-3">
-    <button type="button" class="sub-head" aria-expanded="false"><span class="sub-num">0.3</span><span class="sub-title">A free Vercel account<small>Optional. It's where your site goes live in step 5</small></span><span class="sub-tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span><svg class="chev" aria-hidden="true"><use href="#i-chev"/></svg></button>
-    <div class="collapse"><div class="collapse-inner"><div class="sub-body">
-      <p>Vercel is the free service that puts your file on the internet. Sign up with your email at <a class="go-link" href="https://vercel.com/signup" target="_blank" rel="noopener">vercel.com/signup</a> and pick <strong>Hobby</strong>, which is the free plan. Have one, or want to do it in step 5? Skip.</p>
-      <div class="sub-foot"><button type="button" class="btn small accent sub-done">Done</button><button type="button" class="linkish sub-skip">Skip</button><button type="button" class="stuck-inline" data-stuck="setup-3">Stuck on 0.3?</button></div>
     </div></div></div>
   </div>
 
@@ -239,11 +226,15 @@
   <header class="step-head">
     <div class="step-meta"><span class="step-num">1</span><span class="part-chip">Voice</span><span class="deck-q">How do I get AI to sound like <i>me</i>?</span><span class="when-chip">Most of your time</span></div>
     <h2>Assets + vibe + icks = <em>your</em> voice</h2>
-    <p class="step-lede">Claude can't sound like you until it has read you. The form below collects the three ingredients and packs them into a skill.</p>
+    <p class="step-lede">Claude can't sound like you until it has read you. Three ingredients, in the order from the slides, then one form packs them into a skill.</p>
   </header>
 
-  <h3><span class="h-num">1</span>Pick your vibe</h3>
-  <p>Pick for whoever reads your site first. Changing later is one line in the skill.</p>
+  <h3><span class="h-num">1</span>Assets: find 3 things you wrote</h3>
+  <p>You on a normal day, never the cover letter. Open your sent mail, Slack or texts and grab the three most recent ones with more than two lines. Paste each into its own box below, as sent, typos and all. More is better, three is enough.</p>
+  <p class="aside-tip"><strong>Talk instead of type.</strong> Dictating a sample works too, and it sounds more like you than anything you'd write for a job.</p>
+
+  <h3><span class="h-num">2</span>Vibe: pick one</h3>
+  <p>Pick for whoever reads your site first. It's written into the skill as one line, and changing it later is changing that line. Your pick shows in the header so you can see it from any step.</p>
   <div class="version-cards" id="version-cards">
     <div class="version-card" data-version="polished">
       <h3>Polished</h3>
@@ -275,28 +266,35 @@
     </div>
   </div>
 
-  <h3><span class="h-num">2</span>Fill in the form, download voice.zip</h3>
-  <p>Your samples from 0.2 are the assets. The vibe is your pick above. Icks are words you'd never say. Leave a field blank and the skill keeps a [bracket] there, which Claude will write around until you fill it in.</p>
-  <p class="aside-tip"><strong>Talk instead of type.</strong> Dictating your samples field works too, and it sounds more like you than anything you'd write for a job.</p>
+  <h3><span class="h-num">3</span>Icks: fill in the form, download my-voice.zip</h3>
+  <p>Icks are words you'd never say. The form has your three samples at the top, your vibe in the middle, icks at the bottom. Leave a field blank and the skill keeps a [bracket] there, which Claude writes around until you fill it in.</p>
   <div class="myform" data-kind="voice"></div>
   <details class="alt">
     <summary>Rather talk it through? Build the skill with Claude instead</summary>
-    <p>New chat. Paste this, answer with real writing, then click <strong>Save skill</strong>. It's in Claude already, so jump to 4.</p>
+    <p>New chat. Paste this, answer with real writing, then click <strong>Save skill</strong>. It's in Claude already, so jump to 5.</p>
     <div class="copy-card" data-copy="voice-builder" data-title="Paste into Claude" data-sub="Your vibe is filled in"></div>
   </details>
 
-  <h3><span class="h-num">3</span>Upload it to Claude</h3>
+  <h3><span class="h-num">4</span>Upload it to Claude</h3>
+  <p>Two spots you'll use all night. First time here? Follow the numbers.</p>
   <div class="upload-skill" data-skill="voice" data-open></div>
 
-  <h3><span class="h-num">4</span>Test it on your intro line</h3>
-  <p>The first draft is never it. Run the loop from the slides on the one line that matters most, the first thing people read. Every test starts in a <strong>new chat</strong>, so the skill is doing the work, not the conversation.</p>
+  <h3><span class="h-num">5</span>Test it on your intro line</h3>
+  <p>The first draft is never it. From the slides, this is the loop that makes a skill good:</p>
+  <ol class="loop-strip" aria-label="The loop from the slides"><li>Ask for 3</li><li>Pick one</li><li>Name what's off</li><li>Fix the skill</li><li>Run it again</li></ol>
+  <p>Run it on the one line that matters most, the first thing people read. Every test starts in a <strong>new chat</strong>, so the skill is doing the work, not the conversation.</p>
+  <ol class="do">
+    <li><strong>New chat.</strong> The + at the top left of Claude.</li>
+    <li><strong>Attach your LinkedIn PDF</strong> from 0.2: the <strong>+</strong> at the bottom left of the message box, <strong>Upload a file</strong>. This is where the facts come from, so Claude can't invent any.</li>
+    <li>Paste the first card. Then go around the loop.</li>
+  </ol>
   <div class="card loop">
     <ol class="loop-steps">
-      <li><b>Ask for 3</b><div class="copy-card compact-card" data-copy="loop-ask3" data-title="Paste into a new Claude chat" data-sub="Voice skill is on"></div></li>
+      <li><b>Ask for 3</b><div class="copy-card compact-card" data-copy="loop-ask3" data-title="Paste into the new chat" data-sub="LinkedIn PDF attached. my-voice is on"></div></li>
       <li><b>Pick one</b><span>Tell Claude which one and why, in plain words. The why is what it learns from.</span></li>
       <li><b>Name what's off</b><span>Read it out loud. A word you'd never say or a line that's too stiff jumps out.</span></li>
       <li><b>Fix the skill</b><div class="copy-card compact-card" data-copy="loop-fix" data-title="Paste into the same chat" data-sub="Swap in what was off"></div></li>
-      <li><b>Run it again</b><span><strong>New chat</strong>, same ask. Better? Done. Same? Add a sample, not another rule. Not sure the fix landed? Open Customize › Yours › voice and look for your new line.</span></li>
+      <li><b>Run it again</b><span><strong>New chat</strong>, PDF attached again, same ask. Better? Done. Same? Add a sample, not another rule. Not sure the fix landed? Open Customize › Yours › my-voice and look for your new line.</span></li>
     </ol>
     <div class="example"><span class="ex-label">Example, one round</span>
       <div class="ex-flow">
@@ -310,11 +308,11 @@
   <details class="alt">
     <summary>What's inside your skill</summary>
     <p>The file in your zip. Edit the top part any time, leave the locked part alone.</p>
-    <div class="anatomy" data-skill="voice"><p class="anat-loading">Loading voice…</p></div>
+    <div class="anatomy" data-skill="my-voice"><p class="anat-loading">Loading my-voice…</p></div>
     <div class="anat-caveat"><p>Only the name and description at the top are required. The rest is how we wrote it tonight.</p></div>
   </details>
 
-  <div class="done-box"><div><b>Done looks like</b><p>voice.zip is in Customize › Yours and on. Claude wrote an intro line you'd actually say, and the skill has one line you added after testing it.</p></div></div>
+  <div class="done-box"><div><b>Done looks like</b><p>my-voice is in Customize › Yours and on. Claude wrote an intro line you'd actually say, and the skill has one line you added after testing it.</p></div></div>
 </section>
 
 <!-- ================= STEP 2: DESIGN ================= -->
@@ -326,32 +324,57 @@
     <p class="step-lede">Same recipe. Your photo and two sites are the assets, one color and a font pair are the vibe, and the icks are whatever makes you wince.</p>
   </header>
 
-  <h3><span class="h-num">1</span>Steal from the two sites you love</h3>
+  <h3><span class="h-num">1</span>Assets: steal from the two sites you love</h3>
   <p class="apply-note"><span class="from-slides">From the slides</span> <strong>Describe it, then show it.</strong> Everyone's "warm" is different. Two links show Claude the fonts, spacing and tone your words can't. Do this first, it writes half your form for you.</p>
-  <div class="copy-card" data-copy="compare-sites" data-title="Paste into a new Claude chat" data-sub="Add your two links from 0.2"></div>
+  <div class="copy-card" data-copy="compare-sites" data-title="Paste into a new Claude chat" data-sub="Swap in your two links from 0.2"></div>
 
-  <h3><span class="h-num">2</span>Fill in the form, download design.zip</h3>
-  <p>Your vibe from step 1 picks the starter. Put what Claude just found into the form: one accent color (click a swatch, or paste the hex code, the # and six characters that name a color exactly), a font pair, and 3 words. Icks are whatever makes you wince.</p>
+  <h3><span class="h-num">2</span>Vibe: pick a look</h3>
+  <p>A look is a starting point, not a template. Words for how a page feels, not how you write, so these are different from step 1. It's preset to match your vibe, change it if the match is wrong.</p>
+  <div class="version-cards look-cards" id="look-cards">
+    <div class="version-card look-card" data-look="minimal">
+      <h3>Minimal</h3>
+      <p class="vmeaning">Lots of air, one serif headline, almost no color. Reads as quiet confidence</p>
+      <button type="button" class="btn pick-look" data-look="minimal">This one</button>
+    </div>
+    <div class="version-card look-card" data-look="warm">
+      <h3>Warm</h3>
+      <p class="vmeaning">Off-white paper, a big photo of you, one rounded button. Friendly and quick</p>
+      <button type="button" class="btn pick-look" data-look="warm">This one</button>
+    </div>
+    <div class="version-card look-card" data-look="bold">
+      <h3>Bold</h3>
+      <p class="vmeaning">One loud color, chunky type, a little motion. For side projects and people who like fun</p>
+      <button type="button" class="btn pick-look" data-look="bold">This one</button>
+    </div>
+    <div class="version-card look-card own" data-look="custom">
+      <h3>Your own</h3>
+      <p class="vmeaning">No preset. Your two sites and 3 words do the work.</p>
+      <button type="button" class="btn pick-look" data-look="custom">This one</button>
+    </div>
+  </div>
+
+  <h3><span class="h-num">3</span>Icks: fill in the form, download my-design.zip</h3>
+  <p>Put what Claude just found into the form: one accent color (click a swatch, or paste the hex code, the # and six characters that name a color exactly), a font pair, shown in the real fonts, and 3 words. Icks are whatever makes you wince.</p>
   <div class="myform" data-kind="design"></div>
   <details class="alt">
     <summary>Rather have Claude write the whole skill from those rules?</summary>
-    <p>Same chat. Paste this, then click <strong>Save skill</strong> and jump to 4.</p>
-    <div class="copy-card" data-copy="design-builder" data-title="Paste into the same chat" data-sub="Your vibe is filled in"></div>
+    <p>Same chat. Paste this, then click <strong>Save skill</strong> and jump to 5.</p>
+    <div class="copy-card" data-copy="design-builder" data-title="Paste into the same chat" data-sub="Your look is filled in"></div>
   </details>
 
-  <h3><span class="h-num">3</span>Upload it</h3>
-  <p>Same clicks as step 1. The file is design.zip; in Yours it shows as <code><span data-design-name>design-warm</span></code>, your vibe's version.</p>
+  <h3><span class="h-num">4</span>Upload it</h3>
+  <p>Same clicks as step 1. The file is my-design.zip, and in Yours it shows as <code>my-design</code>. Not <code>design</code>: that name belongs to a built-in Claude feature, and typing /design would open that instead of your skill.</p>
   <div class="upload-skill" data-skill="design"></div>
 
-  <h3><span class="h-num">4</span>Test it on one section</h3>
-  <p>Just the top of your site, so you can judge the look without a whole page in the way. <strong>New chat</strong>, attach your photo with the + under the message box.</p>
+  <h3><span class="h-num">5</span>Test it on one section</h3>
+  <p>Just the top of your site, so you can judge the look without a whole page in the way. <strong>New chat</strong>, attach your photo with the + under the message box, paste.</p>
   <div class="copy-card" data-copy="design-test" data-title="Paste into a new Claude chat" data-sub="Both skills on. Photo attached"></div>
   <div class="card loop">
     <ol class="loop-steps">
       <li><b>Ask for 3</b><span>Add "give me 3 different layouts" if the first one is fine but not you.</span></li>
       <li><b>Pick one</b><span>Say why. Plain words</span></li>
       <li><b>Name what's off</b><span>Too corporate? Too busy? Three cards in a row? Say it.</span></li>
-      <li><b>Fix the skill</b><span>Say <strong>add that to my design skill as an ick.</strong></span></li>
+      <li><b>Fix the skill</b><span>Say <strong>add that to my-design as an ick.</strong></span></li>
       <li><b>Run it again</b><span><strong>New chat</strong>, same test. Still off? Show it a site you love instead of writing another rule.</span></li>
     </ol>
     <div class="example"><span class="ex-label">Example, one round</span>
@@ -363,7 +386,7 @@
     </div>
   </div>
 
-  <div class="done-box"><div><b>Done looks like</b><p>design.zip is in Yours and on. One section in your color and font, with your photo, and one new ick in the skill.</p></div></div>
+  <div class="done-box"><div><b>Done looks like</b><p>my-design is in Yours and on. One section in your color and font, with your photo, and one new ick in the skill.</p></div></div>
 </section>
 
 <!-- ================= STEP 3: BRIEF + THREE ================= -->
@@ -430,12 +453,19 @@
     <div class="butwait-head">Did it work? Two questions</div>
     <div class="butwait-body">
       <p><b>Do you see your site drawn in the chat, with a preview you can scroll?</b><br><strong>Yes.</strong> Go to 2.<br><strong>No, it's a wall of code or text.</strong> Say "make it a single downloadable HTML file". Still no? On a personal account open <a class="go-link" href="https://claude.ai/settings/capabilities" target="_blank" rel="noopener">Settings › Capabilities</a> and turn on <strong>Code execution and file creation</strong>, then new chat. Stanford accounts already have it on.</p>
-      <p><b>Does it use your color and font?</b><br><strong>Yes.</strong> Go to 2.<br><strong>No.</strong> New chat, first line "Use my voice skill and my design skill", paste the brief again.</p>
-      <p><b>Hit a usage limit?</b> Not an emergency. Wait it out and do step 5's Vercel signup now, build on a neighbor's laptop, or finish at home with the fallback prompt below. Raise your hand if you want help picking.</p>
+      <p><b>Does it use your color and font, and sound like you?</b><br><strong>Yes.</strong> Go to 2.<br><strong>No, the skills didn't load.</strong> A chat only knows what it was given. Start over cleanly:</p>
+      <ol class="do">
+        <li>Customize › Yours: <code>my-voice</code> and <code>my-design</code> are both there and switched on. If one is missing, upload its zip again (step 1 has the clicks).</li>
+        <li><strong>New chat</strong>, the + at the top left.</li>
+        <li><strong>Attach</strong> your LinkedIn PDF and your photo again. A new chat starts from zero.</li>
+        <li>Paste this. It names both skills on the first line and carries your brief, so nothing from step 3 is lost.</li>
+      </ol>
+      <div class="copy-card" data-copy="fresh-chat" data-title="Paste into the new chat" data-sub="LinkedIn PDF + photo attached again"></div>
+      <p><b>Hit a usage limit?</b> Not an emergency. Wait it out and do step 5's Vercel sign-up now (click 2), build on a neighbor's laptop, or finish at home with the fallback prompt below. Raise your hand if you want help picking.</p>
       <div class="fold">
         <button type="button" class="fold-head" aria-expanded="false">The fallback prompt, for Gemini or ChatGPT<svg class="chev" aria-hidden="true"><use href="#i-chev"/></svg></button>
         <div class="collapse"><div class="collapse-inner"><div class="fold-body">
-          <p>Unzip both skills, attach the two SKILL.md files and your LinkedIn PDF, paste.</p>
+          <p>Unzip my-voice.zip and my-design.zip, attach the two SKILL.md files and your LinkedIn PDF, paste.</p>
           <div class="copy-card" data-copy="gemini-fallback" data-title="Paste into a Gem or a ChatGPT Project" data-sub="Both SKILL.md files attached"></div>
         </div></div></div>
       </div>
@@ -451,7 +481,7 @@
   <div class="copy-card" data-copy="make-stick" data-title="Paste into the same chat" data-sub="Claude edits both skills"></div>
 
   <h3><span class="h-num">4</span>Run it again</h3>
-  <p>Until you'd send the link to the person you wrote the brief for. Twice is plenty. To prove a fix stuck: open Customize › Yours › design and find your new line, then <strong>new chat</strong>, same brief, see if the thing comes back.</p>
+  <p>Until you'd send the link to the person you wrote the brief for. Twice is plenty. To prove a fix stuck: open Customize › Yours › my-design and find your new line, then <strong>new chat</strong>, same brief, see if the thing comes back.</p>
 
   <div class="done-box"><div><b>Done looks like</b><p>A page with your color, your words, your photo and no fact you didn't give it. At least one new line in a skill that wasn't there 10 minutes ago.</p></div></div>
 </section>
@@ -499,8 +529,8 @@
   <p>They're the whole thing. The two skills work on anything you make next.</p>
   <ul class="checklist-save" id="save-list">
     <li><label><input type="checkbox" data-save="site"><span><strong>index.html</strong></span></label></li>
-    <li><label><input type="checkbox" data-save="voice"><span><strong>voice.zip</strong></span></label></li>
-    <li><label><input type="checkbox" data-save="design"><span><strong>design.zip</strong></span></label></li>
+    <li><label><input type="checkbox" data-save="voice"><span><strong>my-voice.zip</strong></span></label></li>
+    <li><label><input type="checkbox" data-save="design"><span><strong>my-design.zip</strong></span></label></li>
   </ul>
 
   <div class="done-box"><div><b>Done looks like</b><p>A vercel.app link pasted above, open on your phone with your name on it, and your three files saved.</p></div></div>
@@ -628,26 +658,24 @@
       <section class="stuck-group" data-group="setup-1"><h3>0.1 Open Claude</h3>
         <details class="stuck-item"><summary>I can't sign in with my Stanford account</summary><div class="fix"><p>The Stanford workspace comes through a request form: SSO, a short attestation, then it's on. <a class="go-link" href="https://stanford.service-now.com/it_services?id=sc_cat_item&amp;sys_id=d0605d9c2b558b10ee36fd3fc891bfe2" target="_blank" rel="noopener">Request form</a>. Tonight, if it hasn't come through, build in a personal account you'll keep.</p></div></details>
         <details class="stuck-item"><summary>No Customize in the sidebar</summary><div class="fix"><p>It's at the bottom of the left sidebar. Not there? Update the desktop app, or use <a class="go-link" href="https://claude.ai/customize/skills" target="_blank" rel="noopener">claude.ai/customize/skills</a> in a browser. Greyed out is an account setting. Raise your hand.</p></div></details>
-        <details class="stuck-item"><summary>Borrow ours: the starter skills</summary><div class="fix"><p>Download one, upload it under <strong>Customize</strong> › <strong>+ Add</strong> › <strong>Upload skill</strong>. The GSB starter is a ready voice for a GSB student, use it as is. The others are blank: fill in Make it yours later, in Edit.</p><p class="starter-row"><button type="button" class="btn small ghost" data-starter="voice-gsb">voice-gsb.zip</button> <button type="button" class="btn small ghost" data-starter="voice">voice.zip</button> <button type="button" class="btn small ghost" data-starter="design-polished">design-polished.zip</button> <button type="button" class="btn small ghost" data-starter="design-warm">design-warm.zip</button> <button type="button" class="btn small ghost" data-starter="design-playful">design-playful.zip</button></p></div></details>
+        <details class="stuck-item"><summary>Borrow ours: the starter skills</summary><div class="fix"><p>Download one, upload it under <strong>Customize</strong> › <strong>+ Add</strong> › <strong>Upload skill</strong>. The GSB starter is a ready voice for a GSB student, use it as is. The others are blank: fill in Make it yours later, in Edit.</p><p class="starter-row"><button type="button" class="btn small ghost" data-starter="my-voice-gsb">my-voice-gsb.zip</button> <button type="button" class="btn small ghost" data-starter="my-voice">my-voice.zip</button> <button type="button" class="btn small ghost" data-starter="my-design-minimal">my-design-minimal.zip</button> <button type="button" class="btn small ghost" data-starter="my-design-warm">my-design-warm.zip</button> <button type="button" class="btn small ghost" data-starter="my-design-bold">my-design-bold.zip</button></p></div></details>
       </section>
 
       <section class="stuck-group" data-group="setup-2"><h3>0.2 Raw material</h3>
-        <details class="stuck-item"><summary>Where's Save to PDF on LinkedIn?</summary><div class="fix"><p>Your own profile page, the <strong>More</strong> button under your name, then <strong>Save to PDF</strong>. On the phone app it's under the three dots.</p></div></details>
+        <details class="stuck-item"><summary>Where's Save to PDF on LinkedIn?</summary><div class="fix"><p>Your own profile page (Me › View profile). The round button right after <strong>Add section</strong>: three dots, or Resources, or More, depending on your account. Then <strong>Save to PDF</strong>. On the phone app it's under the three dots.</p></div></details>
         <details class="stuck-item"><summary>I don't have a LinkedIn</summary><div class="fix"><p>Three lines about you and your last two roles, typed by hand. Attach that instead of the PDF.</p></div></details>
-        <details class="stuck-item"><summary>No writing samples handy</summary><div class="fix"><p>Your 5 most recent sent emails, pasted into a note. Or use the GSB starter voice under 0.1 and swap in samples later.</p></div></details>
+        <details class="stuck-item"><summary>Should I paste the PDF into the chat?</summary><div class="fix"><p>No. Attach it with the + under the message box. Paste only the prompt. Your writing samples go into the form in step 1, not into a chat.</p></div></details>
       </section>
 
-      <section class="stuck-group" data-group="setup-3"><h3>0.3 Vercel account</h3>
-        <details class="stuck-item"><summary>Vercel asks for a payment method</summary><div class="fix"><p>Wrong plan. Go back and pick <strong>Hobby</strong>. Free for personal sites.</p></div></details>
-        <details class="stuck-item"><summary>Sign up with GitHub or with email?</summary><div class="fix"><p>Either works. GitHub saves a step if you do the GitHub level-up later.</p></div></details>
-      </section>
 
       <section class="stuck-group" data-group="voice"><h3>1 Teach it your voice</h3>
+        <details class="stuck-item"><summary>No writing samples handy</summary><div class="fix"><p>Sent mail, Slack, texts, a group chat. Anything you wrote to a real person. Three short ones beat one long one. Nothing at all? Use the GSB starter voice (under 0.1 in this drawer) and swap in samples later.</p></div></details>
         <details class="stuck-item"><summary>Which vibe? I'm two of these</summary><div class="fix"><p>Pick for whoever reads it first. The other is a one-line change later.</p></div></details>
         <details class="stuck-item"><summary>The skill doesn't show up</summary><div class="fix"><p>Customize › Skills › <strong>Yours</strong>. Check it's on. New chat. Still missing? Upload the .zip, not the folder.</p></div></details>
+        <details class="stuck-item"><summary>Typing /design opens something else</summary><div class="fix"><p>Claude has a built-in feature called Design, and it wins the name. Your skill is <code>my-design</code>, so type <strong>/my-design</strong>, or just say "use my-design". If you uploaded an older zip named design, delete it in Yours and upload my-design.zip.</p></div></details>
         <details class="stuck-item"><summary>It sounds like a press release</summary><div class="fix"><p>Add a sample. A text you sent to a friend pulls harder than anything formal.</p></div></details>
         <details class="stuck-item"><summary>It invented a job, a number, an award</summary><div class="fix"><p>Say "every fact you don't have goes in [brackets]". Check the right skill is on.</p></div></details>
-        <details class="stuck-item"><summary>I uploaded the unzipped folder</summary><div class="fix"><p>Safari unzips for you. Download voice.zip again and upload the .zip. Don't rename the folder inside.</p></div></details>
+        <details class="stuck-item"><summary>I uploaded the unzipped folder</summary><div class="fix"><p>Safari unzips for you. Download my-voice.zip again and upload the .zip. Don't rename the folder inside.</p></div></details>
         <details class="stuck-item"><summary>The form lost what I typed</summary><div class="fix"><p>On purpose. This site never saves your writing. Paste again. Your zip is in Downloads if you made one.</p></div></details>
       </section>
 
@@ -720,7 +748,7 @@
 <!-- ============ COPY-CARD SOURCES ============ -->
 <script type="text/plain" id="src-find-sites">Based on my LinkedIn, find two personal websites you think I'd like the look of. Links and one line each on why.</script>
 
-<script type="text/plain" id="src-voice-builder">Help me build a skill called voice. Its job is to write as me whenever you draft anything in my name: website copy, bios, emails, cover letters, posts, slides.
+<script type="text/plain" id="src-voice-builder">Help me build a skill called my-voice. Its job is to write as me whenever you draft anything in my name: website copy, bios, emails, cover letters, posts, slides.
 
 My vibe is {{VERSION}}. Polished is short, structured, confident. Warm is direct, a clear point of view, sounds like I talk. Playful is candid, loose, fragments allowed.
 
@@ -730,23 +758,23 @@ Write it in three parts. Make it yours, with my answers. Locked, with the rules:
 
 End with the test: read the draft out loud. Would a friend of mine know I wrote it?</script>
 
-<script type="text/plain" id="src-loop-ask3">Using my voice skill, write the first line of my personal website, the one that says what I'm about. Give me 3 versions in my vibe that lead with different things: what I do, who I help, what I believe. One line each. My LinkedIn PDF is attached, so no invented facts. Then tell me which rule in my skill you leaned on hardest.</script>
+<script type="text/plain" id="src-loop-ask3">Using my-voice, my voice skill, write the first line of my personal website, the one that says what I'm about. Give me 3 versions in my vibe that lead with different things: what I do, who I help, what I believe. One line each. My LinkedIn PDF is attached, so no invented facts. Then tell me which rule in my skill you leaned on hardest.</script>
 
-<script type="text/plain" id="src-loop-fix">Add this to my voice skill as an ick so it never comes back: [what was off, e.g. never say "passionate about"]. Show me the line you added.</script>
+<script type="text/plain" id="src-loop-fix">Add this to my-voice as an ick so it never comes back: [what was off, e.g. never say "passionate about"]. Show me the line you added.</script>
 
-<script type="text/plain" id="src-voice-mode">Add a second mode to my voice skill called [mode name]. It's for [when]. It should sound [3 words]. Keep everything else.</script>
+<script type="text/plain" id="src-voice-mode">Add a second mode to my-voice called [mode name]. It's for [when]. It should sound [3 words]. Keep everything else.</script>
 
 <script type="text/plain" id="src-compare-sites">What do these two sites have in common in color, type, layout and feel? Write it as rules I can reuse. [site 1] [site 2]</script>
 
-<script type="text/plain" id="src-design-builder">Help me build a skill called design. Its job is how my website, slides and documents look. Use it whenever you build or style anything visual for me.
+<script type="text/plain" id="src-design-builder">Help me build a skill called my-design (not "design", that name is taken). Its job is how my website, slides and documents look. Use it whenever you build or style anything visual for me.
 
-My vibe is {{VERSION}}. Start from the rules you just wrote. Tell me which to keep, then ask.
+The look I want is {{LOOK}}. Start from the rules you just wrote. Tell me which to keep, then ask.
 
-The skill has three parts I fill in. Assets: my photo or no photo, and up to 2 sites I like. Vibe: one accent color as hex, one Google Fonts pair, 3 words for how it should feel. Icks: up to 3 things it must never do. Then a locked part: one HTML file, unknown facts in [brackets], body text at least 16px, contrast at least 4.5 to 1, no drop shadows, no gradients, no hero with three cards, no icon per bullet, one accent color only. Use my voice skill for every word.</script>
+The skill has three parts I fill in. Assets: my photo or no photo, and up to 2 sites I like. Vibe: one accent color as hex, one Google Fonts pair, 3 words for how it should feel. Icks: up to 3 things it must never do. Then a locked part: one HTML file, unknown facts in [brackets], body text at least 16px, contrast at least 4.5 to 1, no drop shadows, no gradients, no hero with three cards, no icon per bullet, one accent color only. Use my-voice, my voice skill, for every word.</script>
 
-<script type="text/plain" id="src-design-test">Use my design skill and my voice skill. Make just the top section of my personal site: Hi, I'm [name], one line about me, my photo (attached), one button. Nothing else yet. Single HTML file.</script>
+<script type="text/plain" id="src-design-test">Use my-design and my-voice, my two skills. Make just the top section of my personal site: Hi, I'm [name], one line about me, my photo (attached), one button. Nothing else yet. Build it as a single HTML file I can preview, not a description in the chat.</script>
 
-<script type="text/plain" id="src-brief">Use my voice skill and my design skill. Build me a personal website, one page.
+<script type="text/plain" id="src-brief">Use my-voice and my-design, my two skills. Build me a personal website, one page.
 
 Who reads it first: [a recruiter / a founder / a professor / my family].
 Three seconds in, they should think: [one sentence].
@@ -759,39 +787,52 @@ Facts come only from my LinkedIn PDF (attached). Anything you don't know goes in
 
 Propose the sections yourself, 4 to 6, and justify the order in one line each. The first section is always: Hi, I'm [name], one line that says what I'm about, in my words, with my photo. The last is always a way to say hi.
 
-Before you build anything: ask me 3 questions, and push back on any answer that sounds like a résumé. Then show me 3 different directions, A, B and C: the top section only, with one line on the idea behind each. Different structure, not different words.</script>
+Before you build anything: ask me 3 questions, and push back on any answer that sounds like a résumé. Then show me 3 different directions, A, B and C: the top section only, with one line on the idea behind each. Different structure, not different words. Build each one as a small HTML file I can preview, not a description in the chat.</script>
 
 <script type="text/plain" id="src-go-with-b">Go with B. Why: [it feels the most like me because ___]. Keep that in mind for everything after this. Before you build, show me the section list for B in one line each.</script>
+
+<script type="text/plain" id="src-fresh-chat">Use my-voice and my-design, my two skills. Confirm you can see both before you do anything else, by naming one rule from each.
+
+Then build me a personal website, one page, as a single HTML file I can preview.
+
+Who reads it first: [a recruiter / a founder / a professor / my family].
+Three seconds in, they should think: [one sentence].
+The one thing I want to be known for: [one thing].
+After reading, they should: [email me about a role / book a call / get what I do].
+One human thing to include: [a sport, a side project, a ritual].
+Closest reference site: [link].
+
+Facts come only from my LinkedIn PDF (attached). Anything you don't know goes in [brackets], never invented. My photo is attached, embed it in the file. The first section is Hi, I'm [name] with one line in my words and my photo. The last is a way to say hi. 4 to 6 sections, works on a phone.</script>
 
 <script type="text/plain" id="src-build-site">Build the whole site as the direction we picked. Single HTML file I can download, works on a phone. Embed my photo inside the file so it still works as one file. Unknown facts stay in [brackets].</script>
 
 <script type="text/plain" id="src-name-off">Two things are off, circled in the screenshot: [the stats feel corporate] [the photo frame looks tacky]. Fix both, change nothing else.</script>
 
-<script type="text/plain" id="src-make-stick">Add both fixes to my skills as icks so they never come back. Looks go in my design skill, words go in my voice skill. Show me the lines you added.</script>
+<script type="text/plain" id="src-make-stick">Add both fixes to my skills as icks so they never come back. Looks go in my-design, words go in my-voice. Show me the lines you added.</script>
 
 <script type="text/plain" id="src-one-file">Give me my whole site as one file called index.html, with my photo embedded inside it so nothing breaks when I host it.</script>
 
-<script type="text/plain" id="src-gemini-fallback">Read the two attached SKILL.md files first, my voice and my design. Follow both. Build me a personal website, one page as a single HTML file I can download. Sections: Hi I'm, What I'm working on now, Where I've been, Say hi. Facts only from my LinkedIn PDF, unknown facts in [brackets].</script>
+<script type="text/plain" id="src-gemini-fallback">Read the two attached SKILL.md files first, my-voice and my-design. Follow both. Build me a personal website, one page as a single HTML file I can download. Sections: Hi I'm, What I'm working on now, Where I've been, Say hi. Facts only from my LinkedIn PDF, unknown facts in [brackets].</script>
 
-<script type="text/plain" id="src-stuck-ask">I'm in a workshop building a personal website with two skills, voice and design. I'm on {{STEP}}: {{STEP_TITLE}}. What I did and what happened: [paste]. Give me the one most likely cause and the one thing to try next. Short.</script>
+<script type="text/plain" id="src-stuck-ask">I'm in a workshop building a personal website with two skills, my-voice and my-design. I'm on {{STEP}}: {{STEP_TITLE}}. What I did and what happened: [paste]. Give me the one most likely cause and the one thing to try next. Short.</script>
 
-<script type="text/plain" id="src-pers-more">Read my last 50 sent emails and my last 50 Slack messages. Add to my voice skill: words and phrases I repeat, how I open and close, how long my sentences run, what I never say. Show me the lines you'd add before you change anything.</script>
+<script type="text/plain" id="src-pers-more">Read my last 50 sent emails and my last 50 Slack messages. Add to my-voice: words and phrases I repeat, how I open and close, how long my sentences run, what I never say. Show me the lines you'd add before you change anything.</script>
 
-<script type="text/plain" id="src-pers-channels">Add channel rules to my voice skill. Email: [how long, how I open, how I sign off]. Slack: [...]. Texts: [...]. Ask me for one real example of each first, then write the rules from them.</script>
+<script type="text/plain" id="src-pers-channels">Add channel rules to my-voice. Email: [how long, how I open, how I sign off]. Slack: [...]. Texts: [...]. Ask me for one real example of each first, then write the rules from them.</script>
 
-<script type="text/plain" id="src-pers-link">Add one line to my design skill: any words on the page follow my voice skill. Keep the two skills separate otherwise.</script>
+<script type="text/plain" id="src-pers-link">Add one line to my-design: any words on the page follow my-voice. Keep the two skills separate otherwise.</script>
 
-<script type="text/plain" id="src-pers-ask">Add this to both my voice skill and my design skill: before you build or write anything longer than a paragraph, ask me 3 questions (who it's for, what they should do after, the one point) and show me a plan. Push back if my answer is weak.</script>
+<script type="text/plain" id="src-pers-ask">Add this to both my-voice and my-design: before you build or write anything longer than a paragraph, ask me 3 questions (who it's for, what they should do after, the one point) and show me a plan. Push back if my answer is weak.</script>
 
 <script type="text/plain" id="src-pers-nightly">Set up a scheduled task that runs every night. It reads today's chats with you, finds where I corrected you, and turns the ones that should stick into proposed edits to my skills. Propose only, never change a skill directly. I'll review in the morning.</script>
 
-<script type="text/plain" id="src-ch-deck">Add a Slides section to my design skill: title slide layout, max words per slide, type sizes, where the one accent color goes, and three things that never appear on a slide. Then rebuild the attached slide in that style, plus a title slide for the same deck, as a single HTML file I can preview. Before you build, show me the Slides section you'd add.</script>
+<script type="text/plain" id="src-ch-deck">Add a Slides section to my-design: title slide layout, max words per slide, type sizes, where the one accent color goes, and three things that never appear on a slide. Then rebuild the attached slide in that style, plus a title slide for the same deck, as a single HTML file I can preview. Before you build, show me the Slides section you'd add.</script>
 
-<script type="text/plain" id="src-ch-signature">Here's a photo of me. Pull one accent color and two neutrals from it, hex codes. Then suggest 3 signature moves: small, repeatable things someone would recognize as mine, like a hand-drawn outline around every photo or a highlighter stroke under headings. I'll pick one, you add it to my design skill under Non-negotiables with the palette.</script>
+<script type="text/plain" id="src-ch-signature">Here's a photo of me. Pull one accent color and two neutrals from it, hex codes. Then suggest 3 signature moves: small, repeatable things someone would recognize as mine, like a hand-drawn outline around every photo or a highlighter stroke under headings. I'll pick one, you add it to my-design under Non-negotiables with the palette.</script>
 
 <script type="text/plain" id="src-ch-brand">Help me build a skill called [org]-brand for [organization]. One file, two sections, because every flyer, post and email needs both. Voice: who we lead with, how we sound, three things we never say, from the attached copy. Design: logo use, one accent color from the logo, font pair, photo style from the attached photos, three icks. Ask me 5 questions first. Then build the homepage from it as a single HTML file, with [brackets] for anything you don't know.</script>
 
-<script type="text/plain" id="src-lvl-3d">Use my voice skill and my design skill. Add an "Explore in 3D" button to my site. It opens a full-screen 3D scene in the same index.html, built with three.js loaded from a CDN.
+<script type="text/plain" id="src-lvl-3d">Use my-voice and my-design, my two skills. Add an "Explore in 3D" button to my site. It opens a full-screen 3D scene in the same index.html, built with three.js loaded from a CDN.
 
 The scene is [a place that says something about me]. Put one clickable object in it for each section of my site. Clicking one opens a card with that section's text. Let me drag to look around. Add a button back to the regular page. Simple low-poly shapes in my colors. Keep it light enough to run on a phone.
 

@@ -1,5 +1,5 @@
 ---
-name: voice
+name: my-voice
 description: Write as me. Use whenever you draft anything in my name: website copy, bios, emails, cover letters, posts, slides. Read my samples first and match them.
 ---
 
@@ -7,8 +7,8 @@ description: Write as me. Use whenever you draft anything in my name: website co
 
 ## Make it yours (edit this part)
 
-Version: Warm
-(Polished: short, structured, confident. Warm: direct, a clear point of view, sounds like you talk. Playful: candid, loose, fragments allowed.)
+Vibe: Warm
+(Polished: short, structured, confident. Warm: direct, a clear point of view, sounds like you talk. Playful: candid, loose, fragments allowed. Or your own 3 words.)
 
 Who I sound like: a GSB student who is humble, wants to help the world, gets inspired by people doing real work, and keeps it clear and concise.
 

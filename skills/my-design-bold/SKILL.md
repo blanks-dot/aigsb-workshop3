@@ -1,9 +1,9 @@
 ---
-name: design-playful
-description: How my website, slides and documents should look. Use whenever you build or style anything visual for me, especially my personal website. The Playful version.
+name: my-design
+description: How my website, slides and documents should look. Use whenever you build or style anything visual for me, especially my personal website. The Bold look.
 ---
 
-# My design: Playful
+# My design: Bold
 
 ## Make it yours (edit this part)
 
@@ -23,7 +23,7 @@ Sites I like:
 Never do (up to 3 of your own):
 - [example: no stock photos]
 
-## This version's look (a starting point)
+## This look (a starting point)
 
 Background: [suggested: white, or a very light tint of the accent] (change it if you want). Single narrow column, lots of air. Lowercase headline is allowed. A candid photo, slightly tilted or in a circle. Sentences can be fragments. One accent used generously on links and underlines. Small numbered list for 'what I'm working on', like podcast episodes. Reference feel: a side project page made by someone having fun.
 
@@ -43,4 +43,4 @@ One page. These sections are the default. If the brief gives you a better struct
 - Spacing on an 8px grid. Consistent corner radius. No drop shadows, no gradients, no glassmorphism.
 - No AI slop: no "hero with three feature cards" template, no icon-per-bullet, no multi-color palette, no excessive whitespace padding between tiny amounts of text. Never Poppins or Inter as the headline font, they read as AI defaults.
 - Fonts from Google Fonts only. Load only the two in my font pair.
-- Use my voice skill for every word on the page.
+- Use my-voice (my voice skill) for every word on the page.

@@ -1,5 +1,5 @@
 ---
-name: design-custom
+name: my-design
 description: How my website, slides and documents should look. Use whenever you build or style anything visual for me, especially my personal website. My own look, built from scratch.
 ---
 
@@ -43,4 +43,4 @@ One page. These sections are the default. If the brief gives you a better struct
 - Spacing on an 8px grid. Consistent corner radius. No drop shadows, no gradients, no glassmorphism.
 - No AI slop: no "hero with three feature cards" template, no icon-per-bullet, no multi-color palette, no excessive whitespace padding between tiny amounts of text. Never Poppins or Inter as the headline font, they read as AI defaults.
 - Fonts from Google Fonts only. Load only the two in my font pair.
-- Use my voice skill for every word on the page.
+- Use my-voice (my voice skill) for every word on the page.

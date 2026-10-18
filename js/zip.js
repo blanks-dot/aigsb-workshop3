@@ -100,7 +100,7 @@
     var signoff = clean(fields.signoff);
 
     edit = edit.map(function (line) {
-      if (version && /^Version:/.test(line)) return "Version: " + version;
+      if (version && /^(Version|Vibe):/.test(line)) return "Vibe: " + version;
       if (accent && /^Accent color:/.test(line)) return "Accent color: " + accent;
       if (font && /^Font pair:/.test(line)) return "Font pair: \"" + font + "\"";
       if (photo && /^Photo:/.test(line)) return "Photo: " + (photo === "yes" ? "yes, use my photo" : "no photo");
