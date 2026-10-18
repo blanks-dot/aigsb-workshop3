@@ -1081,3 +1081,165 @@ body.draft .draft-note::before { content: "Draft note for Mary (hidden from stud
 .sub-head .sub-tick:hover { box-shadow: 0 0 0 3px var(--why-s); }
 .sub-skip { font-size: .9rem; }
 .skip-step { font-size: .95rem; margin-left: 4px; }
+
+/* =====================================================================
+   Revision 6: the deck's system (aigsb-workshop3.vercel.app/deck)
+   Section colors: Why blue, Voice orange, Design violet, Build teal,
+   Rapid fire yellow. One accent per element. Flat cards, thin borders,
+   no drop shadows, no tilts. Serif headlines with one italic colored
+   phrase, mono labels, Caveat for Mary's real notes, ink panels for
+   skill files.
+   ===================================================================== */
+:root {
+  --why: #2B4BFF;    --why-s: #DCE2FF;    --why-d: #2340E0;
+  --voice: #FF6A3D;  --voice-s: #FFE1D6;  --voice-d: #C2471F;
+  --design: #7C5CFF; --design-s: #E6DFFF; --design-d: #6A48F0;
+  --build: #14B8A6;  --build-s: #D4F3EE;  --build-d: #0F8C80;
+  --deploy: #14B8A6; --deploy-s: #D4F3EE; --deploy-d: #0F8C80;
+  --rapid: #F2B705;  --rapid-s: #FCEFB4;  --rapid-d: #A86B00;
+  --muted: #8C8178;
+  --shadow: none;
+  --shadow-lg: 0 18px 40px rgba(20, 20, 19, .10);
+}
+[data-part="rapid"] { --accent: var(--rapid); --accent-soft: var(--rapid-s); --rc: var(--rapid); --pc: var(--rapid-d); --pc-soft: var(--rapid-s); }
+
+/* headlines: serif, the accent phrase in italic + section color */
+h1 em, h2 em, h4 em { font-style: italic; color: var(--accent, var(--ink)); }
+[data-part="build"] h2 em, [data-part="build"] h4 em { color: var(--build-d); }
+
+/* step header: flat numeral + mono labels, like the deck's progress row */
+.step-meta { gap: 12px; align-items: baseline; flex-wrap: wrap; }
+.step-num { min-width: 0; height: auto; padding: 0; border-radius: 0; background: none; box-shadow: none; transform: none; color: var(--accent); font: 400 2.4rem/1 var(--font-display); }
+.part-chip { background: none; padding: 0; border-radius: 0; color: var(--pc); font: 500 .8rem/1 var(--font-mono); letter-spacing: .08em; }
+.when-chip { background: none; padding: 0; color: var(--muted); font: 500 .8rem/1 var(--font-mono); letter-spacing: .06em; text-transform: uppercase; }
+.deck-q { font: 400 .95rem/1.3 var(--font-body); color: var(--muted); }
+.deck-q i { font-style: italic; }
+.h-num { background: none; color: var(--accent); font: 400 1.4rem/1 var(--font-display); width: auto; height: auto; }
+
+/* buttons: flat ink pills */
+.btn, .btn:hover, .btn:active, .btn.accent, .btn.accent:hover, .complete, .complete:hover { box-shadow: none; transform: none; }
+.btn:hover, .complete:hover { background: #2C2B28; }
+.btn.ghost { box-shadow: inset 0 0 0 1px var(--line-2); }
+.btn.ghost:hover { box-shadow: inset 0 0 0 1px var(--ink); background: transparent; }
+.complete.is-done { background: var(--card); color: var(--ink); box-shadow: inset 0 0 0 1px var(--line-2); }
+.stuck-btn, .stuck-btn:hover { background: var(--card); color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); transform: none; }
+.stuck-btn:hover { background: var(--ink); color: var(--paper); }
+.stuck-inline { background: none; color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 3px; padding: .4em .2em; }
+
+/* progress: one ink color, no rainbow */
+.progress-bar i::after { background: var(--ink); }
+.version-chip, .version-chip[data-version] { background: var(--card); color: var(--ink-2); box-shadow: inset 0 0 0 1px var(--line-2); }
+
+/* flat cards */
+.card, .sub, .sub.open, .copy-card, .shot img, .click, .acct-col, .site-card, .version-card, .upload-skill.open-block,
+.diagram, .further-hero, .quest-card, .gal-card, .recap li { box-shadow: none; }
+.version-card, .version-card:hover { border-width: 1px; transform: none; box-shadow: none; }
+.version-card.chosen { border-color: var(--voice); box-shadow: inset 0 0 0 1px var(--voice); }
+.version-card.chosen .btn { box-shadow: none; background: var(--voice-d); }
+.version-cards { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.version-card.own { border-style: dashed; }
+.vprev-own { display: grid; place-items: center; background: var(--paper); }
+.vp-own { font: 600 1.35rem/1.05 Caveat, "Brush Script MT", cursive; color: var(--voice-d); text-align: center; }
+.own-note { margin: -8px 0 20px; color: var(--ink-3); }
+.site-card:hover { transform: none; border-color: var(--ink); }
+.dg-win { box-shadow: none; border-width: 1.5px; }
+.dg-live { box-shadow: none; background: var(--build-d); }
+.dg-file:hover { transform: none; }
+
+/* tips: no yellow boxes, a quiet rule on the left */
+.aside-tip { background: none; border-left: 2px solid var(--line-2); border-radius: 0; padding: 4px 0 4px 14px; color: var(--ink-2); }
+.further-teaser, .starter-card { border-style: solid; border-color: var(--line); }
+
+/* asides (memory / mirror moments): flat, no drawings */
+.memory, .memory.mirror { display: block; background: var(--card); border: 1px solid var(--line); border-left: 3px solid var(--accent); }
+.memory .label, .memory.mirror .label { color: var(--pc); }
+.memory .elephant { display: none; }
+
+/* check + done looks like: neutral, accent only on the label */
+.check { background: var(--card); border: 1px solid var(--line); }
+.check::before { background: var(--accent); }
+[data-part="build"] .check::before { color: var(--ink); }
+.done-box { border-left-width: 3px; box-shadow: none; }
+
+/* Make it yours form: thin border, ink file tab like the deck's skill panels */
+.myform, .myform.downloaded { border: 1px solid var(--line-2); box-shadow: none; }
+.myform.downloaded { border-color: var(--accent); }
+.mf-head .mf-file { background: var(--ink); color: var(--paper); border: 0; }
+.mf-group-label { background: none; padding: 0; color: var(--pc); }
+
+/* the loop, the deck's 5 steps */
+.card.loop { border-left: 1px solid var(--line); }
+.card.loop h4 { font: 400 1.6rem/1.1 var(--font-display); margin: 0 0 4px; }
+.loop-steps { list-style: none; padding: 0; margin: 14px 0 8px; counter-reset: lp; display: grid; gap: 10px; }
+.loop-steps > li { counter-increment: lp; position: relative; margin: 0; padding: 0 0 10px 44px; border-bottom: 1px dashed var(--line); display: flex; flex-direction: column; gap: 4px; }
+.loop-steps > li:last-child { border-bottom: 0; }
+.loop-steps > li::before { content: counter(lp); position: absolute; left: 0; top: -2px; font: 400 1.6rem/1 var(--font-display); color: var(--accent); }
+.loop-steps b { font-weight: 700; }
+.loop-steps .hand { font: 600 1.3rem/1.15 Caveat, "Brush Script MT", cursive; color: var(--pc); padding: 2px 0; }
+.loop-three { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 4px; }
+.loop-three p { margin: 0; background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; font: 400 1.02rem/1.2 var(--font-display); }
+.loop-three i { display: block; font: 500 .68rem/1 var(--font-mono); font-style: normal; letter-spacing: .08em; text-transform: uppercase; color: var(--pc); margin-bottom: 4px; }
+.ink-panel { background: var(--ink); color: var(--paper); border-radius: 12px; padding: 10px 14px; margin: 4px 0 0; font: 400 .85rem/1.5 var(--font-mono); white-space: pre-wrap; }
+.loop-rule { margin: 6px 0 0; font: 400 1.25rem/1.2 var(--font-display); }
+.loop6 li.here { background: var(--accent-soft); border-color: var(--accent); }
+
+/* Mary's real examples: Caveat in the section color, next to the words */
+.mary-ex { border-left-color: var(--accent); }
+.mary-ex p { color: var(--pc); }
+
+/* what I wish I'd known sooner: rapid fire yellow */
+.habits.rapid li::before { color: var(--rapid-d); }
+.habits li { box-shadow: none; }
+
+/* timeline: one accent */
+.tl-seg.you { background: var(--card); box-shadow: inset 0 0 0 1px var(--ink); }
+
+/* rail: the deck's group names; done nodes keep their section color */
+.rail-pill { box-shadow: none; border: 1px solid var(--line); }
+
+/* house rules + recap numerals: flat serif numbers, no tilted badges */
+.rules li::before, .plan li::before, .rungs li::before { background: none; box-shadow: none; transform: none; color: var(--rule-c, var(--plan-c, var(--rung-c, var(--ink)))); font-size: 1.6rem; }
+.rules li:nth-child(5n+1), .rungs li:nth-child(1) { --rule-c: var(--voice); --rung-c: var(--voice); }
+.rules li:nth-child(5n+2), .rungs li:nth-child(2) { --rule-c: var(--rapid-d); --rung-c: var(--rapid-d); }
+.rules li:nth-child(5n+3), .rungs li:nth-child(3) { --rule-c: var(--why); --rung-c: var(--why); }
+.rules li:nth-child(5n+4), .rungs li:nth-child(4) { --rule-c: var(--build-d); --rung-c: var(--build-d); }
+.plan li:nth-child(1) { --plan-c: var(--voice); } .plan li:nth-child(2) { --plan-c: var(--design); }
+.plan li:nth-child(n+3) { --plan-c: var(--build-d); }
+.ladder { box-shadow: none; border: 1px solid var(--line-2); }
+
+/* the deck's recap on Finish */
+.deck-recap li { display: grid; grid-template-columns: 34px 1fr; gap: 12px; padding: 14px 16px; }
+.deck-recap .rn { background: none !important; box-shadow: none !important; transform: none; color: var(--accent); font: 400 1.9rem/1 var(--font-display) !important; width: auto !important; height: auto !important; }
+.deck-recap b { font: 400 1.5rem/1 var(--font-display); }
+.deck-recap .q { color: var(--muted); font-size: .92rem; margin-left: 6px; }
+.deck-recap p { margin: 6px 0 0; color: var(--ink); }
+.deck-recap p::before { content: "✓  "; color: var(--accent); font-weight: 700; }
+.finish-hero .kicker { color: var(--voice-d); }
+
+/* sign-in: the deck's cover */
+.welcome-card { box-shadow: none; border-radius: 22px; }
+.welcome-card h1 { font-size: clamp(2.6rem, 6vw, 3.6rem); line-height: 1; margin-bottom: .1em; }
+.cover-sub { margin: 0 0 14px; font: italic 400 1.6rem/1.2 var(--font-display); color: var(--ink-2); }
+.cover-sub em { color: var(--voice); }
+.kicker { color: var(--voice-d); }
+.kicker .dot, .blob { display: none; }
+
+/* misc flat-downs */
+.ticker { box-shadow: none; }
+.butwait { box-shadow: none; border-width: 1px; border-color: var(--voice); }
+.butwait-head { background: var(--voice-s); color: var(--voice-d); }
+.butwait-head svg { animation: none; }
+.swatch { box-shadow: inset 0 0 0 2px rgba(255,255,255,.6); }
+
+@media (max-width: 760px) {
+  .version-cards { grid-template-columns: 1fr 1fr; }
+  .loop-three { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  .version-cards { grid-template-columns: 1fr; }
+  .deck-q { flex-basis: 100%; }
+}
+.deck-recap li .rn { color: var(--accent); }
+.formula li { border-top: 1px solid var(--line); }
+.formula li b { font: 500 .78rem/1 var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--pc); margin-bottom: 6px; }
+.site-url { font-size: .8rem; overflow-wrap: anywhere; }

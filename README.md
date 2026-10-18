@@ -36,7 +36,8 @@ js/app.js             site mechanics: sign-in, rail, progress + sync, version pi
                       ladder, "Borrow ours" starter zips, feedback
 js/zip.js             fills a starter SKILL.md from the form and zips it, in the browser (no dependencies)
 skills/<skill>/       the five starters (SKILL.md only): voice, voice-gsb (a ready GSB-student voice,
-                      skill name "voice"), design-polished, design-warm, design-playful.
+                      skill name "voice"), design-polished, design-warm, design-playful, design-custom
+                      (the "Your own" vibe: no preset look).
                       Served as files; the forms and the starter buttons read them.
 img/screens/          screenshot slots: drop <id>.png here (see img/screens/README.md)
 api/progress.js       POST only: a student saves their own progress (plus version, live link, gallery, deploy date)

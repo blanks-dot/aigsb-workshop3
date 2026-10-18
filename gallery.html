@@ -42,7 +42,7 @@
 <script>
 (function () {
   "use strict";
-  var VERSION = { polished: "Polished", warm: "Warm", playful: "Playful" };
+  var VERSION = { polished: "Polished", warm: "Warm", playful: "Playful", custom: "Your own" };
   var params = new URLSearchParams(location.search);
   var room = (String(params.get("room") || "default").toLowerCase().replace(/[^a-z0-9-]/g, "").slice(0, 40)) || "default";
   var $ = function (s) { return document.querySelector(s); };

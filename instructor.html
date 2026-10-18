@@ -105,7 +105,7 @@
     </div>
     <div>
       <section class="panel"><h2>Set up (step 0)</h2><p class="psub">Each item checked off. All optional, students can skip any of them. 0.5 is the Vercel account.</p><div id="prep"></div><div id="prep-missing"></div></section>
-      <section class="panel"><h2>Version</h2><p class="psub">From step 1. Polished, Warm or Playful.</p><div id="versions"></div></section>
+      <section class="panel"><h2>Vibe</h2><p class="psub">From step 1. Polished, Warm, Playful or their own.</p><div id="versions"></div></section>
       <section class="panel"><h2>Live links and gallery</h2><p class="psub">From step 6. Bold chips are in the <a href="gallery.html" target="_blank" rel="noopener">class gallery</a> (opted in, link pasted). Dates are the "not tonight" fallback.</p><div id="deploys"></div></section>
       <section class="panel"><h2>Step 5: how's tonight going?</h2><p class="psub">The 1 to 5 on step 5's Done button.</p><div id="step5"></div></section>
       <section class="panel"><h2>Feedback</h2><p class="psub" id="fb-sub">Ratings and one-line comments from the finish screen.</p><div id="ratings"></div><ul class="comments" id="comments"></ul></section>
@@ -124,11 +124,11 @@
 <script>
 (function () {
   "use strict";
-  var TITLES = { what: "What you're building", setup: "Set up", version: "Pick your version", voice: "Teach it your voice", design: "Teach it your look", three: "Ask for three", build: "Build it. Name what's off", host: "Host it live", finish: "Finish" };
-  var NUM = { what: "✦", setup: "0", version: "1", voice: "2", design: "3", three: "4", build: "5", host: "6", finish: "✓" };
-  var COLOR = { what: "#FF6A3D", setup: "#FF6A3D", version: "#7C5CFF", voice: "#7C5CFF", design: "#14B8A6", three: "#F2B705", build: "#F2B705", host: "#2B4BFF", finish: "#2B4BFF" };
+  var TITLES = { what: "What you're building", setup: "Set up", version: "Pick your version (old)", voice: "Teach it your voice", design: "Teach it your look", three: "Ask for three", build: "Build it. Name what's off", host: "Host it live", finish: "Finish" };
+  var NUM = { what: "→", setup: "0", version: "v", voice: "1", design: "2", three: "3", build: "4", host: "5", finish: "✓" };
+  var COLOR = { what: "#2B4BFF", setup: "#2B4BFF", version: "#FF6A3D", voice: "#FF6A3D", design: "#7C5CFF", three: "#14B8A6", build: "#14B8A6", host: "#14B8A6", finish: "#14B8A6" };
   var ON_COLOR = { three: "#141413", build: "#141413" }; // text on the step color: ink on Build yellow, white elsewhere
-  var VERSION = { polished: "Polished", warm: "Warm", playful: "Playful" };
+  var VERSION = { polished: "Polished", warm: "Warm", playful: "Playful", custom: "Your own" };
   var KEYSTORE = "aigsb-w3-instructor-key";
   var params = new URLSearchParams(location.search);
   var room = cleanRoom(params.get("room"));

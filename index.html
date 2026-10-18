@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Make your AI look and sound like you | AI@GSB Workshop 3</title>
+<title>The Art of Personalization | AI@GSB Workshop 3 tutorial</title>
 <meta name="description" content="AI@GSB Workshop 3. Teach Claude your voice and your look with two skills, test them on a one-page site, host it live.">
 <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -46,7 +46,7 @@
     <span class="brand-text">AI@GSB <small>Workshop 3: Your site</small></span>
   </div>
   <div class="spacer"></div>
-  <span class="version-chip" id="version-chip" hidden title="Your version. Change it in step 1."></span>
+  <span class="version-chip" id="version-chip" hidden title="Your vibe. Change it in step 1"></span>
   <div class="progress" id="progress" hidden>
     <div class="progress-bar" id="progress-bar" aria-hidden="true"></div>
     <span id="progress-text">0 of 8 done</span>
@@ -64,16 +64,16 @@
 
 <!-- ============ SIGN IN ============ -->
 <main class="welcome" id="welcome" hidden>
-  <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span><span class="blob b4"></span>
   <form class="welcome-card" id="signin" novalidate>
-    <div class="kicker"><span class="dot"></span>AI@GSB Workshop 3</div>
-    <h1>Make your AI look and sound like <em>you</em></h1>
-    <p class="lede"><em>Your</em> voice. <em>Your</em> design. <em>Your</em> site. Teach AI how you sound and how you look, so what it makes feels like you every time. A live site proves it</p>
+    <div class="kicker">AI@GSB Workshop 3 tutorial</div>
+    <h1>The Art of Personalization</h1>
+    <p class="cover-sub">teaching AI <em>your</em> voice &amp; style</p>
+    <p class="lede">A voice skill, a design skill, and a live site that proves both work</p>
     <label class="field"><span>Your name</span><input id="who" name="name" autocomplete="name" placeholder="First and last name" required></label>
     <label class="field"><span>Your email</span><input id="email" name="email" type="email" autocomplete="email" placeholder="you@stanford.edu" required></label>
     <p class="form-err" id="form-err" hidden></p>
     <button class="btn" id="go" type="submit" disabled>Let's go →</button>
-    <p class="privacy">We save your name, email, version, progress and live link. Deleted after 30 days. Your writing and colors never leave this page. <span id="room-note"></span></p>
+    <p class="privacy">We save your name, email, vibe, progress and live link. Deleted after 30 days. Your writing and colors never leave this page. <span id="room-note"></span></p>
   </form>
 </main>
 
@@ -90,12 +90,12 @@
     <div class="stage-inner">
 
 <!-- ================= WHAT YOU'RE BUILDING (first, no number) ================= -->
-<section class="step" data-step="what" data-icon="✦" data-title="What you're building" data-group="WHY" data-part="why" data-when="Start here" hidden
+<section class="step" data-step="what" data-icon="→" data-title="What you're building" data-group="WHY" data-part="why" data-when="Start here" hidden
   data-learned="Now you know the point is AI that sounds and looks like you. Skills are how. The site is the proof">
   <header class="step-head">
-    <div class="step-meta"><span class="step-num">✦</span><span class="when-chip">Start here</span></div>
+    <div class="step-meta"><span class="step-num">→</span><span class="part-chip">Why</span><span class="deck-q">Why does everyone's AI sound the same?</span></div>
     <h2>Words that sound like you. Visuals that feel like <em>you</em></h2>
-    <p class="step-lede">Skills are the method. Your site is the proof. A site has both halves, the words and the look, so it tests both skills at once</p>
+    <p class="step-lede">Same prompt = same output. AI drifts to the average. That's where we lose trust. Skills fix it, and your site is the proof: it has both halves, the words and the look</p>
   </header>
 
   <div class="diagram" role="img" aria-label="Two skill files, voice and design, feed your one-page site, which becomes a live link.">
@@ -132,8 +132,7 @@
     <div class="tl-seg us" style="flex:10"><b>Us</b><span>10 min</span></div>
   </div>
 
-  <ol class="plan plan-6">
-    <li><strong>Pick your version.</strong> Who's reading your site first?</li>
+  <ol class="plan plan-5">
     <li><strong>Teach it your voice.</strong> Assets + vibe + icks. Test it on a two-line intro</li>
     <li><strong>Teach it your look.</strong> Assets + vibe + icks. Test it on your About me section</li>
     <li><strong>Ask for three.</strong> Pick one. Say why</li>
@@ -147,17 +146,19 @@
     <li><strong>Ask AI, in the chat you're building in</strong> It already knows what you did. The Stuck? button has the prompt</li>
     <li><strong>Hit Stuck? in the tutorial</strong> Top right. Search the common fixes</li>
     <li><strong>Post on PollEv</strong> We're watching it the whole time</li>
-    <li><strong>Raise your hand and we'll come running</strong> We're walking laps</li>
+    <li><strong>Raise your hand. We'll come running</strong> We're walking laps</li>
   </ol>
 
-  <h3>Six habits that save you an hour</h3>
-  <ol class="habits">
-    <li><b>New chat when it gets messy</b> Long chats get foggy. Start fresh, your skills come with you</li>
-    <li><b>Talk, don't type</b> Hit the mic and ramble. You'll say more and it sounds more like you. Mary's fave: Wispr Flow, free plan</li>
-    <li><b>Tell it who's reading</b> A recruiter? A 10-year-old? Your mom? Say it before it writes</li>
-    <li><b>Show, don't describe</b> Paste a screenshot or a site you love instead of hunting for adjectives</li>
-    <li><b>Fix the skill, not the page</b> Same fix twice? Say <strong>add this to my skill</strong> so it sticks for good</li>
-    <li><b>Make it ask and plan before it builds</b> "Before you build, ask me 3 questions and tell me your plan."</li>
+  <h3>What I wish I'd known sooner</h3>
+  <ol class="habits rapid">
+    <li><b>Sketch the story before AI writes it</b> Mary uses tldraw, then hands Claude the picture</li>
+    <li><b>Describe it, then show it</b> Everyone's "warm" is different. A site you love or an email you sent shows the details</li>
+    <li><b>Make it ask + plan before it builds</b> "Ask me 3 questions and show a plan first. Push back, with data"</li>
+    <li><b>Mark it up, then say the fix</b> Screenshot it, circle what's off, paste it back + say the fix</li>
+    <li><b>Fix the skill, not just the page</b> Same fix twice? Say <strong>add this to my skill</strong></li>
+    <li><b>Split skills that don't travel together</b> Voice and design stay separate. Need both? Call one from the other</li>
+    <li><b>More isn't better... link focused skills</b> One giant skill, one endless chat gets worse. Keep each one short + sharp</li>
+    <li><b>Way more than websites</b> Flyers, donor emails, study pages, a morning brief. Same skills</li>
   </ol>
 
   <div class="done-box"><div class="thumb thumb-list" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div><div><b>Done looks like</b><p>You know the plan, and Claude is open in another tab</p></div></div>
@@ -167,7 +168,7 @@
 <section class="step" data-step="setup" data-num="0" data-title="Set up" data-sub-title="Skip what you've done" data-group="WHY" data-part="why" hidden
   data-learned="You're set up. Claude is open and you know where Skills live">
   <header class="step-head">
-    <div class="step-meta"><span class="step-num">0</span></div>
+    <div class="step-meta"><span class="step-num">0</span><span class="part-chip">Set up</span><span class="when-chip">Skip what you've done</span></div>
     <h2>Set up. Skip what <em>you've done</em></h2>
     <p class="step-lede">All five are optional. Already done one? Tick it or skip it. Done with all of it? Hit the button at the bottom</p>
   </header>
@@ -197,11 +198,11 @@
         <li>New Claude chat. Upload the PDF, then paste this
           <div class="copy-card" data-copy="before-prompt" data-title="Paste into a new Claude chat" data-sub="With the PDF attached"></div>
         </li>
-        <li>Screenshot the preview. You'll put it next to your real site in step 5</li>
+        <li>Screenshot the preview. You'll put it next to your real site in step 4</li>
       </ol>
       <div class="check"><p><strong>Check</strong> a screenshot of a page preview</p></div>
       <figure class="shot" data-shot="0.2-before"><figcaption>A before page</figcaption></figure>
-      <div class="done-box"><div class="thumb thumb-generic" aria-hidden="true"><i class="h"></i><i></i><i></i><span class="cards"><i></i><i></i><i></i></span></div><div><b>Done looks like</b><p>A screenshot of a page that could be anyone's, saved where you'll find it in step 5</p></div></div>
+      <div class="done-box"><div class="thumb thumb-generic" aria-hidden="true"><i class="h"></i><i></i><i></i><span class="cards"><i></i><i></i><i></i></span></div><div><b>Done looks like</b><p>A screenshot of a page that could be anyone's, saved where you'll find it in step 4</p></div></div>
       <div class="sub-foot"><button type="button" class="btn small accent sub-done">Done, next →</button><button type="button" class="linkish sub-skip">Skip</button><button type="button" class="stuck-inline" data-stuck="setup-2">Stuck on 0.2?</button></div>
     </div></div></div>
   </div>
@@ -220,7 +221,7 @@
   <div class="sub" data-sub="setup-4" data-optional id="find-sites">
     <button type="button" class="sub-head" aria-expanded="false"><span class="sub-num">0.4</span><span class="sub-title">Find 2 websites you like the look of<small>Optional, 3 min</small></span><span class="sub-tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span><svg class="chev" aria-hidden="true"><use href="#i-chev"/></svg></button>
     <div class="collapse"><div class="collapse-inner"><div class="sub-body">
-      <p>Two sites where you thought "I'd want mine to feel like that". <strong>Save both links. You'll use them again</strong> in step 3</p>
+      <p>Two sites where you thought "I'd want mine to feel like that". <strong>Save both links. You'll use them again</strong> in step 2</p>
       <p>Nothing comes to mind? Ask Claude, with your LinkedIn PDF attached</p>
       <div class="copy-card" data-copy="find-sites" data-title="Paste into a new Claude chat" data-sub="With the PDF attached"></div>
       <div class="check"><p><strong>Check</strong> two links saved</p></div>
@@ -232,7 +233,7 @@
   <div class="sub" data-sub="setup-5" data-optional>
     <button type="button" class="sub-head" aria-expanded="false"><span class="sub-num">0.5</span><span class="sub-title">Create a free Vercel account<small>Optional, 2 min. Have one? Skip it</small></span><span class="sub-tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span><svg class="chev" aria-hidden="true"><use href="#i-chev"/></svg></button>
     <div class="collapse"><div class="collapse-inner"><div class="sub-body">
-      <p>It's where your site goes live in step 6. Already have one, or want to wait till step 6? Skip it. GitHub or email both work. Pick the <strong>Hobby</strong> plan, it's free. <a class="go-link" href="https://vercel.com/signup" target="_blank" rel="noopener">vercel.com/signup</a></p>
+      <p>It's where your site goes live in step 5. Already have one, or want to wait till step 5? Skip it. GitHub or email both work. Pick the <strong>Hobby</strong> plan, it's free. <a class="go-link" href="https://vercel.com/signup" target="_blank" rel="noopener">vercel.com/signup</a></p>
       <div class="check"><p><strong>Check</strong> you can sign in to Vercel</p></div>
       <div class="sub-foot"><button type="button" class="btn small accent sub-done">Done</button><button type="button" class="linkish sub-skip">Skip</button><button type="button" class="stuck-inline" data-stuck="setup-5">Stuck on 0.5?</button></div>
     </div></div></div>
@@ -240,15 +241,24 @@
 
 </section>
 
-<!-- ================= STEP 1 ================= -->
-<section class="step" data-step="version" data-num="1" data-title="Pick your version" data-sub-title="3 min" data-group="YOUR VOICE" data-part="voice" hidden
-  data-learned="Now you know your version, and that changing it later is one line in each skill">
+<!-- ================= STEP 2 ================= -->
+<section class="step" data-step="voice" data-num="1" data-title="Teach it your voice" data-sub-title="15 min" data-group="VOICE" data-part="voice" hidden
+  data-learned="Now you know a voice skill is assets, vibe and icks, and the test is reading it out loud, then fixing the skill">
   <header class="step-head">
-    <div class="step-meta"><span class="step-num">1</span><span class="when-chip">3 min</span></div>
-    <h2>Three versions. <em>Pick one</em></h2>
-    <p class="step-lede">Pick for whoever reads it first. Changing later is one line in each skill</p>
+    <div class="step-meta"><span class="step-num">1</span><span class="part-chip">Voice</span><span class="deck-q">How do I get AI to sound like <i>me</i>?</span><span class="when-chip">15 min</span></div>
+    <h2>Assets + vibe + icks = <em>your</em> voice</h2>
+    <p class="step-lede">Claude reads what you wrote and your rules before it writes a word in your name</p>
   </header>
 
+  <ul class="formula" aria-label="The voice formula">
+    <li><b>Assets</b><p>Stuff you wrote. Three samples, plus the words you actually use. Claude matches them</p></li>
+    <li><b>Vibe</b><p>How it should feel. Polished, Warm or Playful, you pick it first</p></li>
+    <li><b>Icks</b><p>What makes you cringe. Words you'd never say. Claude won't say them either</p></li>
+  </ul>
+  <p class="aside-tip"><strong>Under the hood:</strong> your samples go first because a few real examples teach AI the pattern better than a page of rules. The fancy name is few-shot learning</p>
+
+    <h3><span class="h-num">1</span>Pick your vibe</h3>
+  <p>Pick for whoever reads it first, or make your own. Changing later is one line in each skill</p>
   <div class="version-cards" id="version-cards">
     <div class="version-card" data-version="polished">
       <div class="vprev vprev-pro" aria-hidden="true"><span class="vp-num">01</span><i class="vp-h"></i><i class="vp-l"></i><i class="vp-l short"></i><span class="vp-rule"></span><span class="vp-num">02</span><i class="vp-l"></i></div>
@@ -277,51 +287,39 @@
       </dl>
       <button type="button" class="btn pick-version" data-version="playful">This one</button>
     </div>
+    <div class="version-card own" data-version="custom">
+      <div class="vprev vprev-own" aria-hidden="true"><span class="vp-own">your words<br>your look</span></div>
+      <h3>Your own</h3>
+      <p class="vmeaning">Start from scratch. Your vibe in your own words, no preset</p>
+      <dl class="vfacts">
+        <div><dt>Looks</dt><dd>Whatever you describe. Show it 2 sites you love</dd></div>
+      </dl>
+      <button type="button" class="btn pick-version" data-version="custom">This one</button>
+    </div>
   </div>
+  <p class="small own-note">Going your own way? The form gives you blank spaces, or skip the form and use <strong>Or build it with Claude</strong> below. Same for your look in step 2</p>
 
-  <p class="sites-lede"><strong>Mary's three sites.</strong> One per version</p>
+  <p class="sites-lede"><strong>Mary's three sites</strong> One per vibe</p>
   <div class="sites-row">
-    <a class="site-card" href="https://ai-gsb-deans.vercel.app" target="_blank" rel="noopener" data-part="core"><span class="site-tag">Polished</span><span class="site-url">ai-gsb-deans.vercel.app</span><span class="site-what">The Dean's Series</span></a>
-    <a class="site-card" href="https://runyourcity.org" target="_blank" rel="noopener" data-part="why"><span class="site-tag">Warm</span><span class="site-url">runyourcity.org</span><span class="site-what">A nonprofit</span></a>
-    <a class="site-card" href="https://outofourdepth.com" target="_blank" rel="noopener" data-part="design"><span class="site-tag">Playful</span><span class="site-url">outofourdepth.com</span><span class="site-what">A podcast</span></a>
+    <a class="site-card" href="https://runyourcity.org" target="_blank" rel="noopener"><span class="site-tag">Polished</span><span class="site-url">runyourcity.org</span><span class="site-what">A nonprofit</span></a>
+    <a class="site-card" href="https://mary-blankemeier.vercel.app" target="_blank" rel="noopener"><span class="site-tag">Warm</span><span class="site-url">mary-blankemeier.vercel.app</span><span class="site-what">Her personal site</span></a>
+    <a class="site-card" href="https://outofourdepth.com" target="_blank" rel="noopener"><span class="site-tag">Playful</span><span class="site-url">outofourdepth.com</span><span class="site-what">A podcast</span></a>
   </div>
 
-  <div class="check"><p><strong>Check</strong> a version chip in the header, top right</p></div>
-  <div class="done-box"><div class="thumb thumb-chip" aria-hidden="true"><i></i><i></i><span class="chip" id="thumb-chip-text">Warm</span></div><div><b>Done looks like</b><p>A version chip in the header. Every form from here starts with it filled in</p></div></div>
-  <p class="foot-note" id="version-gate">Pick one to tick this step. Not sure? Skip it, the forms start on Warm</p>
-</section>
-
-<!-- ================= STEP 2 ================= -->
-<section class="step" data-step="voice" data-num="2" data-title="Teach it your voice" data-sub-title="12 min" data-group="YOUR VOICE" data-part="voice" hidden
-  data-learned="Now you know a voice skill is assets, vibe and icks, and the test is reading it out loud, then fixing the skill">
-  <header class="step-head">
-    <div class="step-meta"><span class="step-num">2</span><span class="part-chip">Your voice</span><span class="when-chip">12 min</span></div>
-    <h2>Assets + vibe + icks = <em>your</em> voice</h2>
-    <p class="step-lede">Claude reads what you wrote and your rules before it writes a word in your name</p>
-  </header>
-
-  <ul class="formula" aria-label="The voice formula">
-    <li><b>Assets</b><p>Stuff you wrote. Three samples, plus the words you actually use. Claude matches them</p></li>
-    <li><b>Vibe</b><p>How it should feel. Polished, Warm or Playful, your pick from step 1</p></li>
-    <li><b>Icks</b><p>What makes you cringe. Words you'd never say. Claude won't say them either</p></li>
-  </ul>
-  <p class="aside-tip"><strong>Under the hood:</strong> your samples go first because a few real examples teach AI the pattern better than a page of rules. The fancy name is few-shot learning</p>
-
-  <h3><span class="h-num">1</span>Fill in the form</h3>
+  <h3><span class="h-num">2</span>Fill in the form</h3>
   <p>Your samples from 0.3 and a few words you use. Blank fields keep their [brackets]</p>
   <div class="starter-card"><p><strong>No samples handy? Start from the GSB starter</strong>A ready voice for a GSB student: humble, clear, wants to help. Swap in your own samples later</p><button type="button" class="btn small ghost" data-starter="voice-gsb">Download voice-gsb.zip</button></div>
   <p class="aside-tip"><strong>Talk instead of type:</strong> the mic button works for samples too</p>
   <div class="myform" data-kind="voice"></div>
 
-  <h3><span class="h-num">2</span>Upload voice.zip to Claude</h3>
+  <h3><span class="h-num">3</span>Upload voice.zip to Claude</h3>
   <div class="upload-skill" data-skill="voice" data-open></div>
   <figure class="shot" data-shot="2-upload"><figcaption>Upload a skill, voice.zip picked</figcaption></figure>
 
-  <h3><span class="h-num">3</span>Test it in a new chat</h3>
+  <h3><span class="h-num">4</span>Test it in a new chat</h3>
   <div class="copy-card" data-copy="voice-intro" data-title="Paste into a new Claude chat" data-sub="Voice skill switched on"></div>
 
   <aside class="memory mirror">
-    <svg class="elephant" aria-hidden="true"><use href="#i-mirror"/></svg>
     <div>
       <div class="label">Mirror moment</div>
       <h4>Read it out loud. Would a friend know it's you?</h4>
@@ -330,14 +328,18 @@
   </aside>
 
   <div class="card loop">
-    <h4>Run the loop twice before you move on</h4>
-    <ol class="do">
-      <li><strong>Name one thing you like.</strong> Plain words are enough</li>
-      <li><strong>Name one thing you don't.</strong> "Too stiff." "I'd never say that."</li>
-      <li><strong>Fix the skill, not the answer.</strong> Say <strong>add that to my voice skill</strong>, or add one line yourself in Customize › Skills › Yours › voice › Edit</li>
-      <li><strong>New chat, same test.</strong> Better? Keep going. Same? Add a sample, not another rule</li>
+    <h4>The skill gets good by <em>iterating</em></h4>
+    <p class="small">Mary's real round, on her site's intro line</p>
+    <ol class="loop-steps">
+      <li><b>Ask for 3</b><span>"Give me 3 versions of my intro"</span>
+        <div class="loop-three"><p><i>Polished</i>Founder, Run Your City. Stanford GSB '27. Former D1 miler.</p><p><i>Warm</i>I'm passionate about getting more people to the starting line &mdash; in sport, health care and AI.</p><p><i>Playful</i>Born 30 minutes before my twin. Haven't stopped running since.</p></div></li>
+      <li><b>Pick one</b><span class="hand">"Warm. Sounds most like me."</span></li>
+      <li><b>Name what's off</b><span class="hand">"passionate"? ick. em dash = AI tell</span></li>
+      <li><b>Fix the skill</b><span>Say <strong>add that to my voice skill</strong>. Fix the skill, not the line</span><pre class="ink-panel">+ Never: "passionate about"
++ Never: em dashes. Use -- instead</pre></li>
+      <li><b>Run it again</b><span>"I'm focused on getting more people to the starting line, in sport, in health care, and in AI."</span><span class="hand">now it sounds like me.</span></li>
     </ol>
-    <p class="small">Giving AI feedback is the real skill tonight. The site is just where you practice</p>
+    <p class="loop-rule">Update the skill every time you correct it</p>
   </div>
 
   <div class="card modes">
@@ -348,7 +350,7 @@
 
   <h3>Or build it with Claude</h3>
   <p>Open a new chat and say: <strong>help me build a skill called voice.</strong> Then paste this so it asks the right questions</p>
-  <div class="copy-card" data-copy="voice-builder" data-title="Paste into the same chat" data-sub="Version comes from step 1"></div>
+  <div class="copy-card" data-copy="voice-builder" data-title="Paste into the same chat" data-sub="Vibe comes from step 1"></div>
   <p>Answer with real writing. Cut anything that sounds like a press release. Click <strong>Save skill</strong> when it's done. Saved skills stay on unless you switch them off</p>
   <figure class="shot" data-shot="2-builder"><figcaption>Claude building the voice skill</figcaption></figure>
 
@@ -367,10 +369,10 @@
 </section>
 
 <!-- ================= STEP 3 ================= -->
-<section class="step" data-step="design" data-num="3" data-title="Teach it your look" data-sub-title="10 min" data-group="YOUR DESIGN" data-part="design" hidden
+<section class="step" data-step="design" data-num="2" data-title="Teach it your look" data-sub-title="10 min" data-group="DESIGN" data-part="design" hidden
   data-learned="Now you know a design skill is the same recipe: assets, vibe and icks">
   <header class="step-head">
-    <div class="step-meta"><span class="step-num">3</span><span class="part-chip">Your design</span><span class="when-chip">10 min</span></div>
+    <div class="step-meta"><span class="step-num">2</span><span class="part-chip">Design</span><span class="deck-q">How do I get it to look like <i>me</i>?</span><span class="when-chip">10 min</span></div>
     <h2>Assets + vibe + icks = <em>your</em> look</h2>
     <p class="step-lede">Same recipe as your voice, just for how it looks</p>
   </header>
@@ -386,7 +388,7 @@
   <div class="myform" data-kind="design"></div>
 
   <h3><span class="h-num">2</span>Upload design.zip</h3>
-  <p>Same clicks as step 2. In your list it's <code><span data-design-name>design-warm</span></code></p>
+  <p>Same clicks as step 1. In your list it's <code><span data-design-name>design-warm</span></code></p>
   <div class="upload-skill" data-skill="design"></div>
 
   <h3><span class="h-num">3</span>Test it on your About me section</h3>
@@ -395,7 +397,6 @@
   <figure class="shot" data-shot="3-test"><figcaption>The About me section only</figcaption></figure>
 
   <aside class="memory">
-    <svg class="elephant" aria-hidden="true"><use href="#i-elephant"/></svg>
     <div>
       <div class="label">Memory moment</div>
       <h4>The skill says how. Memory says who</h4>
@@ -404,21 +405,22 @@
   </aside>
 
   <div class="card loop">
-    <h4>Run the loop twice before you move on</h4>
-    <ol class="do">
-      <li><strong>Name one thing you like.</strong> Plain words are enough</li>
-      <li><strong>Name one thing you don't.</strong> "Too stiff." "I'd never say that."</li>
-      <li><strong>Fix the skill, not the answer.</strong> Say <strong>add that to my design skill</strong>, or add one line yourself in Customize › Skills › Yours › design › Edit</li>
-      <li><strong>New chat, same test.</strong> Better? Keep going. Same? Add a sample, not another rule</li>
+    <h4>Same loop, for <em>your look</em></h4>
+    <ol class="loop-steps">
+      <li><b>Ask for 3</b><span>"Give me 3 versions of my About me section"</span></li>
+      <li><b>Pick one</b><span>Say why. Plain words are enough</span></li>
+      <li><b>Name what's off</b><span>The thing that makes you wince. Too corporate? Too busy?</span></li>
+      <li><b>Fix the skill</b><span>Say <strong>add that to my design skill</strong>, or add a line yourself in Customize › Skills › Yours › design › Edit</span></li>
+      <li><b>Run it again</b><span>New chat, same test. Still off? Show it a site you love instead of another rule</span></li>
     </ol>
-    <p class="small">Giving AI feedback is the real skill tonight. The site is just where you practice</p>
+    <p class="loop-rule">Update the skill every time you correct it</p>
   </div>
 
   <h3>Or write it from two sites you like</h3>
   <p>The two links you saved in <button type="button" class="linkish" data-go="setup">0.4</button>. Open a new chat and say: <strong>help me build a skill called design.</strong> Then ask what the two sites share</p>
   <div class="copy-card" data-copy="compare-sites" data-title="Paste into the same chat" data-sub="Add the two links"></div>
   <p>Usually one color, a lot of white, two fonts. Then paste this so the skill gets the structure</p>
-  <div class="copy-card" data-copy="design-builder" data-title="Paste into the same chat" data-sub="Version comes from step 1"></div>
+  <div class="copy-card" data-copy="design-builder" data-title="Paste into the same chat" data-sub="Vibe comes from step 1"></div>
   <p>If it lists more than one accent color, cut the extras. Click <strong>Save skill</strong> when it's done. Saved skills stay on unless you switch them off</p>
 
   <div class="starter-card"><p><strong>Go deeper: remix a starter</strong>Three design skills to pull apart. Download one, swap the color and fonts, keep the parts you like. Or give Claude two and ask for a mix</p><p class="starter-row"><button type="button" class="btn small ghost" data-starter="design-polished">design-polished.zip</button> <button type="button" class="btn small ghost" data-starter="design-warm">design-warm.zip</button> <button type="button" class="btn small ghost" data-starter="design-playful">design-playful.zip</button></p></div>
@@ -437,10 +439,10 @@
 </section>
 
 <!-- ================= STEP 4 ================= -->
-<section class="step" data-step="three" data-num="4" data-title="Ask for three" data-sub-title="8 min" data-group="YOUR SITE" data-part="build" hidden
+<section class="step" data-step="three" data-num="3" data-title="Ask for three" data-sub-title="8 min" data-group="BUILD" data-part="build" hidden
   data-learned="Now you know the prompt can be one line, because your skills carry the rest. Ask for three, pick one, say why">
   <header class="step-head">
-    <div class="step-meta"><span class="step-num">4</span><span class="part-chip">Your site</span><span class="when-chip">8 min</span></div>
+    <div class="step-meta"><span class="step-num">3</span><span class="part-chip">Build</span><span class="deck-q">What can I build with both?</span><span class="when-chip">8 min</span></div>
     <h2>Ask for three. Pick one. <em>Say why</em></h2>
     <p class="step-lede">All you hand over: your two skills and one line. Never take the first draft</p>
   </header>
@@ -478,10 +480,10 @@
 </section>
 
 <!-- ================= STEP 5 ================= -->
-<section class="step" data-step="build" data-num="5" data-title="Build it. Name what's off" data-sub-title="12 min" data-group="YOUR SITE" data-part="build" hidden
+<section class="step" data-step="build" data-num="4" data-title="Build it. Name what's off" data-sub-title="12 min" data-group="BUILD" data-part="build" hidden
   data-learned="Now you know the first build is a draft. Name what's off, let Claude fix it, and put the fix in your skill so it never comes back">
   <header class="step-head">
-    <div class="step-meta"><span class="step-num">5</span><span class="part-chip">Your site</span><span class="when-chip">12 min</span></div>
+    <div class="step-meta"><span class="step-num">4</span><span class="part-chip">Build</span><span class="deck-q">What can I build with both?</span><span class="when-chip">12 min</span></div>
     <h2>Build it. <em>Name what's off</em></h2>
     <p class="step-lede">Look. Wince. Write it down. Every fix lands in the skill, so it never comes back</p>
   </header>
@@ -491,12 +493,11 @@
   </ol>
 
   <h3><span class="h-num">1</span>Build the whole page</h3>
-  <p>Same chat as step 4. One message, then wait a minute or two. Don't send a second message while it works</p>
+  <p>Same chat as step 3. One message, then wait a minute or two. Don't send a second message while it works</p>
   <div class="copy-card" data-copy="build-site" data-title="Paste into the same chat" data-sub="Four sections, one file"></div>
   <figure class="shot" data-shot="4-preview"><figcaption>All four sections</figcaption></figure>
 
   <aside class="memory mirror">
-    <svg class="elephant" aria-hidden="true"><use href="#i-mirror"/></svg>
     <div>
       <div class="label">Mirror moment</div>
       <h4>Put your before screenshot next to it</h4>
@@ -542,10 +543,10 @@
 </section>
 
 <!-- ================= STEP 6 ================= -->
-<section class="step" data-step="host" data-num="6" data-title="Host it live" data-sub-title="8 min" data-group="YOUR SITE" data-part="deploy" hidden
+<section class="step" data-step="host" data-num="5" data-title="Host it live" data-sub-title="8 min" data-group="BUILD" data-part="build" hidden
   data-learned="Now you know hosting is one file dropped on Vercel, and the link is yours to send">
   <header class="step-head">
-    <div class="step-meta"><span class="step-num">6</span><span class="part-chip">Your site</span><span class="when-chip">8 min</span></div>
+    <div class="step-meta"><span class="step-num">5</span><span class="part-chip">Build</span><span class="deck-q">What can I build with both?</span><span class="when-chip">8 min</span></div>
     <h2>Drag one file. Get a <em>live link</em></h2>
     <p class="step-lede">Right now your site is a file on your laptop, like a doc saved to your desktop. Hosting is hitting share: anyone with the link can open it</p>
   </header>
@@ -710,23 +711,21 @@
 <!-- ================= FINISH ================= -->
 <section class="step finale" data-step="finish" data-title="Finish" data-group="WRAP UP" data-part="finish" hidden>
   <div class="finish-hero">
-    <svg class="trophy" viewBox="0 0 120 120" aria-hidden="true">
-      <circle cx="60" cy="60" r="56" fill="#DCE2FF"/>
-      <path d="M38 30h44v16a22 22 0 0 1-44 0z" fill="#FFD23F" stroke="#C99A00" stroke-width="3"/>
-      <path d="M38 36H26a12 12 0 0 0 14 16M82 36h12a12 12 0 0 1-14 16" fill="none" stroke="#C99A00" stroke-width="3"/>
-      <rect x="54" y="66" width="12" height="14" fill="#FFD23F" stroke="#C99A00" stroke-width="3"/>
-      <rect x="42" y="80" width="36" height="10" rx="3" fill="#2B4BFF"/>
-      <path d="M60 36l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z" fill="#fff"/>
-    </svg>
+    <div class="kicker">Recap: 5 of 5 answered</div>
     <h2>You made it!</h2>
     <p class="step-lede">Two skills that know how you write and how you like things to look. A site that proves it</p>
   </div>
-  <h3>Now you know</h3>
-  <ul class="recap" id="recap"></ul>
+  <ol class="recap deck-recap" id="recap" data-static="1">
+    <li data-part="why"><span class="rn">1</span><div><b>Why</b> <span class="q">Why does everyone's AI sound the same?</span><p>Same prompt = same output. AI drifts to the average. That's where we lose trust</p></div></li>
+    <li data-part="voice"><span class="rn">2</span><div><b>Voice</b> <span class="q">How do I get AI to sound like <i>me</i>?</span><p>Assets + vibe + icks become a voice skill. Iterate till you feel good. Update it every time you correct it</p></div></li>
+    <li data-part="design"><span class="rn">3</span><div><b>Design</b> <span class="q">How do I get it to look like <i>me</i>?</span><p>Assets + vibe + icks become a design skill. Iterate till you feel good. Update it every time you correct it</p></div></li>
+    <li data-part="build"><span class="rn">4</span><div><b>Build</b> <span class="q">What can I build with both?</span><p>A site for you, your company... anything! And it's just the start</p></div></li>
+    <li data-part="rapid"><span class="rn">5</span><div><b>Rapid fire</b> <span class="q">What do I wish I'd known sooner?</span><p>Idk... let's build already!</p></div></li>
+  </ol>
 
   <div class="card" id="feedback">
-    <h3 style="margin-top:0">How was it?</h3>
-    <div class="fb-ask"><a class="go-link" id="fb-form-link" href="https://docs.google.com/forms/d/e/1FAIpQLSfokEUnX4ZjYaXRuYKs_uJRsV0aaQcub4TFnnaveu1Z7YakeA/viewform" target="_blank" rel="noopener">2-minute feedback form</a><p>Fill it out and Mary's skills and website code are yours</p></div>
+    <h3 style="margin-top:0">How'd it go?!</h3>
+    <div class="fb-ask"><a class="go-link" id="fb-form-link" href="https://docs.google.com/forms/d/e/1FAIpQLSfokEUnX4ZjYaXRuYKs_uJRsV0aaQcub4TFnnaveu1Z7YakeA/viewform" target="_blank" rel="noopener">2-minute feedback form</a><p>Fill it out + Mary's skills &amp; website code are yours</p></div>
     <p class="fb-poll">A question for the room? Post it on <a class="go-link" href="https://pollev.com/discourses/lLybyGzDsXa60PKONz6MX/respond" target="_blank" rel="noopener">PollEv</a></p>
     <p class="small">Or rate tonight right here</p>
     <div class="stars" role="radiogroup" aria-label="Rating, 1 to 5"></div>
@@ -763,7 +762,7 @@
           </li>
           <li><b>Search the list below.</b> You're in Stuck? now</li>
           <li><b>Post it on PollEv.</b> A helper answers in the room. <a class="go-link" href="https://pollev.com/discourses/lLybyGzDsXa60PKONz6MX/respond" target="_blank" rel="noopener">PollEv</a></li>
-          <li><b>Raise your hand. We'll come to you</b></li>
+          <li><b>Raise your hand. We'll come running</b></li>
         </ol>
       </section>
 
@@ -785,12 +784,10 @@
         <details class="stuck-item"><summary>Sign up with GitHub or with email?</summary><div class="fix"><p>Either works for tonight. Signing up with GitHub saves a step if you do the GitHub side quest later</p></div></details>
       </section>
 
-      <section class="stuck-group" data-group="version"><h3>1 Pick your version</h3>
-        <details class="stuck-item"><summary>I'm two of these</summary><div class="fix"><p>Pick for whoever reads it first. The other is a one-line change later</p></div></details>
-        <details class="stuck-item"><summary>No chip in the header</summary><div class="fix"><p>Click <strong>This one</strong> on a card. On a phone the chip sits next to Stuck?</p></div></details>
-      </section>
+      
 
-      <section class="stuck-group" data-group="voice"><h3>2 Teach it your voice</h3>
+      <section class="stuck-group" data-group="voice"><h3>1 Teach it your voice</h3>
+        <details class="stuck-item"><summary>Which vibe? I'm two of these</summary><div class="fix"><p>Pick for whoever reads it first. The other is a one-line change later</p></div></details>
         <details class="stuck-item"><summary>The skill doesn't show up</summary><div class="fix"><p>Customize › Skills › <strong>Yours</strong>. Check it's on. New chat. Still missing? Upload the .zip, not the folder</p></div></details>
         <details class="stuck-item"><summary>It sounds like a press release</summary><div class="fix"><p>Add a sample. A text you sent to a friend pulls harder than anything formal</p></div></details>
         <details class="stuck-item"><summary>It invented a job, a number, an award</summary><div class="fix"><p>Say "every fact you don't have goes in [brackets]". Check the right skill is on</p></div></details>
@@ -798,28 +795,28 @@
         <details class="stuck-item"><summary>The form lost what I typed</summary><div class="fix"><p>On purpose. This site never saves your writing. Paste again. Your zip is in Downloads if you made one</p></div></details>
       </section>
 
-      <section class="stuck-group" data-group="design"><h3>3 Teach it your look</h3>
+      <section class="stuck-group" data-group="design"><h3>2 Teach it your look</h3>
         <details class="stuck-item"><summary>It ignored the design skill</summary><div class="fix"><p>Switch it on in Customize › Skills › Yours, then name it in the prompt. "Use my design skill."</p></div></details>
         <details class="stuck-item"><summary>The colors look wrong</summary><div class="fix"><p>Put the hex code in the box, not a name. "Navy" means ten things. <code>#24426B</code> means one</p></div></details>
         <details class="stuck-item"><summary>It added three feature cards</summary><div class="fix"><p>Say "no cards". Check the design skill is on and named in the prompt</p></div></details>
-        <details class="stuck-item"><summary>It built the whole site</summary><div class="fix"><p>Say "only the About me section". The whole thing is step 5</p></div></details>
+        <details class="stuck-item"><summary>It built the whole site</summary><div class="fix"><p>Say "only the About me section". The whole thing is step 4</p></div></details>
       </section>
 
-      <section class="stuck-group" data-group="three"><h3>4 Ask for three</h3>
+      <section class="stuck-group" data-group="three"><h3>3 Ask for three</h3>
         <details class="stuck-item"><summary>It built the whole page three times</summary><div class="fix"><p>Say "only the top section, the Hi I'm part". Small asks get small changes</p></div></details>
         <details class="stuck-item"><summary>The three options look the same</summary><div class="fix"><p>Ask for "different layouts, not just different words". Name one. "Photo on the left, no photo, headline centered."</p></div></details>
         <details class="stuck-item"><summary>The fix didn't stick</summary><div class="fix"><p>It's on the page, not in the skill. Open Customize › Skills › Yours › voice. No new line? Add it by hand. New chat</p></div></details>
       </section>
 
-      <section class="stuck-group" data-group="build"><h3>5 Build it. Name what's off</h3>
+      <section class="stuck-group" data-group="build"><h3>4 Build it. Name what's off</h3>
         <details class="stuck-item"><summary>It answered in chat, no preview</summary><div class="fix"><p>Say "single downloadable HTML file". Personal account? Check <strong>Settings › Capabilities › Code execution and file creation</strong>. New chat after</p></div></details>
         <details class="stuck-item"><summary>It looks nothing like my design skill</summary><div class="fix"><p>New chat. First line "Use my voice skill and my design skill." Both on in Customize › Skills › Yours</p></div></details>
-        <details class="stuck-item"><summary>It forgot my pick from step 4</summary><div class="fix"><p>Paste the top section you chose into the prompt. "Keep this exactly as the first section."</p></div></details>
-        <details class="stuck-item"><summary>I hit a usage limit</summary><div class="fix"><p>Raise your hand. Build on a neighbor's laptop, or finish at home with the Gemini fallback in step 5</p></div></details>
+        <details class="stuck-item"><summary>It forgot my pick from step 3</summary><div class="fix"><p>Paste the top section you chose into the prompt. "Keep this exactly as the first section."</p></div></details>
+        <details class="stuck-item"><summary>I hit a usage limit</summary><div class="fix"><p>Raise your hand. Build on a neighbor's laptop, or finish at home with the Gemini fallback in step 4</p></div></details>
         <details class="stuck-item"><summary>Three minutes and nothing</summary><div class="fix"><p>Wait one more. A second message restarts it. If the chat errors, send the same prompt in a new chat</p></div></details>
       </section>
 
-      <section class="stuck-group" data-group="host"><h3>6 Host it live</h3>
+      <section class="stuck-group" data-group="host"><h3>5 Host it live</h3>
         <details class="stuck-item"><summary>I can't find the download button</summary><div class="fix"><p>Top right of the preview. Or say "give me my whole site as one file called index.html". Rename it <code>index.html</code> if it came out with another name</p></div></details>
         <details class="stuck-item"><summary>vercel.com/drop asks me to sign in</summary><div class="fix"><p>That's normal. Sign up free with GitHub or email, pick <strong>Hobby</strong>, then go back to <a class="go-link" href="https://vercel.com/drop" target="_blank" rel="noopener">vercel.com/drop</a></p></div></details>
         <details class="stuck-item"><summary>I dropped the file and see a blank page or a 404</summary><div class="fix"><p>The file must be named exactly <code>index.html</code>. Rename it and drop it again</p></div></details>

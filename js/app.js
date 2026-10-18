@@ -24,25 +24,26 @@
 
   /* ---------- config ---------- */
 
-  const STEPS = ["what", "setup", "version", "voice", "design", "three", "build", "host"]; // in order, then "finish"
+  const STEPS = ["what", "setup", "voice", "design", "three", "build", "host"]; // Revision 6: picking a version is part of the voice step // in order, then "finish"
   const SUBS = ["setup-1", "setup-2", "setup-3", "setup-4", "setup-5"]; // 0.5 is the optional Vercel account (revision 4 dropped the GitHub one)
   const QUESTS = ["quest-1", "quest-2", "quest-3", "quest-4", "quest-5", "quest-6", "quest-7", "quest-8"]; // side quests on Go further: one-line cards, tick in any order
   const EXTRAS = ["further"]; // Go further: always open, never counted, sits between step 6 and Finish
   const REQUIRED_SUBS = []; // Revision 5: nothing in step 0 is required. Skip anything you've already done.
-  const CHECKPOINTS = { voice: 1, build: 2 }; // 2 = the bigger one (step 5, Build it once)
+  const CHECKPOINTS = {}; // Revision 6: no star badges in the rail // 2 = the bigger one (step 5, Build it once)
   const RATED = { build: 1 }; // steps whose Done button asks for a 1 to 5 rating (step 5)
   const KEY = "aigsb-workshop3-v1";
 
-  const VERSION_NAME = { polished: "Polished", warm: "Warm", playful: "Playful" };
-  const DESIGN_SKILL = { polished: "design-polished", warm: "design-warm", playful: "design-playful" };
+  const VERSION_NAME = { polished: "Polished", warm: "Warm", playful: "Playful", custom: "Your own" }; // Revision 6: "custom" = start from scratch
+  const DESIGN_SKILL = { polished: "design-polished", warm: "design-warm", playful: "design-playful", custom: "design-custom" };
   const SWATCHES = {
     polished: [["deep navy", "#24426B"], ["charcoal", "#1F1E1B"], ["Stanford red", "#8C1515"], ["forest", "#3E6B4A"]],
     warm: [["clay", "#B4532A"], ["forest", "#3E6B4A"], ["pink", "#E03870"], ["deep navy", "#24426B"]],
     playful: [["sky blue", "#38B6FF"], ["sunshine", "#F5A623"], ["lime", "#7CB342"], ["pink", "#E03870"]],
+    custom: [["ink", "#141413"], ["clay", "#B4532A"], ["deep navy", "#24426B"], ["forest", "#3E6B4A"]],
   };
   const FONTS = ["Poppins + Source Sans 3", "Playfair Display + Source Sans 3", "Nunito + JetBrains Mono"];
-  const DEFAULT_FONT = { polished: FONTS[0], warm: FONTS[0], playful: FONTS[2] };
-  const DEFAULT_FEEL = { polished: "clear, structured, confident", warm: "warm, direct, bright", playful: "playful, candid, light" };
+  const DEFAULT_FONT = { polished: FONTS[0], warm: FONTS[0], playful: FONTS[2], custom: "" };
+  const DEFAULT_FEEL = { polished: "clear, structured, confident", warm: "warm, direct, bright", playful: "playful, candid, light", custom: "your 3 words" };
 
   const params = new URLSearchParams(location.search);
   const ROOM = (params.get("room") || "default").toLowerCase().replace(/[^a-z0-9-]/g, "").slice(0, 40) || "default";
@@ -157,6 +158,7 @@
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
   function burst(x, y, n, colors, power) {
+    return; // Revision 6: no confetti, the deck is calm
     if (reduceMotion) return;
     if (!raf) sizeCanvas();
     power = power || 10;
@@ -327,7 +329,7 @@
     chip.textContent = v ? VERSION_NAME[v] : "";
     chip.dataset.version = v || "";
     $all(".version-card").forEach((c) => c.classList.toggle("chosen", c.dataset.version === v));
-    $all(".pick-version").forEach((b) => { b.textContent = b.dataset.version === v ? "Your version ✓" : "This one"; });
+    $all(".pick-version").forEach((b) => { b.textContent = b.dataset.version === v ? "Your vibe ✓" : "This one"; });
     $all("[data-version-name]").forEach((el) => { el.textContent = v ? VERSION_NAME[v] : "your version"; });
     $all("[data-design-name]").forEach((el) => { el.textContent = v ? DESIGN_SKILL[v] : "design-…"; });
     const gate = $("#version-gate");
@@ -335,12 +337,14 @@
     const tc = $("#thumb-chip-text");
     if (tc) tc.textContent = v ? VERSION_NAME[v] : "Warm";
     $all('.myform input[type="radio"][name$="-version"]').forEach((r) => { r.checked = r.value === v; });
+    $all(".mf-own").forEach((el) => { el.hidden = v !== "custom"; });
     $all(".copy-card[data-copy]").filter((c) => VERSION_CARDS[c.dataset.copy]).forEach(renderCopyCard);
     if (viewing === "version" && !isDone("version")) renderFooter("version");
   }
   function setVersion(v, fromForm) {
     if (!VERSION_NAME[v]) return;
     const changed = state.version !== v;
+    const ownFlip = (state.version === "custom") !== (v === "custom");
     state.version = v;
     save();
     paintVersion();
@@ -350,7 +354,7 @@
       const card = $('.version-card[data-version="' + v + '"]');
       if (card) { const r = card.getBoundingClientRect(); burst(r.left + r.width / 2, r.top + 40, 40, PALETTE.voice, 8); }
     } else if (changed && fromForm) {
-      $all(".myform").forEach((f) => { if (!f.contains(document.activeElement)) renderForm(f); });
+      $all(".myform").forEach((f) => { if (!f.contains(document.activeElement) || (ownFlip && f.dataset.kind === "design")) renderForm(f); });
       $all('.myform[data-kind="design"]').forEach((f) => renderSwatches(f));
     }
   }
@@ -733,7 +737,7 @@
   const VERSION_CARDS = { "voice-builder": 1, "design-builder": 1 };
   function cardText(id) {
     let t = srcText(id);
-    if (VERSION_CARDS[id]) t = t.replace(/\{\{VERSION\}\}/g, versionName() || "[your version]");
+    if (VERSION_CARDS[id]) t = t.replace(/\{\{VERSION\}\}/g, state.version === "custom" ? "my own. Ask me to describe it in 3 words and show you 2 things I love" : versionName() || "[your version]");
     if (fullName()) t = t.replace(/\[(name|your name)\]/gi, fullName());
     if (id === "stuck-ask") {
       const cur = viewing || currentId();
@@ -745,6 +749,7 @@
   function cardHtml(id) {
     const t = cardText(id);
     if (VERSION_CARDS[id]) {
+      if (state.version === "custom") return esc(t);
       return esc(t).replace(esc(versionName() || "[your version]"), '<span class="fill' + (state.version ? "" : " missing") + '">' + esc(versionName() || "your version") + "</span>");
     }
     return esc(t);
@@ -801,7 +806,7 @@
     return '<label class="mf-radio"><input type="radio" name="' + name + '" value="' + value + '"' + (checked ? " checked" : "") + "><span>" + esc(label) + "</span></label>";
   }
   function versionRadios(kind) {
-    return '<fieldset class="mf-row mf-versions"><legend>Version <span class="small muted">from step 1</span></legend>' +
+    return '<fieldset class="mf-row mf-versions"><legend>Pick one <span class="small muted">same as the cards above</span></legend>' +
       Object.keys(VERSION_NAME).map((v) => radioHtml(kind + "-version", v, VERSION_NAME[v], state.version === v)).join("") + "</fieldset>";
   }
 
@@ -815,7 +820,8 @@
         '<label class="field"><span>My samples <small>3 things you wrote, a <code>---</code> line between them</small></span><textarea name="samples" rows="9" placeholder="Hey Sam, quick one. Can you send the deck by Thursday? Thanks tons.&#10;---&#10;Second sample&#10;---&#10;Third sample" spellcheck="false"></textarea></label>' +
         '<label class="field"><span>Words and phrases I actually use <small>comma-separated</small></span><input name="words" placeholder="quick one, thanks tons, no worries" autocomplete="off"></label>' +
         '<label class="field"><span>How I sign off</span><input name="signoff" value="' + esc(firstName()) + '" placeholder="Mary" autocomplete="off"></label></div>' +
-        '<div class="mf-group"><span class="mf-group-label">Vibe</span>' + versionRadios("voice") + "</div>" +
+        '<div class="mf-group"><span class="mf-group-label">Vibe</span>' + versionRadios("voice") +
+        '<label class="field mf-own"' + (v === "custom" ? "" : " hidden") + '><span>My vibe, in my own words <small>3 words, like warm, direct, specific</small></span><input name="vibe" placeholder="warm, direct, specific" autocomplete="off"></label></div>' +
         '<div class="mf-group"><span class="mf-group-label">Icks</span>' +
         '<div class="field"><span>Never say <small>up to 3</small></span><div class="mf-three"><input name="never1" placeholder="excited to share" autocomplete="off"><input name="never2" placeholder="circle back" autocomplete="off"><input name="never3" placeholder="" autocomplete="off"></div></div></div>' +
         '<div class="mf-foot"><button type="submit" class="btn accent mf-dl">Download voice.zip</button><span class="small">Built on your laptop. Nothing is sent</span></div>' +
@@ -829,7 +835,9 @@
         '<div class="field"><span>Sites I like <small>up to 2 links, optional</small></span><div class="mf-two"><input name="site1" type="url" inputmode="url" placeholder="https://a-site-you-like.com" autocomplete="off" spellcheck="false" aria-label="Site I like, 1"><input name="site2" type="url" inputmode="url" placeholder="https://another-one.com" autocomplete="off" spellcheck="false" aria-label="Site I like, 2"></div></div></div>' +
         '<div class="mf-group"><span class="mf-group-label">Vibe</span>' +
         '<div class="field"><span>Accent color <small>one color, the rest stays neutral</small></span><div class="mf-accent"><div class="swatches"></div><label class="hex-wrap"><span class="hex-dot"></span><input name="accent" class="hex" placeholder="#24426B" maxlength="7" autocomplete="off" spellcheck="false" aria-label="Hex color"></label></div></div>' +
-        '<label class="field"><span>Font pair</span><select name="font">' + FONTS.map((f) => '<option value="' + esc(f) + '"' + (f === DEFAULT_FONT[v] ? " selected" : "") + ">" + esc(f) + "</option>").join("") + "</select></label>" +
+        (v === "custom"
+          ? '<label class="field"><span>Font pair <small>any two Google Fonts, headline + text</small></span><input name="font" placeholder="Fraunces + Inter" autocomplete="off"></label>'
+          : '<label class="field"><span>Font pair</span><select name="font">' + FONTS.map((f) => '<option value="' + esc(f) + '"' + (f === DEFAULT_FONT[v] ? " selected" : "") + ">" + esc(f) + "</option>").join("") + "</select></label>") +
         '<label class="field"><span>3 words for how it should feel</span><input name="feel" placeholder="' + esc(DEFAULT_FEEL[v]) + '" autocomplete="off"></label></div>' +
         '<div class="mf-group"><span class="mf-group-label">Icks</span>' +
         '<div class="field"><span>Never do <small>up to 3</small></span><div class="mf-three"><input name="never1" placeholder="no stock photos" autocomplete="off"><input name="never2" placeholder="no rainbow gradients" autocomplete="off"><input name="never3" placeholder="" autocomplete="off"></div></div></div>' +
@@ -864,7 +872,9 @@
     const vRadio = f.querySelector('input[name="' + kind + '-version"]:checked');
     const version = vRadio ? VERSION_NAME[vRadio.value] : versionName();
     if (kind === "voice") {
-      return { name: fullName(), version, samples: g("samples"), words: g("words"), signoff: g("signoff"), neverSay: [g("never1"), g("never2"), g("never3")] };
+      const own = vRadio && vRadio.value === "custom";
+      const vibeWords = g("vibe");
+      return { name: fullName(), version: own ? "My own" + (vibeWords ? ": " + vibeWords : ", described in my samples") : version, samples: g("samples"), words: g("words"), signoff: g("signoff"), neverSay: [g("never1"), g("never2"), g("never3")] };
     }
     const sw = f.querySelector(".swatch.on");
     const hexV = g("accent");
@@ -1119,6 +1129,7 @@
     return r.charAt(0).toUpperCase() + r.slice(1);
   }
   function renderRecap() {
+    if ($("#recap").dataset.static) return; // Revision 6: the deck's recap, written in index.html
     $("#recap").innerHTML = STEPS.map((id) =>
       '<li data-part="' + PART[id] + '"><span class="rn">' + esc(sections[id].dataset.num !== undefined ? sections[id].dataset.num : sections[id].dataset.icon) + "</span><span>" + esc(recapLine(LEARNED[id])) + "</span></li>").join("");
   }
