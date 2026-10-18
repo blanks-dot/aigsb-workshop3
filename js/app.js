@@ -28,7 +28,7 @@
   const SUBS = ["setup-1", "setup-2", "setup-3", "setup-4", "setup-5"]; // 0.5 is the optional Vercel account (revision 4 dropped the GitHub one)
   const QUESTS = ["quest-1", "quest-2", "quest-3", "quest-4", "quest-5", "quest-6", "quest-7", "quest-8"]; // side quests on Go further: one-line cards, tick in any order
   const EXTRAS = ["further"]; // Go further: always open, never counted, sits between step 6 and Finish
-  const REQUIRED_SUBS = ["setup-1"]; // 0.2 to 0.5 are optional
+  const REQUIRED_SUBS = []; // Revision 5: nothing in step 0 is required. Skip anything you've already done.
   const CHECKPOINTS = { voice: 1, build: 2 }; // 2 = the bigger one (step 5, Build it once)
   const RATED = { build: 1 }; // steps whose Done button asks for a 1 to 5 rating (step 5)
   const KEY = "aigsb-workshop3-v1";
@@ -206,9 +206,16 @@
     return "finish";
   }
   const idx = (id) => ORDER.indexOf(id);
-  /* Steps open in order. */
+  /* Revision 5: every step is open. Students can skip ahead to anything they've already done. */
   function reachable(id) {
-    return isExtra(id) || isDone(id) || idx(id) <= idx(currentId());
+    return !!sections[id];
+  }
+  /* The next step after this one that isn't done yet, or "finish". Used after completing or skipping a
+     step, so finishing step 4 out of order never throws someone back to a step they skipped on purpose. */
+  function nextAfter(id) {
+    const i = STEPS.indexOf(id);
+    for (const s of STEPS.slice(i + 1)) if (!isDone(s)) return s;
+    return "finish";
   }
   function stepLabel(id) {
     const n = sections[id].dataset.num;
@@ -241,7 +248,7 @@
       const sub = s.dataset.subTitle || s.dataset.when || "";
       li.innerHTML = '<button type="button"><span class="node"><span class="n">' + esc(num) + '</span><svg class="tick"><use href="#i-check"/></svg></span>' +
         '<span class="rail-text"><span class="rail-title">' + esc(TITLES[id]) + "</span>" + (sub ? '<span class="rail-sub">' + esc(sub) + "</span>" : "") + "</span></button>";
-      li.querySelector("button").addEventListener("click", () => { if (reachable(id)) go(id); else toast("Finish " + stepLabel(currentId()) + " first."); });
+      li.querySelector("button").addEventListener("click", () => go(id));
       rail.appendChild(li);
       railItems[id] = li;
     });
@@ -306,7 +313,7 @@
     const show = viewing && !isExtra(viewing) && viewing !== cur && $("#app") && !$("#app").hidden && idx(viewing) < idx(cur);
     const bb = $("#backbar");
     bb.hidden = !show;
-    if (show) $("#backbar-text").textContent = "You're looking back at " + stepLabel(viewing) + ". " + (cur === "finish" ? "You've finished every step." : "You're up to " + stepLabel(cur) + ": " + TITLES[cur] + ".");
+    if (show) $("#backbar-text").textContent = "You're looking back at " + stepLabel(viewing) + ". " + (cur === "finish" ? "You've finished every step" : "You're up to " + stepLabel(cur) + ": " + TITLES[cur]);
   }
   $("#backbar-go").addEventListener("click", () => go(currentId()));
   $("#backbar-go").textContent = "Back to where you are →";
@@ -339,7 +346,7 @@
     paintVersion();
     if (changed && !fromForm) {
       $all(".myform").forEach((f) => renderForm(f));
-      toast(VERSION_NAME[v] + ". It's in the header now.");
+      toast(VERSION_NAME[v] + ". It's in the header now");
       const card = $('.version-card[data-version="' + v + '"]');
       if (card) { const r = card.getBoundingClientRect(); burst(r.left + r.width / 2, r.top + 40, 40, PALETTE.voice, 8); }
     } else if (changed && fromForm) {
@@ -398,23 +405,23 @@
       if (learned) learned.remove();
       const b = document.createElement("button");
       b.type = "button"; b.className = "btn complete";
-      b.innerHTML = '<svg class="tick"><use href="#i-check"/></svg><span>I\'ve done this step</span> →';
+      b.innerHTML = '<svg class="tick"><use href="#i-check"/></svg><span>' + (id === "what" ? "Got it, let's go" : id === "setup" ? "I'm set up" : "I've done this step") + "</span> →";
       b.addEventListener("click", () => { if (RATED[id]) askRating(id, foot); else completeStep(id); });
       foot.appendChild(b);
-      if (id === "setup") {
-        const ok = REQUIRED_SUBS.every(isDone);
-        b.disabled = !ok;
-        const note = document.createElement("span");
-        note.className = "foot-note";
-        note.textContent = ok ? "All set. The rest is optional." : "Still to check 0.1";
-        foot.appendChild(note);
-      }
       if (id === "version") {
         b.disabled = !state.version;
         const note = document.createElement("span");
         note.className = "foot-note";
-        note.textContent = state.version ? "Your version is " + VERSION_NAME[state.version] + "." : "Pick a version first.";
+        note.textContent = state.version ? "Your version is " + VERSION_NAME[state.version] : "Pick a version first";
         foot.appendChild(note);
+      }
+      /* Revision 5: every step can be skipped. Skipping doesn't tick it, so it stays in the progress bar. */
+      if (id !== "what") {
+        const sk = document.createElement("button");
+        sk.type = "button"; sk.className = "linkish skip-step";
+        sk.textContent = "Skip for now →";
+        sk.addEventListener("click", () => go(nextAfter(id)));
+        foot.appendChild(sk);
       }
       const st = document.createElement("button");
       st.type = "button"; st.className = "stuck-inline"; st.textContent = "Stuck?";
@@ -430,7 +437,7 @@
     box.className = "rate-ask";
     box.innerHTML = '<p class="rate-q">Quick one. How\'s tonight going?</p><div class="rate-row" role="radiogroup" aria-label="1 to 5">' +
       [1, 2, 3, 4, 5].map((n) => '<button type="button" class="rate-n" data-n="' + n + '" role="radio" aria-checked="false">' + n + "</button>").join("") +
-      '</div><div class="rate-foot"><span class="small">1 is rough, 5 is great. Goes to the team.</span><button type="button" class="linkish rate-skip">Skip</button></div>';
+      '</div><div class="rate-foot"><span class="small">1 is rough, 5 is great. Goes to the team</span><button type="button" class="linkish rate-skip">Skip</button></div>';
     foot.appendChild(box);
     $all(".rate-n", box).forEach((b) => b.addEventListener("click", () => {
       const n = Number(b.dataset.n);
@@ -441,7 +448,7 @@
         method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name: state.name, email: state.email, rating: n, step: id }),
       }).catch(() => {});
-      toast("Thanks. Noted: " + n + " of 5.");
+      toast("Thanks. Noted: " + n + " of 5");
       setTimeout(() => { box.remove(); completeStep(id); }, 350);
     }));
     $(".rate-skip", box).addEventListener("click", () => { box.remove(); completeStep(id); });
@@ -465,8 +472,16 @@
     if (id === "host") paintDeploy();
   }
 
+  /* A click that lands mid-transition is queued, not dropped (dropped clicks felt like the site was stuck). */
+  let pendingGo = null;
+  function runPending() {
+    if (busy || !pendingGo) return;
+    const id = pendingGo; pendingGo = null;
+    if (id !== viewing) go(id);
+  }
   function go(id, instant) {
-    if (busy || !sections[id]) return;
+    if (!sections[id]) return;
+    if (busy) { pendingGo = id; return; }
     if (id === viewing) { scrollTop(); return; }
     const from = viewing ? sections[viewing] : null;
     const to = sections[id];
@@ -494,7 +509,8 @@
       to.classList.remove("entering");
       busy = false;
       focusHeading(to);
-    });
+      runPending();
+    }, () => { busy = false; runPending(); });
   }
 
   let tickerTimer = null;
@@ -537,15 +553,17 @@
     learned.textContent = LEARNED[id];
     sec.appendChild(learned);
 
-    const nextId = currentId();
-    if (nextId === "finish") {
+    const nextId = nextAfter(id);
+    if (currentId() === "finish") {
       setTimeout(() => burst(innerWidth * 0.25, innerHeight * 0.9, 110, PALETTE.finish, 17), 300);
       setTimeout(() => burst(innerWidth * 0.75, innerHeight * 0.9, 110, PALETTE.finish, 17), 480);
     }
     wait(1300).then(() => {
       busy = false;
       renderFooter(id);
-      go(nextId);
+      // a rail click during the celebration wins over the automatic next step
+      const queued = pendingGo; pendingGo = null;
+      go(queued || nextId);
     });
   }
 
@@ -553,7 +571,7 @@
 
   document.addEventListener("click", (e) => {
     const dg = e.target.closest("[data-go]");
-    if (dg) { e.preventDefault(); const id = dg.dataset.go; if (reachable(id)) go(id); else toast("Finish " + stepLabel(currentId()) + " first."); }
+    if (dg) { e.preventDefault(); go(dg.dataset.go); }
     const jump = e.target.closest('a[href^="#quest-"]');
     if (jump) {
       e.preventDefault();
@@ -582,9 +600,9 @@
         if (isDone(id)) { b.textContent = "Undo check"; b.classList.add("ghost"); b.classList.remove("accent"); }
         else { b.textContent = id === SUBS[SUBS.length - 1] ? "Done" : "Done, next →"; b.classList.remove("ghost"); b.classList.add("accent"); }
       }
+      const sk = $(".sub-skip", el);
+      if (sk) sk.hidden = isDone(id);
     });
-    const gate = $("#setup-gate");
-    if (gate) gate.hidden = REQUIRED_SUBS.every(isDone);
     if (viewing === "setup" && !isDone("setup")) renderFooter("setup");
   }
   function openFirstSub() {
@@ -596,9 +614,24 @@
     const id = el.dataset.sub;
     const quest = QUESTS.indexOf(id) >= 0;
     // Side quests are one-line cards: the whole line is the tick. Step 0 items open and have a Done button.
-    $(".sub-head", el).addEventListener("click", () => { if (quest) tick(); else setOpen(el, !el.classList.contains("open")); });
+    // Revision 5: the circle on the right ticks it straight away, no need to open it. Already done it? One click.
+    $(".sub-head", el).addEventListener("click", (e) => { if (quest || e.target.closest(".sub-tick")) tick(); else setOpen(el, !el.classList.contains("open")); });
     const doneBtn = $(".sub-done", el);
     if (doneBtn) doneBtn.addEventListener("click", tick);
+    const skipBtn = $(".sub-skip", el);
+    if (skipBtn) skipBtn.addEventListener("click", () => { setOpen(el, false); openNext(); });
+    /* Open the next item not done yet, or, at the end of step 0, scroll to the step button. */
+    function openNext() {
+      const next = SUBS.slice(SUBS.indexOf(id) + 1).find((s) => !isDone(s));
+      if (next) {
+        const nel = $('.sub[data-sub="' + next + '"]');
+        setOpen(nel, true);
+        setTimeout(() => nel.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" }), 120);
+      } else {
+        const foot = $(".step-foot", sections.setup);
+        if (foot) setTimeout(() => foot.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" }), 120);
+      }
+    }
     function tick() {
       if (isDone(id)) { delete state.steps[id]; save(); paintSubs(); return; }
       state.steps[id] = true; save();
@@ -607,21 +640,10 @@
       burst(r.left + r.width / 2, r.top + r.height / 2, 28, quest ? PALETTE.deploy : PALETTE.why, 7);
       paintSubs();
       if (quest) {
-        toast("Side quest " + id.slice(-1) + " done.");
+        toast("Side quest " + id.slice(-1) + " done");
         return;
       }
-      setTimeout(() => {
-        setOpen(el, false);
-        const next = SUBS.slice(SUBS.indexOf(id) + 1).find((s) => !isDone(s));
-        if (next) {
-          const nel = $('.sub[data-sub="' + next + '"]');
-          setOpen(nel, true);
-          setTimeout(() => nel.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" }), 120);
-        }
-        if (REQUIRED_SUBS.every(isDone) && id === "setup-1") {
-          toast("That's the required one. Finish step 0 at the bottom when you're ready.");
-        }
-      }, 420);
+      setTimeout(() => { setOpen(el, false); openNext(); }, 420);
     }
   });
 
@@ -632,13 +654,13 @@
   function uploadSteps(skill) {
     return '<figure class="shot" data-shot="claude-customize-skills"><figcaption>Customize › Skills › + › Create skill › Upload a skill.</figcaption></figure>' +
       '<ol class="do">' +
-      '<li><strong>Customize</strong> in the left sidebar.</li>' +
-      "<li><strong>Skills</strong> tab.</li>" +
-      "<li><strong>+</strong> › <strong>Create skill</strong> › <strong>Upload a skill</strong>.</li>" +
-      "<li>Pick <code>" + esc(zipName(skill)) + "</code> from Downloads. The .zip itself, not unzipped.</li>" +
-      '<li><strong>Yours</strong>. Check <strong><span data-list-name="' + esc(skill) + '">' + esc(listName(skill)) + "</span></strong> is there and on.</li>" +
+      '<li><strong>Customize</strong> in the left sidebar</li>' +
+      "<li><strong>Skills</strong> tab</li>" +
+      "<li><strong>+</strong> › <strong>Create skill</strong> › <strong>Upload a skill</strong></li>" +
+      "<li>Pick <code>" + esc(zipName(skill)) + "</code> from Downloads. The .zip itself, not unzipped</li>" +
+      '<li><strong>Yours</strong>. Check <strong><span data-list-name="' + esc(skill) + '">' + esc(listName(skill)) + "</span></strong> is there and on</li>" +
       "</ol>" +
-      '<p class="small zip-again-note">Need the zip again? Fill the form again and download. Nothing you typed is kept.</p>';
+      '<p class="small zip-again-note">Need the zip again? Fill the form again and download. Nothing you typed is kept</p>';
   }
   $all(".upload-skill[data-skill]").forEach((el) => {
     const skill = el.dataset.skill;
@@ -753,8 +775,8 @@
       copyText(cardText(id)).then(() => {
         cb.textContent = "Copied ✓"; cb.classList.add("copied");
         setTimeout(() => { cb.textContent = "Copy"; cb.classList.remove("copied"); }, 1800);
-        toast(/builder/.test(id) ? "Copied. Paste it into the skill builder." : "Copied. Paste it into Claude.");
-      }, () => toast("Copy was blocked. Select the text and copy it by hand."));
+        toast(/builder/.test(id) ? "Copied. Paste it into the skill builder" : "Copied. Paste it into Claude");
+      }, () => toast("Copy was blocked. Select the text and copy it by hand"));
     });
     const db = $(".dl-btn", card);
     if (db) db.addEventListener("click", () => { download(card.dataset.download, cardText(id) + "\n", "text/markdown"); toast("Downloaded " + card.dataset.download); });
@@ -789,14 +811,14 @@
     if (kind === "voice") {
       el.innerHTML = '<form class="myform-inner" novalidate>' +
         '<div class="mf-head"><span class="mf-file">voice/SKILL.md</span><span class="mf-tag">Make it yours</span></div>' +
-        '<div class="mf-group"><span class="mf-group-label">Tone</span>' + versionRadios("voice") + "</div>" +
-        '<div class="mf-group"><span class="mf-group-label">Samples</span>' +
+        '<div class="mf-group"><span class="mf-group-label">Assets</span>' +
         '<label class="field"><span>My samples <small>3 things you wrote, a <code>---</code> line between them</small></span><textarea name="samples" rows="9" placeholder="Hey Sam, quick one. Can you send the deck by Thursday? Thanks tons.&#10;---&#10;Second sample&#10;---&#10;Third sample" spellcheck="false"></textarea></label>' +
         '<label class="field"><span>Words and phrases I actually use <small>comma-separated</small></span><input name="words" placeholder="quick one, thanks tons, no worries" autocomplete="off"></label>' +
         '<label class="field"><span>How I sign off</span><input name="signoff" value="' + esc(firstName()) + '" placeholder="Mary" autocomplete="off"></label></div>' +
-        '<div class="mf-group"><span class="mf-group-label">Nevers</span>' +
+        '<div class="mf-group"><span class="mf-group-label">Vibe</span>' + versionRadios("voice") + "</div>" +
+        '<div class="mf-group"><span class="mf-group-label">Icks</span>' +
         '<div class="field"><span>Never say <small>up to 3</small></span><div class="mf-three"><input name="never1" placeholder="excited to share" autocomplete="off"><input name="never2" placeholder="circle back" autocomplete="off"><input name="never3" placeholder="" autocomplete="off"></div></div></div>' +
-        '<div class="mf-foot"><button type="submit" class="btn accent mf-dl">Download voice.zip</button><span class="small">Built on your laptop. Nothing is sent.</span></div>' +
+        '<div class="mf-foot"><button type="submit" class="btn accent mf-dl">Download voice.zip</button><span class="small">Built on your laptop. Nothing is sent</span></div>' +
         "</form>";
     } else {
       el.innerHTML = '<form class="myform-inner" novalidate>' +
@@ -809,9 +831,9 @@
         '<div class="field"><span>Accent color <small>one color, the rest stays neutral</small></span><div class="mf-accent"><div class="swatches"></div><label class="hex-wrap"><span class="hex-dot"></span><input name="accent" class="hex" placeholder="#24426B" maxlength="7" autocomplete="off" spellcheck="false" aria-label="Hex color"></label></div></div>' +
         '<label class="field"><span>Font pair</span><select name="font">' + FONTS.map((f) => '<option value="' + esc(f) + '"' + (f === DEFAULT_FONT[v] ? " selected" : "") + ">" + esc(f) + "</option>").join("") + "</select></label>" +
         '<label class="field"><span>3 words for how it should feel</span><input name="feel" placeholder="' + esc(DEFAULT_FEEL[v]) + '" autocomplete="off"></label></div>' +
-        '<div class="mf-group"><span class="mf-group-label">Nevers</span>' +
-        '<div class="field"><span>Never do <small>up to 3, your icks</small></span><div class="mf-three"><input name="never1" placeholder="no stock photos" autocomplete="off"><input name="never2" placeholder="no rainbow gradients" autocomplete="off"><input name="never3" placeholder="" autocomplete="off"></div></div></div>' +
-        '<div class="mf-foot"><button type="submit" class="btn accent mf-dl">Download design.zip</button><span class="small">Built on your laptop. Nothing is sent.</span></div>' +
+        '<div class="mf-group"><span class="mf-group-label">Icks</span>' +
+        '<div class="field"><span>Never do <small>up to 3</small></span><div class="mf-three"><input name="never1" placeholder="no stock photos" autocomplete="off"><input name="never2" placeholder="no rainbow gradients" autocomplete="off"><input name="never3" placeholder="" autocomplete="off"></div></div></div>' +
+        '<div class="mf-foot"><button type="submit" class="btn accent mf-dl">Download design.zip</button><span class="small">Built on your laptop. Nothing is sent</span></div>' +
         "</form>";
       renderSwatches(el);
       const hex = $("input.hex", el), dot = $(".hex-dot", el);
@@ -853,12 +875,12 @@
   function downloadFromForm(el) {
     const kind = el.dataset.kind;
     const btn = $(".mf-dl", el);
-    if (kind === "design" && !state.version) { toast("Pick a version first (Step 1, or the radios above)."); return; }
+    if (kind === "design" && !state.version) setVersion("warm", true); // skipped step 1? Start on Warm, the default
     const skill = kind === "voice" ? "voice" : DESIGN_SKILL[state.version];
     const fields = formFields(el);
     if (kind === "design") {
       const hexV = ($("input.hex", el).value || "").trim();
-      if (hexV && !/^#[0-9a-f]{6}$/i.test(hexV)) { toast("That hex doesn't look right. Six characters after the #, like #24426B."); $("input.hex", el).focus(); return; }
+      if (hexV && !/^#[0-9a-f]{6}$/i.test(hexV)) { toast("That hex doesn't look right. Six characters after the #, like #24426B"); $("input.hex", el).focus(); return; }
     }
     btn.disabled = true;
     fetchSkill(skill).then((template) => {
@@ -867,8 +889,8 @@
       el.classList.add("downloaded");
       btn.disabled = false; btn.textContent = "Downloaded ✓ (again?)";
       const filled = kind === "voice" ? [fields.samples, fields.words, fields.signoff].filter(Boolean).length + (fields.neverSay.filter(Boolean).length ? 1 : 0) : [fields.accent, fields.feel].filter(Boolean).length + (fields.neverDo.filter(Boolean).length ? 1 : 0);
-      toast("Downloaded " + zipName(kind) + (filled ? ". Now upload it to Claude." : ". Every field was blank, so the [brackets] stay."));
-    }).catch(() => { btn.disabled = false; toast("Couldn't build " + zipName(kind) + ". Reload the page and try again."); });
+      toast("Downloaded " + zipName(kind) + (filled ? ". Now upload it to Claude" : ". Every field was blank, so the [brackets] stay"));
+    }).catch(() => { btn.disabled = false; toast("Couldn't build " + zipName(kind) + ". Reload the page and try again"); });
   }
   $all(".myform[data-kind]").forEach(renderForm);
 
@@ -882,20 +904,20 @@
     b.disabled = true;
     fetchSkill(skill).then((template) => {
       download(skill + ".zip", new Blob([SkillZip.buildSkillZip(STARTER_FOLDER[skill] || skill, template, { name: fullName() })], { type: "application/zip" }));
-      toast("Downloaded " + skill + ".zip. Upload it under Customize › Skills.");
+      toast("Downloaded " + skill + ".zip. Upload it under Customize › Skills");
       b.disabled = false;
-    }).catch(() => { b.disabled = false; toast("Couldn't build " + skill + ".zip. Reload and try again."); });
+    }).catch(() => { b.disabled = false; toast("Couldn't build " + skill + ".zip. Reload and try again"); });
   });
 
   /* ---------- skill anatomy (step 2) ---------- */
 
   const ANAT = {
-    name: { k: "Name", v: "The skill's ID. The folder name in the zip has to match it." },
-    desc: { k: "Description", v: "When to use it, in one line." },
-    title: { k: "Title", v: "A heading for people. The body starts here." },
-    edit: { k: "Make it yours", tag: "Editable", v: "Your part. Samples, words, sign-off." },
-    locked: { k: "Locked", tag: "Locked", v: "The rules that make it work. Change them and the skill stops working the same way, so leave them." },
-    never: { k: "Never", tag: "Never", v: "What makes writing sound like a machine." },
+    name: { k: "Name", v: "The skill's ID. The folder name in the zip has to match it" },
+    desc: { k: "Description", v: "When to use it, in one line" },
+    title: { k: "Title", v: "A heading for people. The body starts here" },
+    edit: { k: "Make it yours", tag: "Editable", v: "Your part. Samples, words, sign-off" },
+    locked: { k: "Locked", tag: "Locked", v: "The rules that make it work. Change them and the skill stops working the same way, so leave them" },
+    never: { k: "Never", tag: "Never", v: "What makes writing sound like a machine" },
     check: { k: "Check before you finish", v: "The test. Read it out loud. Would a friend know you wrote it?" },
   };
   const HEADING_KEY = {
@@ -987,11 +1009,11 @@
     if (!dateIn) return;
     dateIn.value = state.deployDate; timeIn.value = state.deployTime; gal.checked = state.galleryOptIn;
     const w = deployWords();
-    echo.textContent = w ? "Saved. " + w + "." + (state.deployTime ? "" : " Add a time.") : "";
+    echo.textContent = w ? "Saved. " + w + (state.deployTime ? "" : ". Add a time") : "";
     $("#deploy-plan").classList.toggle("set", !!(state.deployDate && state.deployTime));
     if (live && document.activeElement !== live) live.value = state.liveUrl;
     if (lecho) {
-      lecho.innerHTML = state.liveUrl ? 'Saved. <a href="' + esc(state.liveUrl) + '" target="_blank" rel="noopener">' + esc(state.liveUrl.replace(/^https:\/\//, "")) + "</a>" + (state.galleryOptIn ? ". It's in the gallery." : ". Not in the gallery.") : "";
+      lecho.innerHTML = state.liveUrl ? 'Saved. <a href="' + esc(state.liveUrl) + '" target="_blank" rel="noopener">' + esc(state.liveUrl.replace(/^https:\/\//, "")) + "</a>" + (state.galleryOptIn ? ". It's in the gallery" : ". Not in the gallery") : "";
     }
     $("#live-link").classList.toggle("set", !!state.liveUrl);
   }
@@ -1003,17 +1025,17 @@
       state.deployDate = /^\d{4}-\d{2}-\d{2}$/.test(dateIn.value) ? dateIn.value : "";
       state.deployTime = /^\d{2}:\d{2}$/.test(timeIn.value) ? timeIn.value : "";
       save(); paintDeploy();
-      if (state.deployDate && state.deployTime) toast("Date saved. " + deployWords() + ".");
+      if (state.deployDate && state.deployTime) toast("Date saved. " + deployWords());
     };
     dateIn.addEventListener("change", onChange);
     timeIn.addEventListener("change", onChange);
-    gal.addEventListener("change", () => { state.galleryOptIn = gal.checked; save(); paintDeploy(); toast(gal.checked ? "Gallery on. Your link shows once you paste it." : "Gallery off. Untick stays until you tick it again."); });
+    gal.addEventListener("change", () => { state.galleryOptIn = gal.checked; save(); paintDeploy(); toast(gal.checked ? "Gallery on. Your link shows once you paste it" : "Gallery off. Untick stays until you tick it again"); });
     /* The live link: https only, 200 chars max (lib/store.js checks the same). Saved with progress and, with the box ticked, shown in gallery.html. */
     const onLive = (final) => {
       const v = live.value.trim().slice(0, 200);
       const ok = LIVE_RE.test(v);
       live.classList.toggle("bad", !!v && !ok);
-      if (ok && v !== state.liveUrl) { state.liveUrl = v; save(); paintDeploy(); toast(state.galleryOptIn ? "Link saved. It's in the class gallery." : "Link saved."); }
+      if (ok && v !== state.liveUrl) { state.liveUrl = v; save(); paintDeploy(); toast(state.galleryOptIn ? "Link saved. It's in the class gallery" : "Link saved"); }
       else if (!v && state.liveUrl) { state.liveUrl = ""; save(); paintDeploy(); }
       else if (final && v && !ok) toast("The link has to start with https://");
     };
@@ -1130,14 +1152,14 @@
       }).then((r) => r.json().catch(() => ({})).then((j) => ({ ok: r.ok, j }))).then(({ ok, j }) => {
         st.hidden = false;
         if (ok) {
-          st.className = "fb-status ok"; st.textContent = "Thank you. Sent to the workshop team.";
+          st.className = "fb-status ok"; st.textContent = "Thank you. Sent to the workshop team";
           const r = btn.getBoundingClientRect(); burst(r.left + r.width / 2, r.top, 70, PALETTE.finish, 11);
           paintNav();
         } else {
-          st.className = "fb-status err"; st.textContent = (j && j.error === "storage_unconfigured") ? "Couldn't send: no database is connected yet. Tell us in person instead." : "Couldn't send that. Try again in a moment.";
+          st.className = "fb-status err"; st.textContent = (j && j.error === "storage_unconfigured") ? "Couldn't send: no database is connected yet. Tell us in person instead" : "Couldn't send that. Try again in a moment";
         }
         btn.disabled = false; btn.textContent = "Send again";
-      }).catch(() => { st.hidden = false; st.className = "fb-status err"; st.textContent = "Couldn't send that. Check your connection and try again."; btn.disabled = false; });
+      }).catch(() => { st.hidden = false; st.className = "fb-status err"; st.textContent = "Couldn't send that. Check your connection and try again"; btn.disabled = false; });
     });
   })();
 
@@ -1146,7 +1168,7 @@
   const welcome = $("#welcome"), app = $("#app");
   const who = $("#who"), emailIn = $("#email"), goBtn = $("#go"), formErr = $("#form-err");
   const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (ROOM !== "default") $("#room-note").textContent = "Room: " + ROOM + ".";
+  if (ROOM !== "default") $("#room-note").textContent = "Room: " + ROOM;
 
   function formReady() { goBtn.disabled = !(who.value.trim() && emailIn.value.trim()); formErr.hidden = true; }
   who.addEventListener("input", formReady);
@@ -1183,8 +1205,8 @@
   $("#signin").addEventListener("submit", (e) => {
     e.preventDefault();
     const n = who.value.trim().replace(/\s+/g, " "), m = emailIn.value.trim().toLowerCase();
-    if (!n) { formErr.textContent = "Add your name."; formErr.hidden = false; return; }
-    if (!EMAIL_RE.test(m)) { formErr.textContent = "That email doesn't look right."; formErr.hidden = false; return; }
+    if (!n) { formErr.textContent = "Add your name"; formErr.hidden = false; return; }
+    if (!EMAIL_RE.test(m)) { formErr.textContent = "That email doesn't look right"; formErr.hidden = false; return; }
     state.name = n.slice(0, 60); state.email = m.slice(0, 120);
     save();
     pushRemote();

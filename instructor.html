@@ -73,7 +73,6 @@
 <body>
 <header class="topbar">
   <div class="brand">
-    <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="9" width="15" height="15" rx="4" fill="#FF6A3D" transform="rotate(-8 9.5 16.5)"/><rect x="9" y="5" width="15" height="15" rx="4" fill="#7C5CFF" opacity=".92"/><rect x="15" y="12" width="15" height="15" rx="4" fill="#14B8A6" opacity=".9" transform="rotate(6 22.5 19.5)"/></svg>
     <span class="brand-text">AI@GSB <small>Workshop 3: Instructor dashboard</small></span>
   </div>
   <div class="spacer"></div>
@@ -105,7 +104,7 @@
       <section class="panel"><h2>Median time per step</h2><p class="psub">From when a student opened the step to when they checked it off. Setup steps can run long.</p><div id="time"></div></section>
     </div>
     <div>
-      <section class="panel"><h2>Before class (step 0)</h2><p class="psub">Each item checked off. Only 0.1 is required. 0.5 is the Vercel account.</p><div id="prep"></div><div id="prep-missing"></div></section>
+      <section class="panel"><h2>Set up (step 0)</h2><p class="psub">Each item checked off. All optional, students can skip any of them. 0.5 is the Vercel account.</p><div id="prep"></div><div id="prep-missing"></div></section>
       <section class="panel"><h2>Version</h2><p class="psub">From step 1. Polished, Warm or Playful.</p><div id="versions"></div></section>
       <section class="panel"><h2>Live links and gallery</h2><p class="psub">From step 6. Bold chips are in the <a href="gallery.html" target="_blank" rel="noopener">class gallery</a> (opted in, link pasted). Dates are the "not tonight" fallback.</p><div id="deploys"></div></section>
       <section class="panel"><h2>Step 5: how's tonight going?</h2><p class="psub">The 1 to 5 on step 5's Done button.</p><div id="step5"></div></section>
@@ -125,7 +124,7 @@
 <script>
 (function () {
   "use strict";
-  var TITLES = { what: "What you're building", setup: "Before class", version: "Pick your version", voice: "Teach it your voice", design: "Teach it your look", three: "Three options", build: "Build it once", host: "Host it live", finish: "Finish" };
+  var TITLES = { what: "What you're building", setup: "Set up", version: "Pick your version", voice: "Teach it your voice", design: "Teach it your look", three: "Ask for three", build: "Build it. Name what's off", host: "Host it live", finish: "Finish" };
   var NUM = { what: "✦", setup: "0", version: "1", voice: "2", design: "3", three: "4", build: "5", host: "6", finish: "✓" };
   var COLOR = { what: "#FF6A3D", setup: "#FF6A3D", version: "#7C5CFF", voice: "#7C5CFF", design: "#14B8A6", three: "#F2B705", build: "#F2B705", host: "#2B4BFF", finish: "#2B4BFF" };
   var ON_COLOR = { three: "#141413", build: "#141413" }; // text on the step color: ink on Build yellow, white elsewhere
@@ -223,7 +222,7 @@
     var active = d.students.filter(function (s) { return s.updatedAt && d.now - new Date(s.updatedAt).getTime() < 10 * 60000; }).length;
     var tiles = [
       [n, "signed in"],
-      [d.students.filter(function (s) { return s.steps.setup; }).length, "finished before class (step 0)"],
+      [d.students.filter(function (s) { return s.steps.setup; }).length, "finished set up (step 0)"],
       [d.students.filter(function (s) { return s.steps.build; }).length, "built the site (step 5)"],
       [d.students.filter(function (s) { return s.cur === "finish"; }).length, "finished every step"],
       [active, "active in the last 10 min"],

@@ -11,7 +11,7 @@ lives elsewhere; the site no longer links to it.
 
 Look and feel follow the Workshop 3 deck (`workshop3-deck.html`): beige paper,
 Instrument Serif headlines, DM Sans body, DM Mono labels, four acts with one
-color each. WHY (Start here, Before class) orange, VOICE (version, voice) violet,
+color each. WHY (Start here, Set up) orange, VOICE (version, voice) violet,
 DESIGN (look) teal, BUILD (three options, build it once) yellow #F2B705 with ink
 text, HOST (host it live, finish) blue.
 
