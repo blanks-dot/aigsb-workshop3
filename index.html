@@ -289,7 +289,13 @@
       <li><b>Fix the skill</b><div class="copy-card compact-card" data-copy="loop-fix" data-title="Paste into the same chat" data-sub="Swap in what was off"></div></li>
       <li><b>Run it again</b><span><strong>New chat</strong>, same ask. Better? Done. Same? Add a sample, not another rule. Not sure the fix landed? Open Customize › Yours › voice and look for your new line.</span></li>
     </ol>
-    <div class="example"><span class="ex-label">Example</span><p class="ex-text">Off: "passionate about" and an em dash. Fix: two new icks in the skill. Next run: "I'm focused on getting more people to the starting line, in sport, in health care, and in AI".</p></div>
+    <div class="example"><span class="ex-label">Example, one round</span>
+      <div class="ex-flow">
+        <div class="ex-box"><i>Draft</i><p>I'm <s>passionate about</s> getting more people to the starting line <s>&mdash;</s> in sport, health care and AI.</p></div>
+        <div class="ex-box ink"><i>Fix the skill</i><p>+ Never: "passionate about"<br>+ Never: em dashes. Use -- instead</p></div>
+        <div class="ex-box good"><i>Run it again</i><p>I'm focused on getting more people to the starting line, in sport, in health care, and in AI.</p></div>
+      </div>
+    </div>
   </div>
 
   <details class="alt">
@@ -339,7 +345,13 @@
       <li><b>Fix the skill</b><span>Say <strong>add that to my design skill as an ick.</strong></span></li>
       <li><b>Run it again</b><span><strong>New chat</strong>, same test. Still off? Show it a site you love instead of writing another rule.</span></li>
     </ol>
-    <div class="example"><span class="ex-label">Example</span><p class="ex-text">Off: big-number stats and tape on the photos. Fix: two icks in the skill. Next run: plain bullets, a hand-drawn outline around every photo.</p></div>
+    <div class="example"><span class="ex-label">Example, one round</span>
+      <div class="ex-flow">
+        <div class="ex-box"><i>Draft</i><p><s>106 chapters, 3 countries</s> in a big-number row. Photos with <s>tape corners</s>.</p></div>
+        <div class="ex-box ink"><i>Fix the skill</i><p>+ Never: big-number stats. Plain bullets<br>+ Never: tape or borders on photos</p></div>
+        <div class="ex-box good"><i>Run it again</i><p>Plain bullets. A hand-drawn outline around every photo.</p></div>
+      </div>
+    </div>
   </div>
 
   <div class="done-box"><div><b>Done looks like</b><p>design.zip is in Yours and on. One section in your color and font, with your photo, and one new ick in the skill.</p></div></div>
@@ -365,13 +377,28 @@
     <li><b>Closest reference site</b><span>one of the two you love, or one from Start here.</span></li>
   </ul>
   <div class="copy-card" data-copy="brief" data-title="Paste into a new Claude chat" data-sub="LinkedIn PDF + photo attached. Both skills on"></div>
-  <div class="example"><span class="ex-label">Example, filled in</span><p class="ex-text">Who reads it first: recruiters at consumer health startups. Three seconds in: "she's already building, not waiting". Known for: getting products into clinics. After: email me about a product role. Human thing: I run every morning before class. Reference: brittanychiang.com.</p></div>
+  <div class="example"><span class="ex-label">Example, filled in</span>
+    <dl class="ex-fields">
+      <div><dt>Who reads it first</dt><dd>recruiters at consumer health startups</dd></div>
+      <div><dt>Three seconds in</dt><dd>"she's already building, not waiting"</dd></div>
+      <div><dt>Known for</dt><dd>getting products into clinics</dd></div>
+      <div><dt>After reading</dt><dd>email me about a product role</dd></div>
+      <div><dt>Human thing</dt><dd>I run every morning before class</dd></div>
+      <div><dt>Reference</dt><dd>brittanychiang.com</dd></div>
+    </dl>
+  </div>
   <p class="apply-note"><span class="from-slides">From the slides</span> <strong>Make it ask + plan before it builds.</strong> The brief ends by asking Claude for 3 questions, telling it to push back on résumé answers, then 3 directions. You catch the wrong direction in ten seconds, not after a whole page.</p>
 
   <h3><span class="h-num">2</span>Answer its questions, pick a direction</h3>
   <p>Claude asks 3 questions and may push back on an answer. Then A, B and C: the top of the page only, different structures. Pick one and say why. Plain words are enough.</p>
   <div class="copy-card" data-copy="go-with-b" data-title="Paste into the same chat" data-sub="Change the letter and the why"></div>
-  <div class="example"><span class="ex-label">Example</span><p class="ex-text">"Go with B. Why: it reads like a letter, not a résumé, and I like that the photo is small".</p></div>
+  <div class="example"><span class="ex-label">Example</span>
+    <div class="ex-flow ex-pick">
+      <div class="ex-box"><i>A</i><p>Big photo, headline under it</p></div>
+      <div class="ex-box good"><i>B, picked</i><p>Reads like a letter. Small photo.</p><p class="why">Why: "it's a letter, not a résumé, and I like that the photo is small"</p></div>
+      <div class="ex-box"><i>C</i><p>Timeline down the page</p></div>
+    </div>
+  </div>
 
   <div class="done-box"><div><b>Done looks like</b><p>A, B and C in the chat with your name and real facts. You told Claude which one and why. Nothing built yet.</p></div></div>
 </section>

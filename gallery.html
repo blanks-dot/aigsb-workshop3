@@ -50,16 +50,19 @@
   if (room !== "default") { $("#room-chip").textContent = "Room " + room; $("#room-chip").hidden = false; }
   var last = "";
 
+  var HOST = { name: "Mary Blankemeier", liveUrl: "https://mary-blankemeier.vercel.app", version: "warm", host: true }; // the speaker's, always first
   function render(entries) {
+    entries = [HOST].concat(entries.filter(function (e) { return e.liveUrl !== HOST.liveUrl; }));
     var key = JSON.stringify(entries);
     if (key === last) return;
     last = key;
-    $("#count").textContent = entries.length ? entries.length + (entries.length === 1 ? " site live" : " sites live") : "";
-    $("#empty").hidden = entries.length > 0;
+    var n = entries.length - 1;
+    $("#count").textContent = n ? n + (n === 1 ? " site live" : " sites live") : "";
+    $("#empty").hidden = n > 0;
     $("#grid").innerHTML = entries.map(function (e) {
       if (!/^https:\/\//i.test(e.liveUrl)) return "";
       var ver = VERSION[e.version] ? '<span class="gal-ver ' + esc(e.version) + '">' + esc(VERSION[e.version]) + "</span>" : "";
-      return '<a class="gal-card" href="' + esc(e.liveUrl) + '" target="_blank" rel="noopener">' +
+      return '<a class="gal-card' + (e.host ? " host" : "") + '" href="' + esc(e.liveUrl) + '" target="_blank" rel="noopener">' +
         '<span class="gal-name">' + esc(e.name) + "</span>" +
         '<span class="gal-url">' + esc(e.liveUrl.replace(/^https:\/\//i, "")) + ' <svg style="width:12px;height:12px;vertical-align:-1px" aria-hidden="true"><use href="#i-ext"/></svg></span>' +
         ver + "</a>";
