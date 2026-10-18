@@ -1386,3 +1386,20 @@ details.alt > :last-child { margin-bottom: 16px; }
 .chal .further-hero { margin: 0 0 12px; }
 .plan-3 li:nth-child(1) { --plan-c: var(--voice); --plan-s: var(--voice-s); } .plan-3 li:nth-child(2) { --plan-c: var(--build-d); --plan-s: var(--build-s); } .plan-3 li:nth-child(3) { --plan-c: var(--rapid-d); --plan-s: var(--rapid-s); }
 .plan li > strong:first-child { display: block; }
+
+/* Revision 10: header gap, credit line, deck-style welcome background */
+.brand-text { gap: 0; }
+.brand-text em { margin-left: .28em; }
+.brand-note { font: 500 .7rem/1 var(--font-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); transform: none; margin-left: 12px; }
+.credit { font: 500 .66rem/1 var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 18px 0 0; }
+.stage-credit { margin: 48px 0 8px; }
+.welcome { overflow: hidden; }
+.bg-loop { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+.bg-loop svg { position: absolute; left: 50%; top: 50%; width: 1400px; height: 700px; transform: translate(-50%, -50%); opacity: .5; }
+.bg-pill { position: absolute; font: 700 .9rem/1 var(--font-body); color: var(--ink); background: var(--voice-s); border-radius: 999px; padding: .7em 1.1em; white-space: nowrap; opacity: .9; }
+.bg-pill.p1 { left: calc(50% - 60px); top: calc(50% - 300px); background: var(--ink); color: var(--paper); }
+.bg-pill.p2 { left: calc(50% + 460px); top: calc(50% - 90px); }
+.bg-pill.p3 { left: calc(50% + 300px); top: calc(50% + 240px); }
+.bg-pill.p4 { left: calc(50% - 440px); top: calc(50% + 240px); }
+.bg-pill.p5 { left: calc(50% - 610px); top: calc(50% - 90px); }
+@media (max-width: 1100px) { .bg-pill { display: none; } .bg-loop svg { opacity: .35; } }

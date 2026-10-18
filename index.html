@@ -65,17 +65,18 @@
 
 <!-- ============ SIGN IN ============ -->
 <main class="welcome" id="welcome" hidden>
+  <div class="bg-loop" aria-hidden="true"><svg viewBox="0 0 1400 700"><ellipse cx="700" cy="350" rx="560" ry="250" fill="none" stroke="#FF6A3D" stroke-width="3" stroke-dasharray="12 12"/></svg><span class="bg-pill p1">1 Ask for 3</span><span class="bg-pill p2">2 Pick one</span><span class="bg-pill p3">3 Name what's off</span><span class="bg-pill p4">4 Fix the skill</span><span class="bg-pill p5">5 Run it again</span></div>
   <form class="welcome-card" id="signin" novalidate>
     <div class="kicker">AI@GSB Workshop 3 tutorial</div>
     <h1>The Art of Personalization</h1>
     <p class="cover-sub">teaching AI <em>your</em> voice &amp; style</p>
-    <p class="lede">Hi!! This is your step-by-step for tonight. Sign in so your progress saves, then go build</p>
-    <p class="cover-note">this should be fun... have fun :)</p>
-    <label class="field"><span>Your name</span><input id="who" name="name" autocomplete="name" placeholder="First and last name" required></label>
+    <p class="lede">Hi!! This is your step-by-step for tonight. Sign in so your progress saves, then go build.</p>
+        <label class="field"><span>Your name</span><input id="who" name="name" autocomplete="name" placeholder="First and last name" required></label>
     <label class="field"><span>Your email</span><input id="email" name="email" type="email" autocomplete="email" placeholder="you@stanford.edu" required></label>
     <p class="form-err" id="form-err" hidden></p>
     <button class="btn" id="go" type="submit" disabled>Let's go →</button>
     <p class="privacy">Built on Claude. Works in ChatGPT or Gemini too, see step 0. We save your name, email, vibe, progress and live link. Deleted after 30 days. Your writing and colors never leave this page. <span id="room-note"></span></p>
+    <p class="credit">Created by Mary Blankemeier for AI@GSB</p>
   </form>
 </main>
 
@@ -592,6 +593,7 @@
   </div>
 </section>
 
+      <p class="credit stage-credit">Created by Mary Blankemeier for AI@GSB</p>
     </div><!-- /stage-inner -->
   </div><!-- /stage -->
 </div><!-- /app -->
