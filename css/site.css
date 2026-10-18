@@ -1428,3 +1428,26 @@ details.alt > :last-child { margin-bottom: 16px; }
 @media (max-width: 760px) { .ex-flow { grid-template-columns: 1fr; } .ex-flow .ex-box + .ex-box::before { content: "↓"; left: 50%; top: -16px; transform: translateX(-50%); } .ex-fields { grid-template-columns: 1fr; } }
 .gal-card.host { border-color: var(--voice); }
 .gal-card.host .gal-name::after { content: "the speaker"; margin-left: 8px; font: 500 .62rem/1 var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--voice-d); }
+
+/* welcome backdrop: the loop turns, circles drift, stars twinkle */
+.bg-ring { animation: ringturn 90s linear infinite; }
+@keyframes ringturn { to { transform: translate(-50%, -50%) rotate(360deg); } }
+.bg-pill { animation: bob 7s ease-in-out infinite; }
+.bg-pill.p2 { animation-delay: -1.5s; } .bg-pill.p3 { animation-delay: -3s; } .bg-pill.p4 { animation-delay: -4.5s; } .bg-pill.p5 { animation-delay: -6s; }
+@keyframes bob { 50% { transform: translateY(-10px); } }
+.bg-dot { position: absolute; border-radius: 50%; opacity: .55; animation: drift 18s ease-in-out infinite alternate; }
+.bg-dot.d1 { width: 180px; height: 180px; background: var(--why-s); left: 6%; top: 8%; }
+.bg-dot.d2 { width: 120px; height: 120px; background: var(--design-s); right: 8%; top: 12%; animation-delay: -5s; }
+.bg-dot.d3 { width: 220px; height: 220px; background: var(--build-s); right: 4%; bottom: 6%; animation-delay: -9s; }
+.bg-dot.d4 { width: 90px; height: 90px; background: var(--rapid-s); left: 12%; bottom: 14%; animation-delay: -13s; }
+.bg-dot.d5 { width: 60px; height: 60px; background: var(--voice-s); left: 30%; top: 6%; animation-delay: -3s; }
+@keyframes drift { from { transform: translate(0, 0) scale(1); } to { transform: translate(24px, -30px) scale(1.08); } }
+.bg-star { position: absolute; width: 22px; height: 22px; fill: var(--rapid); opacity: 0; animation: twinkle 4s ease-in-out infinite; }
+.bg-star.s1 { left: 18%; top: 22%; } .bg-star.s2 { right: 14%; top: 30%; animation-delay: -1s; width: 16px; height: 16px; }
+.bg-star.s3 { left: 24%; bottom: 20%; animation-delay: -2s; } .bg-star.s4 { right: 24%; bottom: 16%; animation-delay: -3s; width: 14px; height: 14px; }
+.bg-star.s5 { left: 50%; top: 9%; animation-delay: -2.5s; width: 18px; height: 18px; fill: var(--voice); }
+@keyframes twinkle { 0%, 100% { opacity: 0; transform: scale(.6) rotate(0); } 50% { opacity: .9; transform: scale(1) rotate(20deg); } }
+@media (prefers-reduced-motion: reduce) { .bg-ring, .bg-pill, .bg-dot, .bg-star { animation: none; } .bg-star { opacity: .6; } }
+.bg-loop svg.bg-star { width: 22px !important; height: 22px !important; left: auto; top: auto; transform: none; }
+.bg-loop svg.bg-star.s1 { left: 18% !important; top: 22% !important; } .bg-loop svg.bg-star.s2 { right: 14%; top: 30% !important; width: 16px !important; height: 16px !important; }
+.bg-loop svg.bg-star.s3 { left: 24% !important; bottom: 20%; } .bg-loop svg.bg-star.s4 { right: 24%; bottom: 16%; width: 14px !important; height: 14px !important; } .bg-loop svg.bg-star.s5 { left: 50% !important; top: 9% !important; width: 18px !important; height: 18px !important; }
