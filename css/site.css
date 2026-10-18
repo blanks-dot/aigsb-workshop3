@@ -1363,3 +1363,24 @@ details.alt > :last-child { margin-bottom: 16px; }
 /* show the whole prompt up front, no Show all */
 .copy-pre { max-height: none !important; }
 .copy-more { display: none !important; }
+
+/* Revision 8: review fixes */
+.gloss { margin: -6px 0 18px; padding: 8px 12px; border-left: 2px solid var(--line-2); font-size: .92rem; color: var(--ink-2); }
+.gloss b { color: var(--ink); }
+.fastpath { margin: 0 0 22px; padding: 14px 16px; border: 1px dashed var(--line-2); border-radius: 12px; background: var(--card); }
+.fastpath b { display: block; margin-bottom: 4px; }
+.fastpath p { margin: 0 0 8px; color: var(--ink-2); font-size: .95rem; }
+.fastpath .starter-row { margin: 0; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.butwait-body p b { display: block; margin-bottom: 4px; }
+.challenges { list-style: none; padding: 0; margin: 0 0 10px; display: grid; gap: 14px; }
+.chal { margin: 0; background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 18px 20px; }
+.chal-head { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 8px; }
+.chal-n { flex: none; width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: var(--accent-soft); color: var(--pc); font: 400 1.3rem/1 var(--font-display); }
+.chal h3 { margin: 0; font-size: 1.5rem; }
+.chal-meta { margin: 2px 0 0; font: 500 .74rem/1.3 var(--font-mono); letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
+.chal > p { margin: 0 0 10px; }
+.chal .idea-ex { font: 600 1.1rem/1.2 Caveat, "Brush Script MT", cursive; color: var(--pc); }
+.chal .idea-ex span { font: 500 .66rem/1 var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-right: 6px; }
+.chal-done { margin: 10px 0 0 !important; padding: 10px 12px; border-left: 3px solid var(--accent); background: var(--paper); border-radius: 0 10px 10px 0; font-size: .94rem; }
+.chal-done b { display: block; font: 500 .68rem/1 var(--font-mono); letter-spacing: .09em; text-transform: uppercase; color: var(--pc); margin-bottom: 4px; }
+.chal .further-hero { margin: 0 0 12px; }

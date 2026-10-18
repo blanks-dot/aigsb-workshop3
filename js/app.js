@@ -41,8 +41,8 @@
     playful: [["sky blue", "#38B6FF"], ["sunshine", "#F5A623"], ["lime", "#7CB342"], ["pink", "#E03870"]],
     custom: [["ink", "#141413"], ["clay", "#B4532A"], ["deep navy", "#24426B"], ["forest", "#3E6B4A"]],
   };
-  const FONTS = ["Poppins + Source Sans 3", "Playfair Display + Source Sans 3", "Nunito + JetBrains Mono"];
-  const DEFAULT_FONT = { polished: FONTS[0], warm: FONTS[0], playful: FONTS[2], custom: "" };
+  const FONTS = ["Playfair Display + Source Sans 3", "Fraunces + Inter", "Nunito + JetBrains Mono"];
+  const DEFAULT_FONT = { polished: FONTS[0], warm: FONTS[1], playful: FONTS[2], custom: "" };
   const DEFAULT_FEEL = { polished: "clear, structured, confident", warm: "warm, direct, bright", playful: "playful, candid, light", custom: "your 3 words" };
 
   const params = new URLSearchParams(location.search);
@@ -706,6 +706,7 @@
     const srcs = (ALIAS[id] ? [ALIAS[id]] : []).concat(["png", "svg", "jpg", "webp"].map((x) => "img/screens/" + id + "." + x));
     let i = 0;
     const placeholder = () => {
+      if (!DRAFT) { fig.hidden = true; return; } // a missing screenshot shows nothing to students
       const ph = document.createElement("div");
       ph.className = "shot-empty";
       ph.innerHTML = '<svg aria-hidden="true"><use href="#i-img"/></svg><div><b>Screenshot ' + esc(id) + "</b>" + capHtml + "</div>";

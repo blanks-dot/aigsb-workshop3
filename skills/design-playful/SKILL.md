@@ -11,7 +11,7 @@ Accent color: [pick one: sky blue #38B6FF / sunshine #F5A623 / lime #7CB342]
 (One color. Everything else stays neutral.)
 
 Font pair: "Nunito + JetBrains Mono"
-(Pick one: "Poppins + Source Sans 3" / "Playfair Display + Source Sans 3" / "Nunito + JetBrains Mono")
+(Pick one: "Playfair Display + Source Sans 3" / "Fraunces + Inter" / "Nunito + JetBrains Mono", or any two Google Fonts)
 
 Photo: [yes, use my photo] / [no photo]
 
@@ -27,9 +27,9 @@ Never do (up to 3 of your own):
 
 Background: [suggested: white, or a very light tint of the accent] (change it if you want). Single narrow column, lots of air. Lowercase headline is allowed. A candid photo, slightly tilted or in a circle. Sentences can be fragments. One accent used generously on links and underlines. Small numbered list for 'what I'm working on', like podcast episodes. Reference feel: a side project page made by someone having fun.
 
-## Personal site structure (locked)
+## Personal site structure (a starting point)
 
-One page, four sections, in this order:
+One page. These sections are the default. If the brief gives you a better structure, use it, and say why:
 1. **Hi, I'm [name].** One line about me, in my voice. Candid photo, circle crop, can sit above the headline.
 2. **What I'm working on.** Two or three things, one line each.
 3. **Where I've been.** Short. Places and roles, not a resume dump.
@@ -41,6 +41,6 @@ One page, four sections, in this order:
 - Real text, never placeholder lorem ipsum. Unknown facts get a [bracket].
 - Body text at least 16px. Contrast at least 4.5:1. Alt text on every image.
 - Spacing on an 8px grid. Consistent corner radius. No drop shadows, no gradients, no glassmorphism.
-- No AI slop: no "hero with three feature cards" template, no icon-per-bullet, no multi-color palette, no excessive whitespace padding between tiny amounts of text.
+- No AI slop: no "hero with three feature cards" template, no icon-per-bullet, no multi-color palette, no excessive whitespace padding between tiny amounts of text. Never Poppins or Inter as the headline font, they read as AI defaults.
 - Fonts from Google Fonts only. Load only the two in my font pair.
 - Use my voice skill for every word on the page.
