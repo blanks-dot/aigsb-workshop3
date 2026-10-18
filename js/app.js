@@ -25,8 +25,8 @@
   /* ---------- config ---------- */
 
   const STEPS = ["what", "setup", "voice", "design", "three", "build", "host"]; // Revision 6: picking a version is part of the voice step // in order, then "finish"
-  const SUBS = ["setup-1", "setup-2", "setup-3", "setup-4", "setup-5"]; // 0.5 is the optional Vercel account (revision 4 dropped the GitHub one)
-  const QUESTS = ["quest-1", "quest-2", "quest-3", "quest-4", "quest-5", "quest-6", "quest-7", "quest-8"]; // side quests on Go further: one-line cards, tick in any order
+  const SUBS = ["setup-1", "setup-2", "setup-3"]; // Revision 7: open Claude, raw material, Vercel
+  const QUESTS = []; // Revision 7: no side quests, Go further is prompts
   const EXTRAS = ["further"]; // Go further: always open, never counted, sits between step 6 and Finish
   const REQUIRED_SUBS = []; // Revision 5: nothing in step 0 is required. Skip anything you've already done.
   const CHECKPOINTS = {}; // Revision 6: no star badges in the rail // 2 = the bigger one (step 5, Build it once)
@@ -657,13 +657,13 @@
   function zipName(skill) { return skill === "design" ? "design.zip" : skill + ".zip"; }
   function listName(skill) { return skill === "design" ? (DESIGN_SKILL[state.version] || "design-…") : skill; }
   function uploadSteps(skill) {
-    return '<figure class="shot" data-shot="claude-customize-skills"><figcaption>Where everything lives in Claude</figcaption></figure>' +
-      '<ol class="do">' +
-      '<li><strong>Customize</strong> in the left sidebar</li>' +
-      "<li><strong>+ Add</strong>, top right</li>" +
-      "<li><strong>Upload skill</strong>, then pick <code>" + esc(zipName(skill)) + "</code> from Downloads. The .zip, not the folder</li>" +
-      '<li><strong>Yours</strong>: check <strong><span data-list-name="' + esc(skill) + '">' + esc(listName(skill)) + "</span></strong> is there and on</li>" +
-      "</ol>";
+    return '<ol class="do">' +
+      '<li><strong>Customize</strong>, bottom of the left sidebar</li>' +
+      "<li><strong>+ Add</strong>, top right, then <strong>Upload skill</strong></li>" +
+      "<li>Pick <code>" + esc(zipName(skill)) + "</code> from Downloads. The .zip, not the folder</li>" +
+      '<li><strong>Yours</strong> tab: <strong><span data-list-name="' + esc(skill) + '">' + esc(listName(skill)) + "</span></strong> is there and switched on</li>" +
+      "</ol>" +
+      '<div class="crops crops-small"><figure><img src="img/screens/claude-step-b.jpg" alt="The + Add button marked 2, Upload skill marked 3, the Yours tab marked 4" loading="lazy"></figure></div>';
   }
   $all(".upload-skill[data-skill]").forEach((el) => {
     const skill = el.dataset.skill;
@@ -702,7 +702,7 @@
     const capHtml = cap ? cap.innerHTML : "";
     const img = new Image();
     img.alt = cap ? cap.textContent : "Screenshot " + id;
-    const ALIAS = { "0.2-before": "img/slides/noskill-site.jpg", "3-test": "img/slides/mary-text-now.jpg", "4-preview": "img/slides/mary-text-now.jpg" };
+    const ALIAS = { "4-preview": "img/slides/mary-text-now.jpg" };
     const srcs = (ALIAS[id] ? [ALIAS[id]] : []).concat(["png", "svg", "jpg", "webp"].map((x) => "img/screens/" + id + "." + x));
     let i = 0;
     const placeholder = () => {
