@@ -1384,3 +1384,5 @@ details.alt > :last-child { margin-bottom: 16px; }
 .chal-done { margin: 10px 0 0 !important; padding: 10px 12px; border-left: 3px solid var(--accent); background: var(--paper); border-radius: 0 10px 10px 0; font-size: .94rem; }
 .chal-done b { display: block; font: 500 .68rem/1 var(--font-mono); letter-spacing: .09em; text-transform: uppercase; color: var(--pc); margin-bottom: 4px; }
 .chal .further-hero { margin: 0 0 12px; }
+.plan-3 li:nth-child(1) { --plan-c: var(--voice); --plan-s: var(--voice-s); } .plan-3 li:nth-child(2) { --plan-c: var(--build-d); --plan-s: var(--build-s); } .plan-3 li:nth-child(3) { --plan-c: var(--rapid-d); --plan-s: var(--rapid-s); }
+.plan li > strong:first-child { display: block; }

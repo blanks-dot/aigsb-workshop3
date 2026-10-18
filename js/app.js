@@ -254,12 +254,6 @@
       rail.appendChild(li);
       railItems[id] = li;
     });
-    // Under HOST: the long version of step 6 is its own page, no sign-in needed
-    const li = document.createElement("li");
-    li.className = "rail-item rail-link";
-    li.dataset.part = "deploy";
-    li.innerHTML = '<a href="deploy.html"><span class="node"><span class="n">↗</span></span><span class="rail-text"><span class="rail-title">The long version</span><span class="rail-sub">every hosting screen</span></span></a>';
-    rail.appendChild(li);
   })();
 
   function placeRailPill() {
@@ -296,7 +290,7 @@
     const cur = currentId();
     ORDER.forEach((id) => {
       const li = railItems[id];
-      const done = id === "finish" ? cur === "finish" && !!state.feedback : isDone(id);
+      const done = id === "finish" ? cur === "finish" : isDone(id);
       li.classList.toggle("done", done);
       li.classList.toggle("current", id === viewing);
       li.classList.toggle("locked", !reachable(id));
@@ -832,7 +826,7 @@
         '<div class="mf-group"><span class="mf-group-label">Assets</span>' +
         '<label class="field"><span>My samples <small>3 things you wrote, a <code>---</code> line between them</small></span><textarea name="samples" rows="9" placeholder="Hey Sam, quick one. Can you send the deck by Thursday? Thanks tons.&#10;---&#10;Second sample&#10;---&#10;Third sample" spellcheck="false"></textarea></label>' +
         '<label class="field"><span>Words and phrases I actually use <small>comma-separated</small></span><input name="words" placeholder="quick one, thanks tons, no worries" autocomplete="off"></label>' +
-        '<label class="field"><span>How I sign off</span><input name="signoff" value="' + esc(firstName()) + '" placeholder="Mary" autocomplete="off"></label></div>' +
+        '<label class="field"><span>How I sign off</span><input name="signoff" value="' + esc(firstName()) + '" placeholder="your first name" autocomplete="off"></label></div>' +
         '<div class="mf-group"><span class="mf-group-label">Vibe</span>' + versionRadios("voice") +
         '<label class="field mf-own"' + (v === "custom" ? "" : " hidden") + '><span>My vibe, in my own words <small>3 words, like warm, direct, specific</small></span><input name="vibe" placeholder="warm, direct, specific" autocomplete="off"></label></div>' +
         '<div class="mf-group"><span class="mf-group-label">Icks</span>' +
@@ -1151,6 +1145,7 @@
   let rating = state.feedback ? state.feedback.rating : 0;
   (function feedback() {
     const stars = $(".stars");
+    if (!stars) return; // Revision 9: feedback is the form only
     for (let i = 1; i <= 5; i++) {
       const b = document.createElement("button");
       b.type = "button"; b.className = "star"; b.setAttribute("role", "radio"); b.setAttribute("aria-label", i + (i === 1 ? " star" : " stars"));

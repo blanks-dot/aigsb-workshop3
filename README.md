@@ -24,7 +24,7 @@ Redis. No framework and no build step.
 index.html            the student site: sign-in, What you're building, steps 0 to 6, Finish, Stuck? drawer.
                       All student-facing text lives here, plus an embedded copy of the voice starter
                       (<script type="text/plain" id="skill-voice">) for the step 2 anatomy.
-deploy.html           "the long version" of step 6: Vercel Drop first, then "Optional: with GitHub".
+(deploy.html was folded into step 5 in revision 9)
                       Its own page, no sign-in, linked from step 6 and the rail under HOST
 gallery.html          the class gallery: every student with a live link and the gallery box ticked.
                       No sign-in, no key. Served at /gallery (add ?room= for a room)
