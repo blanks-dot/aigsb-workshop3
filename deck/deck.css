@@ -1,0 +1,10 @@
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:#141413;overflow:hidden;font-family:'DM Sans',Arial,sans-serif}
+#frame{position:absolute;inset:0;overflow:hidden;cursor:pointer}
+#stage{position:absolute;top:0;left:0;width:1920px;height:1080px;transform-origin:0 0}
+#stage>section{position:absolute;inset:0;width:1920px;height:1080px;overflow:hidden}
+#stage p,#stage h1,#stage h2,#stage h3{margin:0}
+#stage img{display:block}
+.bar{position:fixed;right:16px;bottom:14px;display:flex;gap:8px;align-items:center;z-index:5;font:13px 'DM Mono',monospace;color:#b8ada0;background:#141413cc;padding:6px 8px;border-radius:999px}
+.bar button{all:unset;cursor:pointer;width:28px;height:28px;display:grid;place-items:center;border-radius:50%;color:#f3ede2}
+.bar button:hover{background:#3a3935}
