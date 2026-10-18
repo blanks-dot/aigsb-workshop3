@@ -1403,3 +1403,6 @@ details.alt > :last-child { margin-bottom: 16px; }
 .bg-pill.p4 { left: calc(50% - 440px); top: calc(50% + 240px); }
 .bg-pill.p5 { left: calc(50% - 610px); top: calc(50% - 90px); }
 @media (max-width: 1100px) { .bg-pill { display: none; } .bg-loop svg { opacity: .35; } }
+.crops-row { display: flex; flex-wrap: wrap; gap: 14px; align-items: flex-start; }
+.crops-row figure { flex: 0 1 auto; }
+.crops-row img, .crops-small img { width: auto; max-width: 100%; image-rendering: auto; }
