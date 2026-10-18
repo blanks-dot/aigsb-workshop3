@@ -471,6 +471,7 @@
     h.focus({ preventScroll: true });
   }
   function onShow(id) {
+    if (window.__listen) window.__listen.stepChanged();
     if (id === "setup") openFirstSub();
     if (id === "finish") renderRecap();
     if (id === "host") paintDeploy();
@@ -656,15 +657,13 @@
   function zipName(skill) { return skill === "design" ? "design.zip" : skill + ".zip"; }
   function listName(skill) { return skill === "design" ? (DESIGN_SKILL[state.version] || "design-…") : skill; }
   function uploadSteps(skill) {
-    return '<figure class="shot" data-shot="claude-customize-skills"><figcaption>Customize › Skills › + › Create skill › Upload a skill.</figcaption></figure>' +
+    return '<figure class="shot" data-shot="claude-customize-skills"><figcaption>Where everything lives in Claude</figcaption></figure>' +
       '<ol class="do">' +
       '<li><strong>Customize</strong> in the left sidebar</li>' +
-      "<li><strong>Skills</strong> tab</li>" +
-      "<li><strong>+</strong> › <strong>Create skill</strong> › <strong>Upload a skill</strong></li>" +
-      "<li>Pick <code>" + esc(zipName(skill)) + "</code> from Downloads. The .zip itself, not unzipped</li>" +
-      '<li><strong>Yours</strong>. Check <strong><span data-list-name="' + esc(skill) + '">' + esc(listName(skill)) + "</span></strong> is there and on</li>" +
-      "</ol>" +
-      '<p class="small zip-again-note">Need the zip again? Fill the form again and download. Nothing you typed is kept</p>';
+      "<li><strong>+ Add</strong>, top right</li>" +
+      "<li><strong>Upload skill</strong>, then pick <code>" + esc(zipName(skill)) + "</code> from Downloads. The .zip, not the folder</li>" +
+      '<li><strong>Yours</strong>: check <strong><span data-list-name="' + esc(skill) + '">' + esc(listName(skill)) + "</span></strong> is there and on</li>" +
+      "</ol>";
   }
   $all(".upload-skill[data-skill]").forEach((el) => {
     const skill = el.dataset.skill;
@@ -684,13 +683,26 @@
 
   /* ---------- screenshot slots + links ---------- */
 
+  /* Revision 6: the real Customize screenshot, cleaned, with circled numbers that match the numbered steps */
+  const PINS = { "claude-customize-skills": { src: "img/screens/claude-customize-skills-clean.png", w: 1000, h: 628,
+    pins: [[1, 15.2, 19.3, "Customize"], [2, 79, 11.9, "+ Add", 1], [3, 74, 15.9, "Upload skill", 1], [4, 47, 5.6, "Yours"]] } };
+  function pinnedShot(fig, cfg) {
+    const cap = $("figcaption", fig);
+    const box = document.createElement("div");
+    box.className = "annot";
+    box.innerHTML = '<img src="' + cfg.src + '" alt="' + esc(cap ? cap.textContent : "Screenshot") + '" width="' + cfg.w + '" height="' + cfg.h + '" loading="lazy">' +
+      cfg.pins.map((p) => '<span class="pin' + (p[4] ? " flip" : "") + '" style="' + (p[4] ? "right:" + (100 - p[1]) : "left:" + p[1]) + "%;top:" + p[2] + '%"><i>' + p[0] + "</i><b>" + esc(p[3]) + "</b></span>").join("");
+    fig.insertBefore(box, fig.firstChild);
+    if (cap) cap.hidden = true;
+  }
   $all("figure.shot[data-shot]").forEach((fig) => {
     const id = fig.dataset.shot;
+    if (PINS[id]) { pinnedShot(fig, PINS[id]); return; }
     const cap = $("figcaption", fig);
     const capHtml = cap ? cap.innerHTML : "";
     const img = new Image();
     img.alt = cap ? cap.textContent : "Screenshot " + id;
-    const ALIAS = { "0.2-before": "img/slides/noskill-site.jpg", "3-test": "img/slides/mary-text.jpg", "4-preview": "img/slides/mary-text.jpg" };
+    const ALIAS = { "0.2-before": "img/slides/noskill-site.jpg", "3-test": "img/slides/mary-text-now.jpg", "4-preview": "img/slides/mary-text-now.jpg" };
     const srcs = (ALIAS[id] ? [ALIAS[id]] : []).concat(["png", "svg", "jpg", "webp"].map((x) => "img/screens/" + id + "." + x));
     let i = 0;
     const placeholder = () => {
@@ -832,6 +844,7 @@
         versionRadios("design") +
         '<div class="mf-group"><span class="mf-group-label">Assets</span>' +
         '<fieldset class="mf-row"><legend>Photo</legend>' + radioHtml("design-photo", "yes", "Yes, use my photo", false) + radioHtml("design-photo", "no", "No photo", false) + "</fieldset>" +
+        '<p class="small photo-note" hidden>Nothing to upload here. Attach your photo in the Claude chat when you test this (below) and when you build your site in step 4. Claude puts it inside the file, so it still works once it\'s live</p>' +
         '<div class="field"><span>Sites I like <small>up to 2 links, optional</small></span><div class="mf-two"><input name="site1" type="url" inputmode="url" placeholder="https://a-site-you-like.com" autocomplete="off" spellcheck="false" aria-label="Site I like, 1"><input name="site2" type="url" inputmode="url" placeholder="https://another-one.com" autocomplete="off" spellcheck="false" aria-label="Site I like, 2"></div></div></div>' +
         '<div class="mf-group"><span class="mf-group-label">Vibe</span>' +
         '<div class="field"><span>Accent color <small>one color, the rest stays neutral</small></span><div class="mf-accent"><div class="swatches"></div><label class="hex-wrap"><span class="hex-dot"></span><input name="accent" class="hex" placeholder="#24426B" maxlength="7" autocomplete="off" spellcheck="false" aria-label="Hex color"></label></div></div>' +
@@ -844,6 +857,7 @@
         '<div class="mf-foot"><button type="submit" class="btn accent mf-dl">Download design.zip</button><span class="small">Built on your laptop. Nothing is sent</span></div>' +
         "</form>";
       renderSwatches(el);
+      $all('input[name="design-photo"]', el).forEach((r) => r.addEventListener("change", () => { $(".photo-note", el).hidden = !$('input[name="design-photo"][value="yes"]', el).checked; }));
       const hex = $("input.hex", el), dot = $(".hex-dot", el);
       const paintDot = () => { const ok = /^#[0-9a-f]{6}$/i.test(hex.value.trim()); dot.style.background = ok ? hex.value.trim() : "transparent"; hex.classList.toggle("bad", !!hex.value.trim() && !ok); if (ok) $all(".swatch", el).forEach((s) => s.classList.toggle("on", s.dataset.hex.toLowerCase() === hex.value.trim().toLowerCase())); };
       hex.addEventListener("input", paintDot);
@@ -1174,6 +1188,86 @@
     });
   })();
 
+  /* ---------- Listen: read the current step out loud at 1x, 2x or 3x (Revision 6) ---------- */
+  (function listenMode() {
+    if (!("speechSynthesis" in window)) return;
+    const synth = window.speechSynthesis;
+    const bar = $("#listen-bar"), openBtn = $("#listen-open"), playBtn = $("#lb-play"), now = $("#lb-now");
+    const SKIP = ".copy-card, .anatomy, .myform, figure, .acct-grid, .vprev, .version-card dl, .step-foot, .learned, .backbar, .sites-row, .ideas .copy-card, button, .lvls .collapse";
+    let rate = 2, queue = [], idx = 0, playing = false, paused = false, current = null, voice = null, gen = 0;
+    try { const r = Number(localStorage.getItem("aigsb-w3-rate")); if ([1, 2, 3].indexOf(r) >= 0) rate = r; } catch (e) {}
+    function pickVoice() {
+      const vs = synth.getVoices().filter((v) => /^en(-|_)/i.test(v.lang));
+      const pref = [/natural/i, /premium/i, /enhanced/i, /samantha/i, /ava/i, /allison/i, /google us english/i, /jenny/i, /aria/i];
+      for (const re of pref) { const v = vs.find((x) => re.test(x.name)); if (v) return v; }
+      return vs.find((v) => /en-US/i.test(v.lang)) || vs[0] || null;
+    }
+    if (synth.onvoiceschanged !== undefined) synth.onvoiceschanged = () => { voice = pickVoice(); };
+    voice = pickVoice();
+    function visible(el) { return !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length); }
+    function chunks(text) {
+      const out = []; let cur = "";
+      text.split(/(?<=[.!?])\s+/).forEach((sn) => { if ((cur + " " + sn).length > 220 && cur) { out.push(cur); cur = sn; } else cur = cur ? cur + " " + sn : sn; });
+      if (cur) out.push(cur);
+      return out;
+    }
+    function build() {
+      const sec = sections[viewing]; if (!sec) return [];
+      const picked = [];
+      $all("h2, .step-lede, h3, h4, p, li", sec).forEach((el) => {
+        if (el.closest(SKIP) || !visible(el)) return;
+        if (picked.some((c) => c.contains(el))) return;
+        const t = el.textContent.replace(/\s+/g, " ").replace(/›/g, ", then ").trim();
+        if (t.length < 2) return;
+        picked.push(el);
+      });
+      const q = [];
+      picked.forEach((el) => chunks(el.textContent.replace(/\s+/g, " ").replace(/›/g, ", then ").replace(/\.zip/g, " dot zip").trim()).forEach((t) => q.push({ el, t })));
+      return q;
+    }
+    function mark(el) { if (current) current.classList.remove("reading"); current = el; if (el) { el.classList.add("reading"); el.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" }); } }
+    function speakNext() {
+      if (!playing || paused) return;
+      if (idx >= queue.length) { stop(false); now.textContent = "Done. Next step when you're ready"; return; }
+      const item = queue[idx];
+      if (!current || current !== item.el) mark(item.el);
+      const u = new SpeechSynthesisUtterance(item.t);
+      if (voice) u.voice = voice;
+      u.rate = rate; u.pitch = 1;
+      const my = ++gen; // a cancel (pause, speed change, stop) must not skip ahead
+      u.onend = () => { if (my !== gen) return; idx++; speakNext(); };
+      u.onerror = () => { if (my !== gen) return; idx++; speakNext(); };
+      synth.speak(u);
+    }
+    function paint() {
+      bar.classList.toggle("paused", paused || !playing);
+      playBtn.setAttribute("aria-label", paused || !playing ? "Play" : "Pause");
+      $all("[data-rate]", bar).forEach((b) => { b.classList.toggle("on", Number(b.dataset.rate) === rate); b.setAttribute("aria-checked", String(Number(b.dataset.rate) === rate)); });
+      openBtn.setAttribute("aria-pressed", String(!bar.hidden));
+    }
+    function start() {
+      gen++; synth.cancel(); queue = build(); idx = 0; playing = true; paused = false;
+      bar.hidden = false; now.textContent = "Reading " + (sections[viewing] ? stepLabel(viewing) + ": " + TITLES[viewing] : "this step");
+      paint(); speakNext();
+    }
+    function stop(hide) { playing = false; paused = false; gen++; synth.cancel(); mark(null); if (hide) bar.hidden = true; paint(); }
+    openBtn.addEventListener("click", () => { if (!bar.hidden && playing) stop(true); else start(); });
+    playBtn.addEventListener("click", () => {
+      if (!playing) { start(); return; }
+      if (paused) { paused = false; gen++; synth.cancel(); speakNext(); } else { paused = true; gen++; synth.cancel(); }
+      paint();
+    });
+    $("#lb-close").addEventListener("click", () => stop(true));
+    $all("[data-rate]", bar).forEach((b) => b.addEventListener("click", () => {
+      rate = Number(b.dataset.rate);
+      try { localStorage.setItem("aigsb-w3-rate", String(rate)); } catch (e) {}
+      if (playing && !paused) { gen++; synth.cancel(); speakNext(); }
+      paint();
+    }));
+    window.__listen = { stepChanged() { if (playing) { stop(false); setTimeout(start, 400); } }, start, stop };
+    paint();
+  })();
+
   /* ---------- sign in ---------- */
 
   const welcome = $("#welcome"), app = $("#app");
@@ -1187,6 +1281,7 @@
 
   function chrome(signedIn) {
     ["#progress", "#stuck-open", "#who-wrap"].forEach((s) => { $(s).hidden = !signedIn; });
+    $("#listen-open").hidden = !signedIn || !("speechSynthesis" in window);
     if (signedIn) {
       $("#who-btn").textContent = (state.name.trim()[0] || "?").toUpperCase();
       $("#whoami").textContent = "Signed in as " + state.name + " (" + state.email + ")" + (ROOM !== "default" ? " | room: " + ROOM : "");
