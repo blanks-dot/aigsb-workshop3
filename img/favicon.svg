@@ -1,5 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="14" fill="#F3EDE2"/>
-  <ellipse cx="32" cy="32" rx="21" ry="15" fill="none" stroke="#FF6A3D" stroke-width="3.5" stroke-dasharray="6 5" transform="rotate(-12 32 32)"/>
-  <text x="32" y="40" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-style="italic" font-size="26" fill="#141413">you</text>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#F3EDE2"/><path d="M32 10 l4 12 12 4 -12 4 -4 12 -4-12 -12-4 12-4z" fill="#F2B705"/><circle cx="46" cy="46" r="6" fill="#FF6A3D"/><circle cx="16" cy="48" r="4" fill="#7C5CFF"/></svg>
