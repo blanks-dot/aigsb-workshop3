@@ -1451,3 +1451,5 @@ details.alt > :last-child { margin-bottom: 16px; }
 .bg-loop svg.bg-star { width: 22px !important; height: 22px !important; left: auto; top: auto; transform: none; }
 .bg-loop svg.bg-star.s1 { left: 18% !important; top: 22% !important; } .bg-loop svg.bg-star.s2 { right: 14%; top: 30% !important; width: 16px !important; height: 16px !important; }
 .bg-loop svg.bg-star.s3 { left: 24% !important; bottom: 20%; } .bg-loop svg.bg-star.s4 { right: 24%; bottom: 16%; width: 14px !important; height: 14px !important; } .bg-loop svg.bg-star.s5 { left: 50% !important; top: 9% !important; width: 18px !important; height: 18px !important; }
+.click::before { display: inline-grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: var(--build-s); color: var(--build-d); font: 400 1.35rem/1 var(--font-display); letter-spacing: 0; }
+.click .shot img { max-width: 100%; }
