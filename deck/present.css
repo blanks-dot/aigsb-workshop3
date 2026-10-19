@@ -67,3 +67,14 @@ body{display:flex;flex-direction:column}
   .grid{grid-template-columns:1fr}
   .notes{overflow:visible}
 }
+
+/* Start / End cues */
+#notes .se{display:grid;grid-template-columns:62px 1fr;gap:14px;align-items:baseline;background:#272620;border:1px solid var(--line);border-radius:12px;padding:12px 16px}
+#notes .se .lbl{font-family:var(--mono);font-size:13px;letter-spacing:.12em;color:var(--pen)}
+#notes .se p{font-size:var(--fs);line-height:1.35;color:#cfc6b9}
+#notes .se b{color:var(--ink)}
+#notes .se.end{border-color:#4a5799}
+#notes .beats{margin:0;padding:0 0 0 96px;display:flex;flex-direction:column;gap:8px;font-size:calc(var(--fs) * .72);line-height:1.4;color:var(--muted)}
+#notes .beats li::marker{color:var(--quiet)}
+#notes .beats b{color:#e9e2d6;font-weight:700}
+#notes .ca{color:var(--quiet);font-style:italic}

@@ -251,11 +251,300 @@ const TIGHT = [
  ]
 ];
 
+/* CUES: the presenter view's default. START = first line on the slide, END = last line before you click.
+   beats = the middle, short. **bold** = the words to hit. [brackets] = asides and cues. */
+const CUES = [
+ {
+  "start": "Welcome in! Tonight is the **Art of Personalization**... teaching AI **your voice and style**.",
+  "beats": [],
+  "end": "Quick **intro on me** first."
+ },
+ {
+  "start": "I'm **Mary Blankemeier**, MBA2, from Chicago.",
+  "beats": [
+   "Before the GSB: **UVA**, systems engineering, ran track",
+   "Then **Bain** and healthcare startups",
+   "Now: **Run Your City, AI@GSB**, and building at the intersection of AI and healthcare"
+  ],
+  "end": "Fun fact to wake y'all up... recently **married another AI@GSB scholar**. I'll let you **guess which one**."
+ },
+ {
+  "start": "Plan for today: the next 20 minutes, we go through these **five sections**.",
+  "beats": [
+   "Then **50 minutes** to build your personal website",
+   "Then **10 minutes** back together to debrief",
+   "1 Why does everyone's AI sound the same?  2 How do I get it to sound like me?  3 In my style?  4 What do I get with both?  5 What do I wish I'd known sooner?"
+  ],
+  "end": "Was **antisocial** this weekend building this... so would LOVE the next 20 minutes to be **tech free**. Faces, not the backs of your computers, if that's not **too drama** to ask!"
+ },
+ {
+  "start": "Which would you trust? **Shout it out!**",
+  "beats": [
+   "Three versions of our website for the nonprofit I help lead",
+   "**A:** our old site. Took years, repped us pretty well, but an absolute pain (time, money, limited)",
+   "**B:** Claude with a simple \"build me a website for my nonprofit\" prompt. Totally fine... **could be literally anyone**",
+   "**C:** Claude, **SAME simple prompt**, plus our photos, colors, taglines"
+  ],
+  "end": "B and C are the **same model, same prompt**. The only difference: **C has skills**, like the ones we're building tonight, that capture who we are in our voice and style."
+ },
+ {
+  "start": "Beyond what you give AI up front, **how you iterate** matters too. Wherever you don't give guidance, **AI fills the gaps**.",
+  "beats": [
+   "Delightful study: AI plays **telephone**. One draws a picture from a sentence, another describes it... back and forth 100 times",
+   "Ran it **1,000+** times, all kinds of starting sentences",
+   "Almost every one ended as one of just **12 pictures**: lighthouses, cities at night, palace interiors",
+   "Every round drops what's unusual, fills in what's common. They called it **\"visual elevator music\"**",
+   "Anywhere you leave a gap, AI fills it with the **most common thing** it's seen. That's where the AI-isms come from"
+  ],
+  "end": "Prompting **\"make it better\"** over and over won't save you... it pulls you **closer to average**. Visual elevator music."
+ },
+ {
+  "start": "Why care about NOT being AI-average? **We lose trust.**",
+  "beats": [
+   "Picture the study in here: same work for everyone",
+   "Left side finds out I used AI, right side thinks I did it myself",
+   "Left side trusts me **16 to 20% less**",
+   "Held across **13 experiments** and **5,000+ people**: students and professors, investors and companies, clients and designers",
+   "[Aside] For the record, I did use AI for this... so there goes **a fifth of your trust** in me",
+   "It can be **SO painfully obvious**... the classic LinkedIn post: \"I'm thrilled to share a new chapter... in today's fast-paced world...\" blah blah"
+  ],
+  "end": "More generic prompting won't fix this. You've got to train your AI to be **unmistakably yours**."
+ },
+ {
+  "start": "Recap: **why does everyone's AI sound the same?**",
+  "beats": [
+   "**Generic in = generic out**. AI drifts to the average. That's where we lose trust"
+  ],
+  "end": "Next: how do I get AI to **sound like me?**"
+ },
+ {
+  "start": "Quick throwback to workshop 2... what's a skill? **Saved instructions**. Write the details once, **never retype** them.",
+  "beats": [
+   "Left side, **no skill**: you give the same directions every single prompt",
+   "Right side, **with a skill**: type the short version, \"write my LinkedIn post about tonight,\" and the skill fills in the rest"
+  ],
+  "end": "The skill **has you covered**."
+ },
+ {
+  "start": "**Two ways** it kicks in.",
+  "beats": [
+   "**Automatically:** Claude reads every skill's name and description, and when your ask matches, it pulls the skill in",
+   "**On purpose:** type slash and the skill name, if you want to be sure it's used"
+  ],
+  "end": "Write the details **once**. Stop retyping them. We **LOVE saving time**."
+ },
+ {
+  "start": "Okay so... how do you actually get AI to sound like you? It's a formula: **examples + vibe + icks**.",
+  "beats": [
+   "**Examples:** stuff you actually wrote. Mine: ~140 emails, ~120 Slacks, **17,736 texts**, meeting notes",
+   "**Vibe:** how it should feel. Mine: warm, direct, specific... playful",
+   "**Icks:** what makes you cringe. Em dashes, middle dots, \"Regards,\" and please, never \"I hope this email finds you well\"",
+   "Hand all three to Claude, ChatGPT or Gemini and it **writes the rules** for you",
+   "Middle is my real skill, trimmed. **Almost 500 lines** and counting"
+  ],
+  "end": "**Same prompt, two answers.** No skill: \"results-driven leader passionate about leveraging AI.\" With my skill: **the line that's actually on my site**."
+ },
+ {
+  "start": "Real talk: the first draft of your skill is **never it**. It gets good by going around **this loop**.",
+  "beats": [
+   "You only gave it a handful of examples. **Ask AI for more**, pick what you like, say why, update the skill",
+   "Real round from my site's intro line..."
+  ],
+  "end": "Step 1: I literally typed **\"give me 3 versions of my intro line.\"** It gave me **polished, warm and playful**."
+ },
+ {
+  "start": "Step 2: I picked the middle one, **warm**.",
+  "beats": [],
+  "end": "Sounded the **most like me**..."
+ },
+ {
+  "start": "Step 3: but **two things bugged me**.",
+  "beats": [
+   "**\"Passionate\"?** Ick, way overused"
+  ],
+  "end": "And that **em dash**... **classic AI tell**."
+ },
+ {
+  "start": "Step 4: so I told Claude: **add both to my skill as nevers**, so you remember next time.",
+  "beats": [],
+  "end": "That's the key... not just fixing this one line. **Remembering it going forward.**"
+ },
+ {
+  "start": "Step 5: run it again... and **now it sounds like me**.",
+  "beats": [],
+  "end": "Every round of naming what's off, or what you like, **makes the skill sharper**. Keep going till it's a skill you're proud of."
+ },
+ {
+  "start": "This is **THE muscle** to build tonight: **update the skill every time you correct it**.",
+  "beats": [
+   "Fixing it in the chat helps once. **\"Add that to my skill\"** fixes it for good",
+   "Every line on the right is real, each one from me correcting Claude",
+   "[Aside] Yes, I'm that picky. And yes, **finance vs fiancé** is real... very different conversations",
+   "Pro move: a **recurring routine** that reads your chats and proposes skill updates, daily or weekly",
+   "Get over the hump of being annoyed. After that it's easy to keep investing. Be strategic about which ones"
+  ],
+  "end": "**Every correction goes into the skill**... or you'll be making the **same fix tomorrow**."
+ },
+ {
+  "start": "Recap: how do I get AI to **sound like me?**",
+  "beats": [
+   "Examples + vibe + icks become your **voice skill**. Iterate till you feel good. Update it every time you correct it",
+   "**Tactically:** pulled my writing in (screenshots, copy-paste, connectors), gave it a few vibe words and my obvious icks, then kept refining as it showed me drafts"
+  ],
+  "end": "Next: how do I get it **in my style?** Spoiler... **same recipe**."
+ },
+ {
+  "start": "Good news: design is the **same recipe**. Examples + vibe + icks, just for how it looks.",
+  "beats": [
+   "**Examples:** what goes on the page. Headshot, résumé, paintings, my voice skill... and sites I love as inspo, because showing beats describing",
+   "**Vibe:** casual, kinda Notion-like... a clean page with pen notes. Colors straight from my headshot: blue pen and a yellow-green highlighter",
+   "**Icks:** the nope list. Emojis, tape on photos, big-number stats, dark mode... anything that looks like a video game. Found every one by building, wincing, writing it down",
+   "Hand all three to Claude and it **writes the rules**. Middle is my real design skill, trimmed",
+   "**Non-negotiables:** blue pen around every photo, handwriting always gets breathing room [I'm that picky here too]"
+  ],
+  "end": "Same prompt on both sides. **Top could be anyone. Bottom is mine.**"
+ },
+ {
+  "start": "Quick peek at mine... **live**. Yours will look even better by tonight.",
+  "beats": [
+   "[Let it play]",
+   "Every rule from that skill is on here: **blue pen** around my photo, **highlighter** on every heading, my paintings, my signature... **my style, not everyone else's**",
+   "Built the design skill first, asked for examples, iterated, **THEN built the site**"
+  ],
+  "end": "**Same recipe as the voice skill**. This is what comes out the other end."
+ },
+ {
+  "start": "Recap: how do I get it **in my style?**",
+  "beats": [
+   "Examples + vibe + icks become a **design skill**. Iterate till you feel good. Update it every time you correct it"
+  ],
+  "end": "Next: what do you get **once you have both?**"
+ },
+ {
+  "start": "This is **site C. Live.**",
+  "beats": [
+   "[Let it play]",
+   "This is what got me **SO fired up** about skills. The impact is tremendous",
+   "Rebuilt our whole website in **way less time**, in a voice and design more us than ever... with **more features** than we've ever had"
+  ],
+  "end": "Once you have your brand, you get to spend your time **growing and serving** more parents, volunteers and chapters... **not rewriting your brand** along the way."
+ },
+ {
+  "start": "So what did **one brand skill** actually get us? Way more than a prettier homepage.",
+  "beats": [
+   "A map of all **106 chapters**. Tap a pin, find your program",
+   "Every chapter page: **kid sign-up, volunteer sign-up, donate**. Used to be Google Forms, now built in and way more professional",
+   "A **real store** that looks like we make the gear",
+   "Giving that's **dead simple**",
+   "The whole site in **Spanish** too, because so many of our families speak Spanish",
+   "A **password-protected hub** for volunteers and chapter leads: roster, check-ins, one dashboard",
+   "Not all of this fits a personal site. The point: your time goes to what's actually **creative and valuable**"
+  ],
+  "end": "Once you have your brand, you stop spending your time on how it looks and sounds... and start spending it on **growing the thing**."
+ },
+ {
+  "start": "And the site is **just the start**.",
+  "beats": [
+   "Same Run Your City brand skill, three more things: a **volunteer flyer** (tear-off tabs and all), an **Instagram post**, a **donor email**",
+   "[Aside] **Mia's quote** in the donor email is real, straight from our homepage",
+   "For you: **presentations, papers, posts**"
+  ],
+  "end": "Once the skill exists, everything you make **sounds and looks like you**. Tonight's site is **just the first thing**."
+ },
+ {
+  "start": "Recap: what do I get **with both?**",
+  "beats": [
+   "**A site for you**, your company... anything. Flyers, posts, decks. **Same two skills** every time"
+  ],
+  "end": "Last one: what do I wish I'd known sooner? **Rapid fire**... **six of them**, fast."
+ },
+ {
+  "start": "Okay, **rapid fire!** Six things, roughly in the order you'll hit them on a project. **#1**: where do I start a big project? **Sketch the story first**, then hand AI the sketch.",
+  "beats": [
+   "Before a single slide, I sketched this deck in **tldraw (free!)**, then handed Claude the picture"
+  ],
+  "end": "AI can absolutely outline for you... but then it's **AI's story**. **You pick the story**, AI fills it in."
+ },
+ {
+  "start": "**#2**: how do I get AI to match my taste? **Show, don't tell.**",
+  "beats": [
+   "Telling works. \"Warm, bright, modern\" is a fine start. But **everyone's warm is different**, so AI fills the gaps with the average",
+   "Show it **a site you love** or **an email you actually sent**. It picks up way more than any description: fonts, spacing, how you sign off",
+   "[Aside] Fancy name for this: **few-shot learning**"
+  ],
+  "end": "A few examples **teach the pattern**."
+ },
+ {
+  "start": "**#3**: how do I give AI design feedback? **Mark it up, then say the fix.**",
+  "beats": [
+   "\"Make the header smaller\"... **which header?**",
+   "Screenshot it, **circle what's off**, paste it back with one line on what you want",
+   "Real one: an early agenda slide, scribbled all over it. \"Fix these slides, see my **notes in red**\" [Yes... this deck had a LOT of notes]"
+  ],
+  "end": "The picture **shows where**, the words **say what**."
+ },
+ {
+  "start": "**#4**: **one skill or two?** One if voice and design always travel together, two if they don't.",
+  "beats": [
+   "Run Your City: everything needs both, the site, flyers, posts, donor emails. So one brand skill holds both",
+   "Me: my writing skill runs on **EVERYTHING**. Emails, Slack, texts, intros, thank-yous",
+   "My design skill? **Basically just my website**. My texts don't need a highlighter. So I **keep two**"
+  ],
+  "end": "When I do need both, I don't merge them. One line in my design skill: \"any words on the page? use my writing style.\" **Linked, not merged.**"
+ },
+ {
+  "start": "**#5**: why does AI get worse the more I give it? **Too much on its desk.**",
+  "beats": [
+   "Everything in your chat, plus every skill it pulls in, sits on AI's desk **at once**",
+   "Bury it in directions and it can **miss the one that matters**",
+   "Keep each skill focused on **one job**, link them when you need both",
+   "My emails run my writing style AND a **humanizer**. One sounds like me, the other strips the AI tells",
+   "[Pro tip] Crowded chat? **Start a new one**. Your skills come with you"
+  ],
+  "end": "**More isn't better.** Short, sharp, focused skills."
+ },
+ {
+  "start": "**#6**: what else can skills do? **Way more than websites.** My favorites right now:",
+  "beats": [
+   "**undyslexify**: I have dyslexia, so it turns dense reading into a press-play study page, PDF and audio",
+   "**think-first-my-guy**: asks me questions before it writes a thing (I love to start building before I've nailed the actual problem)",
+   "**winning-writing**: Glenn Kramon's writing class... as a skill",
+   "**bye-bye-robot**: the humanizer. Strips the AI tells, so I don't end up like our LinkedIn friend",
+   "**morning-moment**: my 30-minute morning brief",
+   "**spill-the-tea**: preps Josh and me for the podcast in a reality-TV voice [Highly recommend]"
+  ],
+  "end": "Fill out the **feedback form** and I'll send you **all six** AND the **code for my website**... steal away!!"
+ },
+ {
+  "start": "Recap: what do I **wish I'd known sooner?**",
+  "beats": [
+   "**Sketch first**. **Show, don't tell**. **Mark it up**. **Split skills** that don't travel together. **Keep skills focused**"
+  ],
+  "end": "All five answered! This is your **checklist for the next 50 minutes**."
+ },
+ {
+  "start": "Okay... now **go build!!** Voice, design and your site, with the tutorial. Scan the **first QR code**.",
+  "beats": [
+   "**Stuck?** Debug in this order: 1 ask AI in the chat you're building in, 2 hit \"Stuck?\" in the tutorial, 3 post on PollEv (we're watching it), 4 raise your hand, we'll come running",
+   "**Finished early?** Make it 3D, add a signature move, build a brand skill for your club"
+  ],
+  "end": "Before you leave... **feedback form, 2 minutes**. Please, please, please. TYSM!!"
+ },
+ {
+  "start": "Okay... **how'd it go?!** First... **show us what you built!!** Ugly drafts welcome. Who's brave?",
+  "beats": [
+   "**Thank you so big** for being here. Seriously so touched",
+   "Josh and I have a podcast, **Out of Our Depth** (outofourdepth.com). Watch him go through this exact process... and us learn AI and have fun with it"
+  ],
+  "end": "**2 minutes of feedback** = my skills and website code are yours. Have a **joy of a week!!**"
+ }
+];
+
 export default function handler(req, res) {
   res.setHeader("Cache-Control", "no-store");
   if (req.method !== "GET") return res.status(405).json({ ok: false, error: "method not allowed" });
   const check = instructorCheck(req);
   if (check === "unconfigured") return res.status(503).json({ ok: false, error: "notes are not set up" });
   if (!check) return res.status(401).json({ ok: false, error: "unauthorized" });
-  return res.status(200).json({ ok: true, notes: NOTES, tight: TIGHT });
+  return res.status(200).json({ ok: true, notes: NOTES, tight: TIGHT, cues: CUES });
 }

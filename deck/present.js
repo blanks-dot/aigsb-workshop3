@@ -5,8 +5,8 @@
   const W = 1920, H = 1080, TALK_MIN = 20;
   const $ = id => document.getElementById(id);
   const SECTIONS = { walkin: "Intro", trust4: "1 Why", skill: "2 Voice", designform: "3 Design", payoff: "4 Payoff", rf7: "5 Rapid fire", yourturn: "Close" };
-  let slides = [], ids = [], titles = [], sections = [], full = [], tight = [], i = 0;
-  let mode = "tight", fs = 26, aud = null;
+  let slides = [], ids = [], titles = [], sections = [], full = [], tight = [], cues = [], i = 0;
+  let mode = "cues", fs = 26, aud = null;
   const bc = "BroadcastChannel" in window ? new BroadcastChannel("aop-deck") : null;
 
   const store = (k, v) => { try { localStorage.setItem("present." + k, JSON.stringify(v)); } catch (e) {} };
@@ -27,13 +27,16 @@
     if (key) return `<p class="key"><span class="tag">KEY POINT</span>${h}</p>`;
     return `<p class="${aside ? "aside" : ""}">${h}</p>`;
   }
+  const md = t => esc(t).replace(/\*\*(.+?)\*\*/g, "<b>$1</b>").replace(/\[([^\]]+)\]/g, '<span class="ca">[$1]</span>');
   function renderNotes() {
     const n = $("notes");
-    if (mode === "tight") {
-      const lines = tight[i] || [];
-      n.innerHTML = lines.length ? lines.map(fmtTight).join("") : '<p class="none">No notes. Walk-in slide.</p>';
+    if (mode === "full") {
+      n.innerHTML = full[i] ? `<p class="full">${full[i]}</p>` : '<p class="none">No notes on this one.</p>';
     } else {
-      n.innerHTML = full[i] ? `<p class="full">${full[i]}</p>` : '<p class="none">No notes. Walk-in slide.</p>';
+      const c = cues[i];
+      n.innerHTML = c ? `<div class="se start"><span class="lbl">START</span><p>${md(c.start)}</p></div>` +
+        (c.beats.length ? `<ul class="beats">${c.beats.map(b => `<li>${md(b)}</li>`).join("")}</ul>` : "") +
+        `<div class="se end"><span class="lbl">END</span><p>${md(c.end)}</p></div>` : '<p class="none">No notes on this one.</p>';
     }
     n.parentElement.scrollTop = 0;
   }
@@ -71,9 +74,9 @@
   setInterval(paint, 500); paint();
 
   // Controls
-  function setMode(m) { mode = m; store("mode", m); $("vTight").setAttribute("aria-pressed", m === "tight"); $("vFull").setAttribute("aria-pressed", m === "full"); renderNotes(); }
+  function setMode(m) { mode = m === "full" ? "full" : "cues"; m = mode; store("mode", m); $("vTight").setAttribute("aria-pressed", m === "cues"); $("vFull").setAttribute("aria-pressed", m === "full"); renderNotes(); }
   function setFs(v) { fs = Math.max(16, Math.min(44, v)); store("fs", fs); document.documentElement.style.setProperty("--fs", fs + "px"); }
-  $("vTight").onclick = () => setMode("tight");
+  $("vTight").onclick = () => setMode("cues");
   $("vFull").onclick = () => setMode("full");
   $("aMinus").onclick = () => setFs(fs - 2);
   $("aPlus").onclick = () => setFs(fs + 2);
@@ -112,7 +115,7 @@
   async function start(key) {
     const r = await fetch("/api/deck-notes", { headers: { "x-instructor-key": key } });
     if (!r.ok) return false;
-    const d = await r.json(); full = d.notes || []; tight = d.tight || [];
+    const d = await r.json(); full = d.notes || []; tight = d.tight || []; cues = d.cues || [];
     try { sessionStorage.setItem("deckKey", key); } catch (e) {}
     const data = await (await fetch("/deck/slides.json", { cache: "no-cache" })).json();
     data.fonts.forEach(href => { const l = document.createElement("link"); l.rel = "stylesheet"; l.href = href; document.head.appendChild(l); });
@@ -123,7 +126,7 @@
       ids.push(id); cur = SECTIONS[id] || cur; sections.push(cur); titles.push(titleOf(s, id));
     });
     $("gate").remove();
-    setMode(load("mode", "tight")); setFs(load("fs", 26));
+    setMode(load("mode", "cues")); setFs(load("fs", 26));
     const startAt = parseInt((location.hash || "#1").slice(1), 10);
     show(isNaN(startAt) ? 0 : startAt - 1, true);
     return true;
