@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Presenter: The Art of Personalization</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="/img/favicon.svg">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/deck/present.css">
+</head><body>
+<header class="top">
+  <div class="where"><span id="num">SLIDE 1 / 34</span><span id="sec"></span></div>
+  <div class="timer" id="timerbox">
+    <span id="elapsed">0:00</span><span class="of">/ 20:00</span>
+    <button id="tstart" class="chip">Start</button><button id="treset" class="chip quiet">Reset</button>
+  </div>
+  <div class="tools">
+    <span id="clock" class="clock"></span>
+    <div class="seg" role="group" aria-label="Notes version"><button id="vTight" aria-pressed="true">Tight</button><button id="vFull" aria-pressed="false">Full</button></div>
+    <div class="seg" role="group" aria-label="Text size"><button id="aMinus" aria-label="Smaller text">A−</button><button id="aPlus" aria-label="Bigger text">A+</button></div>
+    <button id="openAud" class="primary">Open audience screen</button>
+  </div>
+</header>
+
+<main class="grid">
+  <section class="slides">
+    <div class="frame cur" id="curF"><div class="stage" id="cur"></div></div>
+    <div class="nextrow">
+      <div class="frame nxt" id="nxtF"><div class="stage" id="nxt"></div></div>
+      <div class="nextinfo">
+        <p class="lab">UP NEXT</p>
+        <p id="nextTitle" class="nt"></p>
+        <div class="navbtns"><button id="prev" class="chip">← Back</button><button id="next" class="chip">Next →</button></div>
+      </div>
+    </div>
+  </section>
+  <section class="notes">
+    <p class="lab" id="title"></p>
+    <div id="notes"></div>
+  </section>
+</main>
+
+<div id="help" class="help">Arrows, space or your clicker move both screens. Drag the audience window to the projector, click it once, press F for full screen.</div>
+
+<div id="gate"><form id="f"><h1>Presenter mode</h1><input id="k" type="password" placeholder="Password" autocomplete="current-password" autofocus><button>Open</button><p id="err"></p></form></div>
+<script src="/deck/present.js"></script>
+</body></html>

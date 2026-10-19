@@ -9,6 +9,7 @@
 #side{position:fixed;top:0;right:0;bottom:0;width:34%;background:#f3ede2;color:#141413;display:flex;flex-direction:column;padding:28px 30px;overflow:auto}
 #notes-count{font:13px 'DM Mono',monospace;letter-spacing:1px;color:#c2471f;text-transform:uppercase;margin-bottom:14px}
 #notes{font-size:19px;line-height:1.55}
+#pm{font:13px 'DM Mono',monospace;color:#2b4bff;margin-bottom:14px;text-decoration:none}
 #gate{position:fixed;inset:0;background:#141413;display:grid;place-items:center;z-index:10}
 #gate form{background:#f3ede2;padding:32px;border-radius:20px;width:min(360px,90vw);display:flex;flex-direction:column;gap:12px}
 #gate h1{margin:0;font:400 34px 'Instrument Serif',Georgia,serif}
@@ -20,7 +21,7 @@
 </head><body data-notes="1">
 <div id="frame"><div id="stage"></div></div>
 <div class="bar"><button id="prev" aria-label="Previous slide">←</button><span id="count"></span><button id="next" aria-label="Next slide">→</button></div>
-<aside id="side"><div id="notes-count"></div><div id="notes"></div></aside>
+<aside id="side"><div id="notes-count"></div><a id="pm" href="/deck/present">Open presenter mode (two screens) →</a><div id="notes"></div></aside>
 <div id="gate"><form id="f"><h1>Speaker notes</h1><input id="k" type="password" placeholder="Password" autocomplete="current-password" autofocus><button>Open</button><p id="err"></p></form></div>
 <script src="/deck/deck.js"></script>
 <script>

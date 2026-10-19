@@ -8,3 +8,7 @@ html,body{margin:0;height:100%;background:#141413;overflow:hidden;font-family:'D
 .bar{position:fixed;right:16px;bottom:14px;display:flex;gap:8px;align-items:center;z-index:5;font:13px 'DM Mono',monospace;color:#b8ada0;background:#141413cc;padding:6px 8px;border-radius:999px}
 .bar button{all:unset;cursor:pointer;width:28px;height:28px;display:grid;place-items:center;border-radius:50%;color:#f3ede2}
 .bar button:hover{background:#3a3935}
+
+/* Audience screen opened from presenter mode: no controls, no cursor */
+body.audience .bar{display:none}
+body.audience #frame{cursor:none}

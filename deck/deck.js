@@ -3,6 +3,11 @@
   const W = 1920, H = 1080;
   const withNotes = document.body.dataset.notes === "1";
   let slides = [], notes = [], i = 0;
+  // Keeps every open deck window (audience screen, notes, presenter) on the same slide.
+  const bc = "BroadcastChannel" in window ? new BroadcastChannel("aop-deck") : null;
+  let quiet = false;
+  const audience = /[?&]audience\b/.test(location.search);
+  if (audience) document.body.classList.add("audience");
   const stage = document.getElementById("stage"), frame = document.getElementById("frame");
   const count = document.getElementById("count");
 
@@ -19,7 +24,8 @@
       el.querySelectorAll("video").forEach(v => { if (on) { v.currentTime = 0; v.play().catch(() => {}); } else v.pause(); });
     });
     count.textContent = `${i + 1} / ${slides.length}`;
-    if (history.replaceState) history.replaceState(null, "", "#" + (i + 1));
+    if (history.replaceState) history.replaceState(null, location.search, location.pathname + location.search + "#" + (i + 1));
+    if (bc && !quiet) bc.postMessage({ type: "go", i });
     if (withNotes) {
       document.getElementById("notes").innerHTML = notes[i] || "<i>No notes on this slide</i>";
       document.getElementById("notes-count").textContent = `Slide ${i + 1} of ${slides.length}`;
@@ -43,6 +49,12 @@
   document.getElementById("next").onclick = e => { e.stopPropagation(); go(1); };
   window.addEventListener("resize", fit);
 
+  if (bc) bc.onmessage = e => {
+    const m = e.data || {};
+    if (m.type === "go" && slides.length && m.i !== i) { quiet = true; show(m.i); quiet = false; }
+    if (m.type === "hello" && slides.length) bc.postMessage({ type: "go", i });
+  };
+
   window.startDeck = async function (noteList) {
     notes = noteList || [];
     const data = await (await fetch("/deck/slides.json", { cache: "no-cache" })).json();
@@ -51,7 +63,8 @@
     stage.innerHTML = slides.join("");
     fit();
     const start = parseInt((location.hash || "#1").slice(1), 10);
-    show(isNaN(start) ? 0 : start - 1);
+    quiet = true; show(isNaN(start) ? 0 : start - 1); quiet = false;
+    if (bc) bc.postMessage({ type: "hello" });
   };
   if (!withNotes) window.startDeck();
 })();

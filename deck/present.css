@@ -1,0 +1,69 @@
+/* Presenter view: dark so it doesn't glare on the laptop while the projector shows the deck.
+   Left: current slide big, next slide small. Right: what to say. */
+:root{
+  --bg:#141413; --panel:#1f1e1b; --line:#34322e; --ink:#f3ede2; --muted:#a99e92; --quiet:#6e645b;
+  --pen:#8fa0ff; --hl:#d7f26b; --hl-bg:#2b3112; --warn:#f2b705; --over:#ff6a3d;
+  --serif:'Instrument Serif',Georgia,serif; --sans:'DM Sans',Arial,sans-serif; --mono:'DM Mono',Menlo,monospace;
+  --fs:26px;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font-family:var(--sans);overflow:hidden}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible{outline:2px solid var(--pen);outline-offset:2px}
+body{display:flex;flex-direction:column}
+
+.top{display:flex;align-items:center;gap:16px 24px;flex-wrap:wrap;padding:12px 20px;border-bottom:1px solid var(--line)}
+.where{display:flex;gap:14px;align-items:baseline;font-family:var(--mono);font-size:14px;letter-spacing:.06em}
+#num{color:var(--pen)} #sec{color:var(--muted);text-transform:uppercase}
+.timer{display:flex;align-items:baseline;gap:8px;margin:0 auto;font-family:var(--mono);font-variant-numeric:tabular-nums}
+#elapsed{font-size:30px;color:var(--ink)} .of{color:var(--quiet);font-size:15px}
+.timer.warn #elapsed{color:var(--warn)} .timer.over #elapsed{color:var(--over)}
+.tools{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.clock{font-family:var(--mono);font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums}
+.chip{border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:6px 12px;font-size:14px}
+.chip.quiet{color:var(--muted)}
+.seg{display:flex;border:1px solid var(--line);border-radius:999px;padding:3px;background:var(--panel)}
+.seg button{border:0;background:transparent;padding:5px 11px;border-radius:999px;font-size:14px;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.primary{border:0;background:var(--pen);color:#141413;font-weight:700;border-radius:999px;padding:8px 16px;font-size:14px}
+
+.grid{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:20px;padding:18px 20px}
+.slides{min-width:0;display:flex;flex-direction:column;gap:16px}
+.frame{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;border-radius:12px;background:#000;border:1px solid var(--line)}
+.stage{position:absolute;top:0;left:0;width:1920px;height:1080px;transform-origin:0 0}
+.stage>section{position:absolute;inset:0;width:1920px;height:1080px;overflow:hidden}
+.stage p,.stage h1,.stage h2,.stage h3{margin:0}
+.stage img{display:block;max-width:none}
+.nextrow{display:flex;gap:16px;align-items:flex-start}
+.frame.nxt{width:42%;flex:0 0 auto;opacity:.9}
+.nextinfo{min-width:0;display:flex;flex-direction:column;gap:8px}
+.lab{margin:0;font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--muted);text-transform:uppercase}
+.nt{margin:0;font-family:var(--serif);font-size:24px;line-height:1.15;text-wrap:balance}
+.navbtns{display:flex;gap:8px;margin-top:6px}
+
+.notes{min-width:0;min-height:0;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px 26px;overflow:auto;display:flex;flex-direction:column;gap:14px}
+#notes{display:flex;flex-direction:column;gap:14px;font-size:var(--fs);line-height:1.38}
+#notes p{margin:0;color:#d9d0c4}
+#notes b{color:var(--ink);font-weight:700}
+#notes .key{background:var(--hl-bg);border-left:4px solid var(--hl);padding:10px 14px;border-radius:8px}
+#notes .key .tag{display:block;font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--hl);margin-bottom:4px}
+#notes .key b{color:var(--hl)}
+#notes .aside{color:var(--muted);font-style:italic}
+#notes .full{font-size:calc(var(--fs) * .78);line-height:1.5;color:#d9d0c4}
+#notes .none{color:var(--quiet);font-style:italic}
+
+.help{padding:8px 20px 12px;font-size:13px;color:var(--quiet)}
+
+#gate{position:fixed;inset:0;background:var(--bg);display:grid;place-items:center;z-index:10}
+#gate form{background:#f3ede2;color:#141413;padding:32px;border-radius:20px;width:min(360px,90vw);display:flex;flex-direction:column;gap:12px}
+#gate h1{margin:0;font:400 34px var(--serif)}
+#gate input{font:16px var(--sans);padding:12px 14px;border:1px solid #ddd3c3;border-radius:10px;color:#141413;background:#fff}
+#gate button{font:600 16px var(--sans);padding:12px;border:0;border-radius:10px;background:#141413;color:#f3ede2}
+#err{color:#c2471f;font-size:14px;min-height:18px;margin:0}
+
+@media (max-width:900px){
+  html,body{overflow:auto}
+  .grid{grid-template-columns:1fr}
+  .notes{overflow:visible}
+}
