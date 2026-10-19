@@ -4,7 +4,7 @@
 (function () {
   const W = 1920, H = 1080, TALK_MIN = 20;
   const $ = id => document.getElementById(id);
-  const SECTIONS = { walkin: "Intro", trust4: "1 Why", skill: "2 Voice", designform: "3 Design", payoff: "4 Build", rf7: "5 Rapid fire", yourturn: "Close" };
+  const SECTIONS = { walkin: "Intro", trust4: "1 Why", skill: "2 Voice", designform: "3 Design", payoff: "4 Payoff", rf7: "5 Rapid fire", yourturn: "Close" };
   let slides = [], ids = [], titles = [], sections = [], full = [], tight = [], i = 0;
   let mode = "tight", fs = 26, aud = null;
   const bc = "BroadcastChannel" in window ? new BroadcastChannel("aop-deck") : null;
@@ -105,6 +105,7 @@
     const h = d.querySelector("h1,h2");
     if (h && h.textContent.trim()) return h.textContent.replace(/\s+/g, " ").trim().replace("The Art ofPersonalization", "The Art of Personalization");
     if (id === "payoff") return "Run Your City, live";
+    if (id === "mysite") return "My site, live";
     const img = d.querySelector("img[alt]"); return img ? img.alt : id;
   }
 
