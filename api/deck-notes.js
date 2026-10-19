@@ -20,9 +20,9 @@ const NOTES = [
 "Recap: Why does everyone’s AI sound the same?<br>✓ &nbsp;Generic in = generic out. AI drifts to the average. That's where we lose trust.<br><br>Next: how do I get it to sound like me?",
 "Okay, quick throwback to workshop 2... what's a skill again? Saved instructions. You write the details once and never retype them.<br><br>Without a skill you have to provide the same direction every prompt - LHS<br><br>With a skill, you type the short version -- \"write my LinkedIn post about tonight\" -- and the skill fills in the rest.",
 "Two ways it kicks in. On its own, when your ask matches the skill's name and description (so write that description like a trigger!). Or on purpose: type slash and the name.<br><br>[KEY POINT] Write the details once. Stop retyping them. we LOVE saving time",
-"Okay so... how do you actually get AI to sound like you? It's a formula: examples + vibe + icks.<br><br>Examples = stuff you actually wrote. Mine: ~140 sent emails, ~120 Slacks, 17,736 texts and my meeting notes.<br>Vibe = how it should feel. Mine's warm, direct, specific... athlete-operator.<br>Icks = what makes you cringe. Em dashes, middle dots, \"Regards,\" and please, never \"I hope this email finds you well.\"<br><br>Hand all three to Claude and it writes the rules for you. Middle is my real skill, trimmed. Almost 500 lines and counting.<br><br>And yes, the Mary-isms made it in... \"thank you so big\" stays ungrammatical. On purpose. [Also: tehe, never lol. Non-negotiable.]<br><br>Works in ChatGPT or Gemini too... paste it into a Project or a Gem.<br><br>[KEY POINT] Same prompt, two answers. No skill: \"results-driven leader passionate about leveraging AI.\" With my skill: the line that's actually on my site.",
+"Okay so... how do you actually get AI to sound like you? It's a formula: examples + vibe + icks.<br><br>Examples = stuff you actually wrote. Mine: ~140 sent emails, ~120 Slacks, 17,736 texts and my meeting notes.<br>Vibe = how it should feel. Mine's warm, direct, specific... athlete-operator.<br>Icks = what makes you cringe. Em dashes, middle dots, \"Regards,\" and please, never \"I hope this email finds you well.\"<br><br>Hand all three to Claude/Chat/Gemini and it writes the rules for you. Middle is my real skill, trimmed. Almost 500 lines and counting.<br><br>[KEY POINT] Same prompt, two answers. No skill: \"results-driven leader passionate about leveraging AI.\" With my skill: the line that's actually on my site.",
 "Okay, real talk: the first draft is never it. The skill gets good by going around this loop.<br><br>Real round from my site's intro line. Walking you through exactly what I did...<br><br>1. I literally typed: \"give me 3 versions of my intro line.\" It gave me polished, warm and playful.",
-"2. I picked the middle one, warm. Sounded the most like me... and I told Claude that, in plain words. The why is what it learns from.",
+"2. I picked the middle one, warm. Sounded the most like me...&nbsp;",
 "3. But two things bugged me. \"Passionate\"? Ick, way overused. And that em dash... classic AI tell.",
 "4. So I told it: add both to my skill as nevers, so you remember next time.<br><br>That last part is the key... not just fix this one line. Remember it going forward.",
 "5. Run it again... and now it sounds like me<br><br>[KEY POINT] Every round of naming what's off makes the skill sharper. Then you go around again.",
@@ -108,9 +108,7 @@ const TIGHT = [
   "**Examples**: stuff you actually wrote. Mine: ~140 emails, ~120 Slacks, **17,736 texts**, meeting notes",
   "**Vibe**: how it should feel. Mine: warm, direct, specific... **athlete-operator**",
   "**Icks**: what makes you cringe. **Em dashes**, middle dots, “Regards,” and never “**I hope this email finds you well**”",
-  "Hand all three to Claude, it **writes the rules**. Middle is my real skill: **almost 500 lines** and counting",
-  "Mary-isms made it in... “**thank you so big**” stays ungrammatical. [Also: **tehe, never lol**. Non-negotiable]",
-  "Works in **ChatGPT or Gemini** too... paste it into a **Project or a Gem**",
+  "Hand all three to **Claude / Chat / Gemini**, it **writes the rules**. Middle is my real skill: **almost 500 lines** and counting",
   "[KEY POINT] Same prompt, two answers. No skill: “**results-driven leader**...” With my skill: **the line actually on my site**"
  ],
  [
@@ -119,8 +117,7 @@ const TIGHT = [
   "1. I literally typed: “**give me 3 versions of my intro line**.” Got polished, warm, playful"
  ],
  [
-  "2. I **picked the middle one, warm**. Sounded most like me",
-  "And I **told Claude why**, in plain words. **The why is what it learns from**"
+  "2. I **picked the middle one, warm**. Sounded the most like me..."
  ],
  [
   "3. Two things bugged me. “**Passionate**”? **Ick**, way overused",
