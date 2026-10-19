@@ -870,7 +870,7 @@
       /* Revision 8: the form follows the step's order. Assets (3 separate sample boxes), then the vibe you picked on the cards, then icks. No second vibe picker. */
       el.innerHTML = '<form class="myform-inner" novalidate>' +
         '<div class="mf-head"><span class="mf-file">my-voice/SKILL.md</span><span class="mf-tag">Make it yours</span></div>' +
-        '<div class="mf-group"><span class="mf-group-label">Assets</span>' +
+        '<div class="mf-group"><span class="mf-group-label">Examples</span>' +
         '<div class="field"><span>3 things you wrote <small>paste one per box, as sent, typos and all</small></span>' +
         '<textarea name="sample1" rows="4" placeholder="Hey Sam, quick one. Can you send the deck by Thursday? Thanks tons." spellcheck="false" aria-label="Sample 1"></textarea>' +
         '<textarea name="sample2" rows="4" placeholder="Second one. A Slack or a text counts." spellcheck="false" aria-label="Sample 2"></textarea>' +
@@ -890,7 +890,7 @@
       el.innerHTML = '<form class="myform-inner" novalidate>' +
         '<div class="mf-head"><span class="mf-file">my-design/SKILL.md</span><span class="mf-tag">Make it yours</span></div>' +
         '<p class="mf-note">Starting from the <strong data-look-name>' + esc(LOOK_NAME[lk]) + '</strong> look. Change it on the cards above.</p>' +
-        '<div class="mf-group"><span class="mf-group-label">Assets</span>' +
+        '<div class="mf-group"><span class="mf-group-label">Examples</span>' +
         '<fieldset class="mf-row"><legend>Photo</legend>' + radioHtml("design-photo", "yes", "Yes, use my photo", false) + radioHtml("design-photo", "no", "No photo", false) + "</fieldset>" +
         '<p class="small photo-note" hidden>Nothing to upload here. Attach your photo in the Claude chat when you test this (below) and when you build your site in step 4. Claude puts it inside the file, so it still works once it\'s live.</p>' +
         '<div class="field"><span>Sites I like <small>up to 2 links, optional</small></span><div class="mf-two"><input name="site1" type="url" inputmode="url" placeholder="https://a-site-you-like.com" autocomplete="off" spellcheck="false" aria-label="Site I like, 1"><input name="site2" type="url" inputmode="url" placeholder="https://another-one.com" autocomplete="off" spellcheck="false" aria-label="Site I like, 2"></div></div></div>' +

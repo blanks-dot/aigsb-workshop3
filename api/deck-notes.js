@@ -12,25 +12,25 @@ import { instructorCheck } from "../lib/store.js";
  */
 const NOTES = [
 "",
-"I'm Mary Blankemeier, GSB '27, from Chicago<br>Before: UVA engineering and track, then Bain and healthcare startups<br>Now: Run Your City, AI@GSB and AI in healthcare<br><br>Fun facts to wake yall up...<br>Recently married another AI@GSB scholar - will let you guess which one<br>",
-"In the next 20 minutes we're going to answer these 5 questions<br>Then you'll have 50 minutes to build your personal website<br>And we'll come back together for 10 minutes at the end to debrief",
-"Quick question: which would you send your current or future daughter to right now? Hands up for A, B, C.<br><br>A is drag and drop on Wix -- us last year.<br>B is Claude with a simple prompt. Totally fine... could be literally anyone.<br>C is Claude with the SAME simple prompt, plus our photos, colors, taglines, etc.<br><br>[KEY POINT]&nbsp;<br>So: B and C are the same AI, same prompt. The only difference is the pile of “who we are” stuff we handed it alongside.<br><br>Hold onto that pile... we’re gonna come back to it.",
-"Same prompt gives the same output. We all know that part<br><br>Came across this delightful study: researchers had AI play telephone. One AI draws a picture from a sentence, another AI describes the picture, then repeat... 100 times<br><br>They played that game over 1,000 times, starting from all kinds of different sentences<br>Almost every single one ended up as one of just 12 pictures -- stormy lighthouses, cities at night, palace interiors<br>Why? Every round drops what’s unusual and fills in what’s common. They literally called it visual elevator music<br><br>Why this matters for you: anywhere you leave a gap, AI fills it with an assumption... and it fills it with the most common thing it's seen. That's where the AI-isms come from. The stuff that's so not you.<br><br>[KEY POINT]&nbsp;<br>Prompting “make it better” over and over won't save you... it'll make you closer to the average.. and by average we mean visual elevator music (the most common version of a thing)",
-"Why care about NOT being AI-average? We lose trust.<br><br>Okay, picture yourselves in this study. Same presentation for everyone. Left side finds out I used AI to make it, right side thinks I made it by hand. Just like that, left side trusts me ~18% less.<br><br>And it held across totally different groups -- students trusting professors, investors trusting companies, clients trusting designers.<br><br>[For the record, I did use AI for this. So there goes 1/5 of your trust in me.]<br><br>And it can be SO painfully obvious... the classic Linkedin post: I’m thrilled to share⁶ that I’m starting a new chapter! In today’s fast-paced world,¹ it’s not just about leadership, it’s about impact.² I’m excited to delve³ into the rich tapestry³ of healthcare —⁴ leveraging³ AI to build seamless, innovative and transformative⁵ solutions. Let’s connect!⁶<br><br>They just lost a lot more than 20% of my trust tbh.<br><br>[KEY POINT] More generic prompting won’t fix this. You've got to train your AI to be unmistakably yours.<br><br>[Quick tangent: this is the most studies I’ve deeply read in a while... so feel free to give me kudos in the feedback form you’ll all be filling out. TYSM in advance!]",
-"Recap: Why does everyone’s AI sound the same?<br>✓ &nbsp;Same prompt = same output. AI drifts to the average. That's where we lose trust.<br><br>Next: how do I get it to sound like me?",
-"Okay, quick throwback to workshop 2... what's a skill again? Saved instructions. You write the details once and never retype them.<br><br>Without one, every prompt has to carry the same paragraph of rules. Monday, Wednesday, Friday... same paragraph, every. single. time.<br><br>With one, you type the short version -- \"write my LinkedIn post about tonight\" -- and the skill fills in the rest. Bonus: it's cheaper too, since the chat stays short.",
-"Two ways it kicks in. On its own, when your ask matches the skill's name and description (so write that description like a trigger!). Or on purpose: type slash and the name.<br><br>[KEY POINT] Write the details once. Stop retyping them.",
-"Okay so... how do you actually get AI to sound like you? It's a formula: assets + vibe + icks.<br><br>Assets = stuff you actually wrote. Mine: ~140 sent emails, ~120 Slacks, 17,736 texts and my meeting notes.<br>Vibe = how it should feel. Mine's warm, direct, specific... athlete-operator.<br>Icks = what makes you cringe. Em dashes, middle dots, \"Regards,\" and please, never \"I hope this email finds you well.\"<br><br>Hand all three to Claude and it writes the rules for you. Middle is my real skill, trimmed. 483 lines and counting.<br><br>And yes, the Mary-isms made it in... \"thank you so big\" stays ungrammatical. On purpose. [Also: tehe, never lol. Non-negotiable.]<br><br>Works the same in ChatGPT or Gemini.<br><br>[KEY POINT] Same prompt, two answers. No skill: \"results-driven leader passionate about leveraging AI.\" With my skill: the line that's actually on my site.",
+"I'm Mary Blankemeier, MBA2, from Chicago<br>Before: UVA engineering and track, then Bain and healthcare startups<br>Now: Run Your City, AI@GSB and building at the intersection of AI x healthcare<br><br>Fun facts to wake yall up...<br>Recently married another AI@GSB scholar - will let you guess which one<br>",
+"Plan for today<br><br>Spend the next 20 minutes...<br>Then you'll have 50 minutes to build your personal website<br>And we'll come back together for 10 minutes at the end to debrief<br><br>Was antisocial this weekend to build this out so would LOVE to talk to ur beautiful faces vs backs of ur computers if thats not too drama to ask...",
+"...shout it out!<br><br>3 different versions of what our website could look like for the nonprofit I help lead<br><br>A - previous website, took many years -- represented us pretty well but an absolute pain (time, money, limited capabilities)<br>B - Claude with a simple build me a website for my nonprofit prompt. Totally fine... could be literally anyone.<br>C - Claude with the SAME simple prompt, plus our photos, colors, taglines, etc.<br><br>[KEY POINT]&nbsp;<br>B and C are the same model, same prompt. The only difference version C has access to the skills like those we're building tonight which capture who we are -- and communicate that in our voice + style<br>",
+"In addition to the context + information you give AI upfront -- also important to be thoughtful on how you iterate with these models.<br>Where ever you don't provide guidance to AI -- AI has to fill the gaps.<br><br>Came across this delightful study: researchers had AI play telephone. One AI draws a picture from a sentence, another AI describes the picture, then repeat... 100 times<br><br>They ran it 1,000+ times, starting from all kinds of different sentences<br>Almost every single one ended up as one of just 12 pictures -- stormy lighthouses, cities at night, palace interiors<br>Why? Every round drops what’s unusual and fills in what’s common. They literally called it visual elevator music<br><br>Why this matters for you: anywhere you leave a gap, AI fills it with an assumption... and it fills it with the most common thing it's seen. That's where the AI-isms come from. The stuff that's so not you.<br><br>[KEY POINT]&nbsp;<br>Prompting “make it better” over and over won't save you... it'll make you closer to the average.. and by average we mean visual elevator music (the most common version of a thing)",
+"Why care about NOT being AI-average? We lose trust.<br><br>Okay, picture a version of this study in here. Same work for everyone. Left side finds out I used AI, right side thinks I did it myself. The side that knows trusts me 16 to 20% less.<br><br>And it held across 13 experiments and 5,000+ people -- students trusting professors, investors trusting companies, clients trusting designers.<br><br>[For the record, I did use AI for this. So there goes 1/5 of your trust in me.]<br><br>And it can be SO painfully obvious... the classic Linkedin post: I’m thrilled to share⁶ that I’m starting a new chapter! In today’s fast-paced world,¹ it’s not just about leadership, it’s about impact.² I’m excited to delve³ into the rich tapestry³ of healthcare —⁴ leveraging³ AI to build seamless, innovative and transformative⁵ solutions. Let’s connect!⁶<br><br>They just lost a lot more than 20% of my trust tbh.<br><br>[KEY POINT] More generic prompting won’t fix this. You've got to train your AI to be unmistakably yours.<br><br>[Quick tangent: this is the most studies I’ve deeply read in a while... so feel free to give me kudos in the feedback form you’ll all be filling out. TYSM in advance!]",
+"Recap: Why does everyone’s AI sound the same?<br>✓ &nbsp;Generic in = generic out. AI drifts to the average. That's where we lose trust.<br><br>Next: how do I get it to sound like me?",
+"Okay, quick throwback to workshop 2... what's a skill again? Saved instructions. You write the details once and never retype them.<br><br>Without a skill you have to provide the same direction every prompt - LHS<br><br>With a skill, you type the short version -- \"write my LinkedIn post about tonight\" -- and the skill fills in the rest.",
+"Two ways it kicks in. On its own, when your ask matches the skill's name and description (so write that description like a trigger!). Or on purpose: type slash and the name.<br><br>[KEY POINT] Write the details once. Stop retyping them. we LOVE saving time",
+"Okay so... how do you actually get AI to sound like you? It's a formula: examples + vibe + icks.<br><br>Examples = stuff you actually wrote. Mine: ~140 sent emails, ~120 Slacks, 17,736 texts and my meeting notes.<br>Vibe = how it should feel. Mine's warm, direct, specific... athlete-operator.<br>Icks = what makes you cringe. Em dashes, middle dots, \"Regards,\" and please, never \"I hope this email finds you well.\"<br><br>Hand all three to Claude and it writes the rules for you. Middle is my real skill, trimmed. Almost 500 lines and counting.<br><br>And yes, the Mary-isms made it in... \"thank you so big\" stays ungrammatical. On purpose. [Also: tehe, never lol. Non-negotiable.]<br><br>Works in ChatGPT or Gemini too... paste it into a Project or a Gem.<br><br>[KEY POINT] Same prompt, two answers. No skill: \"results-driven leader passionate about leveraging AI.\" With my skill: the line that's actually on my site.",
 "Okay, real talk: the first draft is never it. The skill gets good by going around this loop.<br><br>Real round from my site's intro line. Walking you through exactly what I did...<br><br>1. I literally typed: \"give me 3 versions of my intro line.\" It gave me polished, warm and playful.",
 "2. I picked the middle one, warm. Sounded the most like me... and I told Claude that, in plain words. The why is what it learns from.",
 "3. But two things bugged me. \"Passionate\"? Ick, way overused. And that em dash... classic AI tell.",
 "4. So I told it: add both to my skill as nevers, so you remember next time.<br><br>That last part is the key... not just fix this one line. Remember it going forward.",
 "5. Run it again... and now it sounds like me<br><br>[KEY POINT] Every round of naming what's off makes the skill sharper. Then you go around again.",
 "This is THE muscle to build tonight.<br><br>Fixing it in the chat helps once. \"Add that to my skill\" fixes it for good. Skip that step and you'll be making the same correction tomorrow... and the day after.<br><br>Every line on the right is real -- each one came from me correcting Claude. [Yes, I'm that picky. And yes, the finance vs fiancé one is real... very different conversations.]<br><br>[KEY POINT] Every correction goes into the skill, or you'll make the same fix tomorrow.&nbsp;<br><br>I've found that you just have to get over the hump of it making you annoyed -- once you get it over that hump its easy to continue to invest -- be strategic on which you want to&nbsp;invest in.",
-"Recap: How do I get AI to sound like me?<br>✓ &nbsp;Assets + vibe + icks become a voice skill. Iterate till you feel good. Update it every time you correct it.<br><br>Tactically: a skill is just saved instructions. I pulled my writing in (screenshots, copy-paste, or connectors), gave it a few vibe words + my obvious icks... then kept refining as it showed me drafts.<br><br>Next: how do I get it to look like me? Spoiler... same recipe.",
-"Good news: design is the same recipe. Assets + vibe + icks, just for how it looks.<br><br>Assets = what goes on the page. Mine: headshot, résumé, paintings, my voice skill... and a couple of sites I love as inspo, because showing beats describing.<br>Vibe = how it should feel. I pulled mine straight from my headshot -- blue pen and a yellow-green highlighter.<br>Icks = the nope list. Emojis, tape on photos, big-number stats, dark mode... and anything that looks like a video game. Found every one of those by building, wincing and writing it down.<br><br>Hand all three to Claude and it writes the rules. Middle is my real design skill, trimmed... and yes, it has its own non-negotiables. Blue pen outline around every photo. Handwriting always gets breathing room. [I'm that picky here too.]<br><br>[KEY POINT] Same prompt on both sides. Left could be anyone. Right is mine.",
-"Quick peek at mine... live. [Let it play]<br><br>Every rule from that skill is on here. Blue pen around my photo, the highlighter on every heading, my paintings, my signature at the bottom... it looks like me, not like everyone else.<br><br>[KEY POINT] Same recipe as the voice skill: assets + vibe + icks. This is what comes out the other end.",
-"Recap: How do I get it to look like me?<br>✓ &nbsp;Assets + vibe + icks become a design skill. Iterate till you feel good. Update it every time you correct it.<br><br>Next: what do you get once you have both?",
+"Recap: How do I get AI to sound like me?<br>✓ &nbsp;Examples + vibe + icks become a voice skill. Iterate till you feel good. Update it every time you correct it.<br><br>Tactically: a skill is just saved instructions. I pulled my writing in (screenshots, copy-paste, or connectors), gave it a few vibe words + my obvious icks... then kept refining as it showed me drafts.<br><br>Next: how do I get it to look like me? Spoiler... same recipe.",
+"Good news: design is the same recipe. Examples + vibe + icks, just for how it looks.<br><br>Examples = what goes on the page. Mine: headshot, résumé, paintings, my voice skill... and a couple of sites I love as inspo, because showing beats describing.<br>Vibe = how it should feel. I pulled mine straight from my headshot -- blue pen and a yellow-green highlighter.<br>Icks = the nope list. Emojis, tape on photos, big-number stats, dark mode... and anything that looks like a video game. Found every one of those by building, wincing and writing it down.<br><br>Hand all three to Claude and it writes the rules. Middle is my real design skill, trimmed... and yes, it has its own non-negotiables. Blue pen outline around every photo. Handwriting always gets breathing room. [I'm that picky here too.]<br><br>[KEY POINT] Same prompt on both sides. Left could be anyone. Right is mine.",
+"Quick peek at mine... live. [Let it play]<br><br>Every rule from that skill is on here. Blue pen around my photo, the highlighter on every heading, my paintings, my signature at the bottom... it looks like me, not like everyone else.<br><br>[KEY POINT] Same recipe as the voice skill: examples + vibe + icks. This is what comes out the other end.",
+"Recap: How do I get it to look like me?<br>✓ &nbsp;Examples + vibe + icks become a design skill. Iterate till you feel good. Update it every time you correct it.<br><br>Next: what do you get once you have both?",
 "Back to your make believe daughter... this is site C. Live. [Let it play]<br><br>Okay so this is what got me SO fired up about skills. The impact is tremendous.<br><br>We rebuilt our whole website in way less time, in a voice and design that's more us than ever... and with more features than we've ever had. A map of every chapter. Sign-ups for parents and volunteers. A dashboard for volunteers to track. A store.<br><br>[KEY POINT] Once you have your brand -- voice + design -- you can quite literally grow and serve more parents, volunteers and chapters, in so much less time, and cheaper than what we paid before.",
 "So what did one brand skill actually get us? Way more than a prettier homepage...<br><br>1. A map of all 106 chapters -- tap a pin, find your program.<br>2. Every chapter page has kids sign-up, volunteer sign-up and donate-to-this-chapter.<br>3. A real store. Every order fuels another kid's season.<br>4. Giving that's dead simple -- $50 is one kid for a whole season.<br>5. The whole site in Spanish too.<br>6. And a password-protected hub for our volunteers and chapter leads -- check in kids, see the roster, track it all in one dashboard.<br><br>[KEY POINT] Once you have your brand, you stop spending your time on how it looks and sounds... and start spending it on growing the thing.",
 "And the site is just the start. Same ryc-brand skill, three more things: a volunteer flyer (tear-off tabs and all), an Instagram post, a donor email.<br><br>[Mia's quote in the donor email is real -- straight from our homepage.]<br><br>[KEY POINT] Once the skill exists, everything you make sounds and looks like you. Tonight's site is just the first thing.",
@@ -49,38 +49,41 @@ const NOTES = [
 const TIGHT = [
  [],
  [
-  "I'm **Mary Blankemeier**, GSB '27, from Chicago",
+  "I'm **Mary Blankemeier**, MBA2, from Chicago",
   "Before: **UVA** engineering + track, then **Bain** + healthcare startups",
-  "Now: **Run Your City**, **AI@GSB**, AI in healthcare",
-  "Fun fact to wake y'all up...",
+  "Now: **Run Your City**, **AI@GSB**, building at **AI x healthcare**",
+  "Fun facts to wake y'all up...",
   "Recently **married another AI@GSB scholar**... guess which one"
  ],
  [
-  "**5 questions** in the next **20 minutes**",
+  "Plan for today",
+  "Next **20 minutes**...",
   "Then **50 minutes** to build your personal website",
-  "Back together for **10 minutes** to debrief"
+  "Back together for **10 minutes** to debrief",
+  "Was antisocial this weekend building this... would LOVE **your faces, not the backs of your computers**"
  ],
  [
-  "Which would you send your **current or future daughter** to? **Hands up**: A, B, C",
-  "**A**: drag and drop on **Wix**... us last year",
+  "...**shout it out!**",
+  "3 versions of our website for the **nonprofit I help lead**",
+  "**A**: previous site, **took years**. Represented us okay but an absolute pain (**time, money, limited**)",
   "**B**: Claude, **simple prompt**. Fine... could be **anyone**",
   "**C**: Claude, **same prompt**, plus our **photos, colors, taglines**",
-  "[KEY POINT] B and C: **same AI, same prompt**. Only difference is the **pile of “who we are”**",
-  "**Hold onto that pile**... we're coming back to it"
+  "[KEY POINT] B and C: **same model, same prompt**. Only difference: C has **skills like the ones we build tonight**, in our **voice + style**"
  ],
  [
-  "Same prompt, **same output**. We all know that part",
+  "Beyond what you give AI up front... **how you iterate** matters too",
+  "Wherever you don't give guidance, **AI fills the gaps**",
   "Delightful study: AI plays **telephone**. One draws a picture, another describes it... **100 times**",
-  "**1,000+ games**, all kinds of starting sentences",
+  "They ran it **1,000+ times**, all kinds of starting sentences",
   "Almost all ended as **1 of 12 pictures**: stormy lighthouses, cities at night, palace interiors",
   "Why? Each round **drops the unusual**, fills in the common. They called it **visual elevator music**",
-  "Why it matters for you: **any gap you leave, AI fills with an assumption**... the most common thing it's seen. That's where the **AI-isms** come from",
+  "Why it matters: **any gap you leave, AI fills with an assumption**... the most common thing. That's where the **AI-isms** come from",
   "[KEY POINT] “Make it better” over and over **won't save you**... it pulls you **closer to average**"
  ],
  [
   "Why care? **We lose trust**",
-  "Picture this study: same presentation. Left side learns **I used AI**, right side thinks **I made it by hand**. Left trusts me **~18% less**",
-  "Held everywhere: **students, investors, clients**",
+  "Picture it here: same work. Left side learns **I used AI**, right side thinks **I did it myself**. Left trusts me **16 to 20% less**",
+  "Held across **13 experiments, 5,000+ people**: students, investors, clients",
   "[For the record, I did use AI for this. There goes **1/5 of your trust**]",
   "And it can be SO obvious... the classic **LinkedIn post** [read it]",
   "They lost **way more than 20%** of my trust tbh",
@@ -88,26 +91,26 @@ const TIGHT = [
   "[Tangent: most studies I've read in a while... **kudos in the feedback form** welcome. TYSM!]"
  ],
  [
-  "✓ Same prompt = same output. AI **drifts to average**. That's where we **lose trust**",
+  "✓ **Generic in = generic out**. AI **drifts to average**. That's where we **lose trust**",
   "Next: how do I get it to **sound like me**?"
  ],
  [
   "Throwback to workshop 2... what's a skill? **Saved instructions**. Write once, **never retype**",
-  "Without one: same paragraph of rules **Monday, Wednesday, Friday**... every. single. time.",
-  "With one: “**write my LinkedIn post about tonight**” and the skill fills in the rest. Bonus: **cheaper**, chat stays short"
+  "Without one: **same direction every prompt** (left side)",
+  "With one: “**write my LinkedIn post about tonight**” and the skill fills in the rest"
  ],
  [
   "Two ways it kicks in: **on its own** when your ask matches the description (write it **like a trigger!**). Or **on purpose**: slash + the name",
-  "[KEY POINT] Write the details **once**. Stop retyping them"
+  "[KEY POINT] Write the details **once**. Stop retyping them. We **LOVE saving time**"
  ],
  [
-  "How do you get AI to sound like you? **Assets + vibe + icks**",
-  "**Assets**: stuff you actually wrote. Mine: ~140 emails, ~120 Slacks, **17,736 texts**, meeting notes",
+  "How do you get AI to sound like you? **Examples + vibe + icks**",
+  "**Examples**: stuff you actually wrote. Mine: ~140 emails, ~120 Slacks, **17,736 texts**, meeting notes",
   "**Vibe**: how it should feel. Mine: warm, direct, specific... **athlete-operator**",
   "**Icks**: what makes you cringe. **Em dashes**, middle dots, “Regards,” and never “**I hope this email finds you well**”",
-  "Hand all three to Claude, it **writes the rules**. Middle is my real skill: **483 lines** and counting",
+  "Hand all three to Claude, it **writes the rules**. Middle is my real skill: **almost 500 lines** and counting",
   "Mary-isms made it in... “**thank you so big**” stays ungrammatical. [Also: **tehe, never lol**. Non-negotiable]",
-  "Works in **ChatGPT or Gemini** too",
+  "Works in **ChatGPT or Gemini** too... paste it into a **Project or a Gem**",
   "[KEY POINT] Same prompt, two answers. No skill: “**results-driven leader**...” With my skill: **the line actually on my site**"
  ],
  [
@@ -139,13 +142,13 @@ const TIGHT = [
   "Get over the **hump of being annoyed**... then it's easy to keep investing. Be **strategic** about which"
  ],
  [
-  "✓ **Assets + vibe + icks** = a voice skill. **Iterate**. **Update it** every time you correct it",
+  "✓ **Examples + vibe + icks** = a voice skill. **Iterate**. **Update it** every time you correct it",
   "Tactically: **saved instructions**. Pulled my writing in (screenshots, copy-paste or **connectors**), a few **vibe words** + obvious **icks**... then **refined as it showed me drafts**",
   "Next: how do I get it to **look like me**? Spoiler... **same recipe**"
  ],
  [
-  "Good news: design is the **same recipe**. Assets + vibe + icks, for **how it looks**",
-  "**Assets**: headshot, résumé, paintings, my voice skill... + **a couple of sites I love** as inspo. Showing beats describing",
+  "Good news: design is the **same recipe**. Examples + vibe + icks, for **how it looks**",
+  "**Examples**: headshot, résumé, paintings, my voice skill... + **a couple of sites I love** as inspo. Showing beats describing",
   "**Vibe**: pulled straight from my headshot. **Blue pen + yellow-green highlighter**",
   "**Icks**: emojis, tape on photos, big-number stats, dark mode... anything like a **video game**. Found each by **building, wincing, writing it down**",
   "Claude writes the rules. Non-negotiables: **blue pen outline** on every photo, **handwriting gets breathing room**. [That picky here too]",
@@ -154,11 +157,11 @@ const TIGHT = [
  [
   "Quick peek at **mine**... live. [Let it play]",
   "Every rule from the skill: **blue pen** around my photo, **highlighter** on every heading, my **paintings**, my **signature** at the bottom",
-  "[KEY POINT] Same recipe: **assets + vibe + icks**. This is what comes out the other end"
+  "[KEY POINT] Same recipe: **examples + vibe + icks**. This is what comes out the other end"
  ],
  [
-  "✓ Same recipe = a **design skill**. Iterate, update every time you correct it",
-  "Next: what can you **build with both**?"
+  "✓ **Examples + vibe + icks** = a **design skill**. Iterate, update every time you correct it",
+  "Next: what do you **get with both**?"
  ],
  [
   "Back to your make-believe daughter... **this is site C. Live.**",
